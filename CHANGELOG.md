@@ -5,6 +5,28 @@ All notable changes to Syntekpro-Toggle will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-02-10
+
+### 🏗️ Architecture Improvements
+
+#### ✨ Changed
+- **Professional Folder Structure** - Reorganized plugin with industry-standard architecture:
+  - `/admin/` - All admin-related files
+    - `admin.php` - Admin functionality
+    - `/css/` - Admin stylesheets
+    - `/js/` - Admin JavaScript
+  - `/public/` - All frontend files
+    - `/css/` - Public stylesheets
+    - `/js/` - Public JavaScript
+  - `/assets/` - Media assets (images, icons)
+  - Root level documentation files (README, CHANGELOG, LICENSE)
+- **Improved Code Organization** - Better separation of concerns between admin and public functionality
+- **Enhanced Maintainability** - Easier to navigate and maintain codebase
+
+#### 🐛 Fixed
+- **Menu Icon Sizing** - Fixed oversized admin menu icon with proper CSS constraints (20x20px)
+- **Asset Format Migration** - Converted SVG icons to PNG format for better compatibility
+
 ## [1.2.0] - 2026-02-10
 
 ### 🎉 Major UI Overhaul - Professional Admin Interface
