@@ -3,7 +3,7 @@
  * Plugin Name: Syntekpro-Toggle
  * Plugin URI: https://plugins.syntekpro.com/toggle
  * Description: A lightweight Dark/Light mode toggle that respects OS preferences and remembers user choices.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Requires at least: 5.0
  * Requires PHP: 7.2
  * Author: Syntekpro
@@ -14,7 +14,7 @@
  * Domain Path: /languages
  * 
  * @package Syntekpro_Toggle
- * @version 1.0.0
+ * @version 1.1.0
  * @author Syntekpro <development@syntekpro.com>
  */
 
@@ -24,9 +24,14 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('SYNTEKPRO_TOGGLE_VERSION', '1.0.0');
+define('SYNTEKPRO_TOGGLE_VERSION', '1.1.0');
 define('SYNTEKPRO_TOGGLE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SYNTEKPRO_TOGGLE_PLUGIN_URL', plugin_dir_url(__FILE__));
+
+// Include admin functionality
+if (is_admin()) {
+    require_once SYNTEKPRO_TOGGLE_PLUGIN_DIR . 'admin.php';
+}
 
 /**
  * Enqueue scripts and styles
@@ -57,14 +62,39 @@ add_action('wp_enqueue_scripts', 'syntekpro_toggle_enqueue_assets');
  * This runs BEFORE the page renders
  */
 function syntekpro_toggle_inline_script() {
+    $options = function_exists('syntekpro_toggle_get_options') ? syntekpro_toggle_get_options() : array('default_mode' => 'auto');
+    $default_mode = isset($options['default_mode']) ? $options['default_mode'] : 'auto';
     ?>
     <script>
-        // Check localStorage or OS preference BEFORE page renders
+        // Check localStorage or admin settings BEFORE page renders
         (function() {
             const savedMode = localStorage.getItem('syntekpro-dark-mode');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const defaultMode = '<?php echo esc_js($default_mode); ?>';
             
-            if (savedMode === 'true' || (savedMode === null && prefersDark)) {
+            let shouldEnableDark = false;
+            
+            // Priority: localStorage > admin setting > OS preference
+            if (savedMode !== null) {
+                shouldEnableDark = (savedMode === 'true');
+            } else {
+                switch(defaultMode) {
+                    case 'dark':
+                        shouldEnableDark = true;
+                        break;
+                    case 'light':
+                        shouldEnableDark = false;
+                        break;
+                    case 'auto':
+                        shouldEnableDark = prefersDark;
+                        break;
+                    case 'manual':
+                        shouldEnableDark = false;
+                        break;
+                }
+            }
+            
+            if (shouldEnableDark) {
                 document.documentElement.classList.add('dark-mode');
             }
         })();
@@ -77,6 +107,12 @@ add_action('wp_head', 'syntekpro_toggle_inline_script', 1);
  * Add toggle button to footer
  */
 function syntekpro_toggle_button() {
+    $options = function_exists('syntekpro_toggle_get_options') ? syntekpro_toggle_get_options() : array('enable_toggle' => '1');
+    
+    // Don't show button if disabled in settings
+    if (isset($options['enable_toggle']) && $options['enable_toggle'] !== '1') {
+        return;
+    }
     ?>
     <button id="syntekpro-dark-mode-toggle" class="syntekpro-toggle-btn" aria-label="Toggle Dark Mode">
         <span class="syntekpro-icon-sun" aria-hidden="true">

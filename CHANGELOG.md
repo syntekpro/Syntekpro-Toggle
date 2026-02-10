@@ -5,6 +5,68 @@ All notable changes to Syntekpro-Toggle will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-02-10
+
+### 🎉 Major Update - Admin Panel & Enhanced Theme Support
+
+#### ✨ Added
+- **Admin Settings Page** in WordPress dashboard (Settings → Dark Mode Toggle)
+  - Default mode selection (Auto/Light/Dark/Manual)
+  - Enable/disable toggle button
+  - Button position options (4 corners)
+  - Adjustable button size (30-100px)
+  - Color customization with WordPress color picker:
+    - Background color
+    - Text color
+    - Link color
+    - Secondary background color
+  - Custom CSS field for advanced styling
+  - Transition speed control (0-2 seconds)
+  - Reset to defaults button
+  - Live preview indicators
+
+#### 🎨 Enhanced Theme Support
+- Extended CSS variable support for ALL WordPress block themes:
+  - Twenty Twenty-Five
+  - Twenty Twenty-Four
+  - Twenty Twenty-Three
+  - All other block themes
+- Added specific styling for WordPress blocks:
+  - Cover blocks
+  - Group blocks
+  - Columns blocks
+  - Media & Text blocks
+  - Navigation blocks
+  - Button blocks
+  - Search blocks
+
+#### 🔧 Technical Improvements
+- Admin settings stored in WordPress options table
+- Settings sanitization and validation
+- Inline script now respects admin settings
+- JavaScript reads admin configuration
+- Custom CSS injection system
+- WordPress Color Picker API integration
+- Form validation for all inputs
+- Proper settings API implementation
+
+#### 📝 Admin Features
+- Professional admin interface with sidebar
+- Quick tips and documentation links
+- Theme compatibility information
+- Visual color indicators
+- Button size preview
+- Transition speed descriptions
+- Validation messages
+- Success notifications
+
+#### 🐛 Bug Fixes
+- Fixed FOUC with configurable default modes
+- Improved localStorage priority handling
+- Better OS preference detection with settings
+
+---
+
 ## [1.0.0] - 2026-02-10
 
 ### 🎉 Initial Release
@@ -103,6 +165,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **1.1.0** (2026-02-10) - Admin panel, enhanced theme support, color customization
 - **1.0.0** (2026-02-10) - Initial release
 
 ---

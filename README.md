@@ -1,22 +1,26 @@
 # Syntekpro-Toggle
 
-A lightweight WordPress plugin that adds an automatic and manual Dark/Light mode toggle with localStorage persistence and OS preference detection.
+A lightweight WordPress plugin with a powerful admin panel for Dark/Light mode toggle. Customize colors, positions, and behaviors with full support for ALL WordPress block themes.
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)
 ![WordPress](https://img.shields.io/badge/wordpress-5.0+-green.svg)
 ![PHP](https://img.shields.io/badge/php-7.2+-purple.svg)
 ![License](https://img.shields.io/badge/license-GPL--2.0+-orange.svg)
 
 ## 🌟 Features
 
-- **🌓 Automatic OS Detection**: Respects user's system dark/light mode preference
-- **💾 LocalStorage Persistence**: Remembers user's manual toggle choice across sessions
+- **⚙️ Admin Settings Panel**: Full control from WordPress dashboard
+- **🎨 Color Customization**: WordPress color picker for all dark mode colors
+- **🌓 Multiple Modes**: Auto/Light/Dark/Manual default modes
+- **📍 Flexible Positioning**: Place toggle button in any corner
+- **💾 LocalStorage Persistence**: Remembers user's manual toggle choice
 - **⚡ Zero FOUC**: JavaScript loads in header to prevent Flash of Unstyled Content
-- **🎨 Twenty Twenty-Five Compatible**: Specifically targets TT5 theme CSS variables
+- **🎯 Universal Block Theme Support**: Works with ALL WordPress block themes
 - **♿ Accessible**: ARIA labels, keyboard navigation, and reduced motion support
 - **📱 Responsive**: Beautiful floating toggle button that adapts to all screen sizes
 - **🎯 Lightweight**: Minimal footprint with no dependencies
-- **🔄 Smooth Transitions**: 0.3s CSS transitions for seamless color changes
+- **🔄 Smooth Transitions**: Configurable CSS transitions (0-2 seconds)
+- **✏️ Custom CSS**: Add your own CSS rules for advanced customization
 
 ## 📋 Requirements
 
@@ -37,7 +41,9 @@ A lightweight WordPress plugin that adds an automatic and manual Dark/Light mode
 
 3. Activate the plugin through the 'Plugins' menu in WordPress
 
-4. That's it! The toggle button will automatically appear on your site
+4. Go to **Settings → Dark Mode Toggle** to configure options
+
+5. Customize colors, position, and behavior as needed!
 
 ### Manual Installation
 
@@ -45,6 +51,38 @@ A lightweight WordPress plugin that adds an automatic and manual Dark/Light mode
 2. Go to WordPress Admin → Plugins → Add New → Upload Plugin
 3. Choose the ZIP file and click "Install Now"
 4. Activate the plugin
+5. Navigate to **Settings → Dark Mode Toggle**
+Admin-Configurable Behavior
+
+The plugin respects your admin settings with this priority order:
+
+```
+1. User's manual toggle (stored in localStorage) - highest priority
+2. Admin panel default mode setting
+3. OS/System preference (if Auto mode selected)
+4. Light mode fallback
+```
+
+### All Block Themes Supported
+
+Works out-of-the-box with:
+- **Twenty Twenty-Five** (TT5)
+- **Twenty Twenty-Four** (TT4)
+- **Twenty Twenty-Three** (TT3)
+- **All other WordPress block themes**
+
+Automatically targets these CSS variables:
+- `--wp--preset--color--base`
+- `--wp--preset--color--contrast`
+- `--wp--preset--color--primary`
+- `--wp--preset--color--secondary`
+- `--wp--preset--color--background`
+- `--wp--preset--color--foreground`
+- Plus custom fallback colors
+#### Advanced Settings
+
+- **Custom CSS**: Add your own CSS rules (no curly braces needed)
+- **Transition Speed**: Control animation speed (0-2 seconds, 0.3s default)
 
 ## 💡 How It Works
 
@@ -78,38 +116,43 @@ The plugin overrides Twenty Twenty-Five theme variables:
 
 ## 🎨 Customization
 
-### Changing Button Position
+### Using Admin Panel (Recommended)
 
-Edit `style.css`:
+1. Go to **Settings → Dark Mode Toggle**
+2. Adjust colors using the color pickers
+3. Set button position and size
+4. Add custom CSS if needed
+5. Save settings
 
-```css
-.syntekpro-toggle-btn {
-    bottom: 30px;  /* Change vertical position */
-    right: 30px;   /* Change horizontal position */
-}
+### Changing Colors Programmatically
+
+```php
+// In your theme's functions.php
+add_filter('option_syntekpro_toggle_options', function($options) {
+    $options['bg_color'] = '#000000'; // Pure black
+    $options['text_color'] = '#f0f0f0'; // Off-white
+    return $options;
+});
 ```
 
-### Customizing Colors
+### Custom CSS Examples
 
-Dark mode colors can be adjusted in `style.css`:
+In the **Admin Panel → Custom CSS** field:
 
 ```css
-html.dark-mode body {
-    --wp--preset--color--base: #1a1a1a; /* Background */
-    --wp--preset--color--contrast: #ffffff; /* Text */
+/* Make headers even darker */
+header, nav, footer {
+    background-color: #0a0a0a;
 }
-```
 
-### Button Appearance
+/* Adjust link hover color */
+a:hover {
+    color: #ffd700;
+}
 
-Modify button styles in `style.css`:
-
-```css
-.syntekpro-toggle-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; /* Make it square: 8px */
-    background-color: #333333;
+/* Style specific blocks */
+.wp-block-quote {
+    border-left-color: #6ea8fe;
 }
 ```
 
@@ -161,20 +204,25 @@ wp_enqueue_script(..., false); // false = head, true = footer
 
 ### Theme colors don't change
 
-Your theme may use different CSS variables. Inspect elements and update `style.css` accordingly:
+1. Go to **Settings → Dark Mode Toggle**
+2. Use the color pickers to adjust colors
+3. If specific elements aren't changing, add custom CSS:
+   ```css
+   .my-element {
+       background-color: #2d2d2d;
+       color: #ffffff;
+   }
+   ```
+4. Check browser console for CSS specificity issues
 
-```css
-html.dark-mode {
-    --your-theme-bg-var: #1a1a1a;
-    --your-theme-text-var: #ffffff;
-}
-```
-
-## 📚 File Structure
-
-```
-Syntekpro-Toggle/
-├── syntekpro-toggle.php    # Main plugin file
+## admin.php               # Admin settings page
+├── admin.css              # Admin panel styles
+├── admin.js               # Admin panel JavaScript
+├── script.js              # Frontend toggle functionality
+├── style.css              # Dark mode styles
+├── README.md              # This file
+├── CHANGELOG.md           # Version history
+└── LICENSEo-toggle.php    # Main plugin file
 ├── script.js               # Toggle functionality
 ├── style.css               # Dark mode styles
 ├── README.md               # This file
@@ -226,13 +274,17 @@ GNU General Public License for more details.
 
 See [CHANGELOG.md](CHANGELOG.md) for a detailed version history.
 
-## 🔮 Roadmap
-
+## x] Admin settings panel with color pickers
+- [x] Support for all WordPress block themes
+- [x] Custom CSS field
+- [x] Button positioning options
 - [ ] WordPress.org repository submission
-- [ ] Custom color picker in admin settings
-- [ ] Multiple theme presets (blue, purple, green)
-- [ ] Toggle animation options
+- [ ] Multiple color theme presets (blue, purple, green)
 - [ ] Scheduled auto-switching (day/night times)
+- [ ] Per-page toggle disable option
+- [ ] Widget and shortcode support
+- [ ] Import/export settings
+- [ ] Multi-site network supportg (day/night times)
 - [ ] Per-page toggle disable option
 - [ ] Widget area integration
 

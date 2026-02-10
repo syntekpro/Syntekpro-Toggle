@@ -1,6 +1,6 @@
 /**
  * Syntekpro-Toggle - Dark Mode Styles
- * CSS Variables for Twenty Twenty-Five Theme
+ * CSS Variables for All WordPress Block Themes
  */
 
 /* ===================================
@@ -13,16 +13,29 @@
 
 /* ===================================
    Dark Mode Overrides
-   Target Twenty Twenty-Five Theme Variables
+   Compatible with ALL Block Themes
    =================================== */
 html.dark-mode,
 html.dark-mode body {
-    /* Override Twenty Twenty-Five color variables */
+    /* Twenty Twenty-Five variables */
     --wp--preset--color--base: #1a1a1a !important;
     --wp--preset--color--contrast: #ffffff !important;
     --wp--preset--color--primary: #ffffff !important;
     --wp--preset--color--secondary: #e0e0e0 !important;
     --wp--preset--color--tertiary: #cccccc !important;
+    
+    /* Twenty Twenty-Four variables */
+    --wp--preset--color--base-2: #2d2d2d !important;
+    --wp--preset--color--accent: #6ea8fe !important;
+    --wp--preset--color--accent-2: #9ec5fe !important;
+    
+    /* Twenty Twenty-Three variables */
+    --wp--preset--color--background: #1a1a1a !important;
+    --wp--preset--color--foreground: #ffffff !important;
+    
+    /* General block theme variables */
+    --wp--style--root--padding-top: 0;
+    --wp--style--root--padding-bottom: 0;
     
     /* Custom fallback colors */
     background-color: #1a1a1a !important;
@@ -119,6 +132,38 @@ html.dark-mode .widget {
     background-color: #2d2d2d !important;
     color: #ffffff !important;
     transition: var(--syntekpro-transition);
+}
+
+/* WordPress blocks support */
+html.dark-mode .wp-block-cover,
+html.dark-mode .wp-block-group,
+html.dark-mode .wp-block-columns,
+html.dark-mode .wp-block-media-text {
+    color: #ffffff !important;
+}
+
+html.dark-mode .wp-block-cover__inner-container,
+html.dark-mode .wp-block-group__inner-container {
+    color: inherit;
+}
+
+html.dark-mode .wp-block-button__link {
+    background-color: #383838 !important;
+    color: #ffffff !important;
+}
+
+html.dark-mode .wp-block-search__button {
+    background-color: #383838 !important;
+    color: #ffffff !important;
+}
+
+html.dark-mode .wp-block-navigation,
+html.dark-mode .wp-block-navigation__container {
+    background-color: transparent;
+}
+
+html.dark-mode .wp-block-navigation-item a {
+    color: #ffffff !important;
 }
 
 /* ===================================

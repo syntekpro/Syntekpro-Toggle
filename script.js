@@ -6,6 +6,12 @@
 (function() {
     'use strict';
 
+    // Get settings from admin panel
+    var settings = window.syntekproToggleSettings || {
+        defaultMode: 'auto',
+        enableToggle: true
+    };
+
     // Wait for DOM to be ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initDarkModeToggle);
@@ -34,20 +40,22 @@
             updateToggleButton();
         });
 
-        // Listen for OS preference changes
-        const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        darkModeMediaQuery.addEventListener('change', function(e) {
-            // Only apply OS preference if user hasn't manually set a preference
-            const savedMode = localStorage.getItem('syntekpro-dark-mode');
-            if (savedMode === null) {
-                if (e.matches) {
-                    document.documentElement.classList.add('dark-mode');
-                } else {
-                    document.documentElement.classList.remove('dark-mode');
+        // Listen for OS preference changes (only if auto mode is enabled)
+        if (settings.defaultMode === 'auto') {
+            const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            darkModeMediaQuery.addEventListener('change', function(e) {
+                // Only apply OS preference if user hasn't manually set a preference
+                const savedMode = localStorage.getItem('syntekpro-dark-mode');
+                if (savedMode === null) {
+                    if (e.matches) {
+                        document.documentElement.classList.add('dark-mode');
+                    } else {
+                        document.documentElement.classList.remove('dark-mode');
+                    }
+                    updateToggleButton();
                 }
-                updateToggleButton();
-            }
-        });
+            });
+        }
     }
 
     function updateToggleButton() {

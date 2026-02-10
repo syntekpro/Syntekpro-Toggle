@@ -1,0 +1,225 @@
+/**
+ * Admin Styles for Syntekpro Toggle
+ */
+
+.syntekpro-toggle-admin {
+    max-width: 1200px;
+}
+
+.syntekpro-admin-header {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.syntekpro-admin-header .lead {
+    font-size: 16px;
+    color: #50575e;
+    margin: 0;
+}
+
+.syntekpro-toggle-admin .form-table {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.syntekpro-toggle-admin h2 {
+    background: #f0f0f1;
+    padding: 12px 15px;
+    margin: 0 -20px 20px -20px;
+    border-bottom: 1px solid #ccd0d4;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.syntekpro-toggle-admin .form-table th {
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.syntekpro-toggle-admin .form-table td {
+    padding: 15px 10px;
+}
+
+.syntekpro-toggle-admin select,
+.syntekpro-toggle-admin input[type="text"],
+.syntekpro-toggle-admin input[type="number"],
+.syntekpro-toggle-admin textarea {
+    padding: 8px 12px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.syntekpro-toggle-admin select {
+    min-width: 250px;
+}
+
+.syntekpro-toggle-admin input[type="number"] {
+    width: 80px;
+}
+
+.syntekpro-toggle-admin .description {
+    color: #646970;
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Color Picker */
+.syntekpro-color-picker {
+    width: 100px !important;
+}
+
+.wp-picker-container {
+    display: inline-block;
+}
+
+.wp-picker-container .button {
+    margin-left: 0 !important;
+}
+
+/* Sidebar */
+.syntekpro-admin-sidebar {
+    float: right;
+    width: 300px;
+    margin-left: 20px;
+    margin-top: -60px;
+}
+
+.syntekpro-toggle-admin form {
+    margin-right: 320px;
+}
+
+.syntekpro-admin-box {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+}
+
+.syntekpro-admin-box h3 {
+    margin-top: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.syntekpro-admin-box ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.syntekpro-admin-box li {
+    margin: 8px 0;
+    color: #50575e;
+    font-size: 14px;
+}
+
+.syntekpro-admin-box p {
+    color: #50575e;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.syntekpro-admin-box a {
+    color: #2271b1;
+    text-decoration: none;
+}
+
+.syntekpro-admin-box a:hover {
+    color: #135e96;
+    text-decoration: underline;
+}
+
+/* Submit Button */
+.syntekpro-toggle-admin .submit {
+    padding-top: 0;
+}
+
+.syntekpro-toggle-admin .submit .button-primary {
+    padding: 10px 30px;
+    height: auto;
+    font-size: 14px;
+}
+
+/* Custom CSS Textarea */
+.syntekpro-toggle-admin textarea.large-text {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Success Message */
+.syntekpro-toggle-admin .notice-success {
+    border-left-color: #00a32a;
+}
+
+/* Responsive */
+@media screen and (max-width: 782px) {
+    .syntekpro-admin-sidebar {
+        float: none;
+        width: 100%;
+        margin-left: 0;
+        margin-top: 20px;
+    }
+    
+    .syntekpro-toggle-admin form {
+        margin-right: 0;
+    }
+    
+    .syntekpro-toggle-admin select {
+        min-width: 100%;
+    }
+    
+    .syntekpro-toggle-admin input[type="number"] {
+        width: 100px;
+    }
+    
+    .syntekpro-toggle-admin .form-table {
+        padding: 15px;
+    }
+    
+    .syntekpro-toggle-admin h2 {
+        margin: 0 -15px 15px -15px;
+    }
+}
+
+/* Settings Sections Visual Enhancement */
+.form-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Checkbox Styling */
+.syntekpro-toggle-admin input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* Info Icons */
+.syntekpro-info-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: #2271b1;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 16px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: help;
+    margin-left: 5px;
+}
+
+.syntekpro-info-icon:hover {
+    background: #135e96;
+}
