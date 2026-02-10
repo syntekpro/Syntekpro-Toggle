@@ -14,12 +14,34 @@ if (!defined('ABSPATH')) {
  * Register admin menu
  */
 function syntekpro_toggle_admin_menu() {
-    add_options_page(
-        'Syntekpro Toggle Settings',
-        'Dark Mode Toggle',
+    // Add top-level menu page
+    add_menu_page(
+        'Toggle - Dark Mode Settings',
+        'Toggle',
+        'manage_options',
+        'syntekpro-toggle',
+        'syntekpro_toggle_settings_page',
+        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/toggle-icon.svg',
+        30
+    );
+    
+    // Add submenu items
+    add_submenu_page(
+        'syntekpro-toggle',
+        'Settings',
+        'Settings',
         'manage_options',
         'syntekpro-toggle',
         'syntekpro_toggle_settings_page'
+    );
+    
+    add_submenu_page(
+        'syntekpro-toggle',
+        'Options',
+        'Options',
+        'manage_options',
+        'syntekpro-toggle-options',
+        'syntekpro_toggle_options_page'
     );
 }
 add_action('admin_menu', 'syntekpro_toggle_admin_menu');
@@ -320,49 +342,314 @@ function syntekpro_toggle_settings_page() {
     }
     
     settings_errors('syntekpro_toggle_messages');
+    
+    // Get current tab
+    $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'settings';
     ?>
     <div class="wrap syntekpro-toggle-admin">
-        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-        
-        <div class="syntekpro-admin-header">
-            <p class="lead">Configure your dark/light mode toggle settings. These settings work with all WordPress block themes.</p>
+        <!-- Header -->
+        <div class="syntekpro-header">
+            <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-toggle-logo.svg'); ?>" alt="Syntekpro Toggle" class="syntekpro-header-logo">
+            <div class="syntekpro-header-version">Version <?php echo esc_html(SYNTEKPRO_TOGGLE_VERSION); ?></div>
         </div>
         
-        <form action="options.php" method="post">
-            <?php
-            settings_fields('syntekpro_toggle_settings');
-            do_settings_sections('syntekpro-toggle');
-            submit_button('Save Settings');
-            ?>
-        </form>
+        <!-- Tabs -->
+        <h2 class="nav-tab-wrapper">
+            <a href="?page=syntekpro-toggle&tab=settings" class="nav-tab <?php echo $active_tab === 'settings' ? 'nav-tab-active' : ''; ?>">
+                <span class="dashicons dashicons-admin-settings"></span> Settings
+            </a>
+            <a href="?page=syntekpro-toggle-options" class="nav-tab <?php echo $active_tab === 'options' ? 'nav-tab-active' : ''; ?>">
+                <span class="dashicons dashicons-admin-generic"></span> Options
+            </a>
+        </h2>
         
-        <div class="syntekpro-admin-sidebar">
-            <div class="syntekpro-admin-box">
-                <h3>🌓 Quick Tips</h3>
-                <ul>
-                    <li><strong>Auto Mode:</strong> Respects user's OS preference</li>
-                    <li><strong>Manual Mode:</strong> Only toggles when user clicks button</li>
-                    <li><strong>Custom Colors:</strong> Works with all block themes</li>
-                    <li><strong>Custom CSS:</strong> Add theme-specific overrides</li>
-                </ul>
+        <div class="syntekpro-content-wrapper">
+            <div class="syntekpro-main-content">
+                <form action="options.php" method="post">
+                    <?php
+                    settings_fields('syntekpro_toggle_settings');
+                    do_settings_sections('syntekpro-toggle');
+                    submit_button('Save Settings');
+                    ?>
+                </form>
             </div>
             
-            <div class="syntekpro-admin-box">
-                <h3>🎨 Theme Compatibility</h3>
-                <p>This plugin works with all WordPress block themes including:</p>
-                <ul>
-                    <li>Twenty Twenty-Five</li>
-                    <li>Twenty Twenty-Four</li>
-                    <li>Twenty Twenty-Three</li>
-                    <li>And all other block themes!</li>
-                </ul>
+            <div class="syntekpro-sidebar">
+                <div class="syntekpro-admin-box">
+                    <h3>🌓 Quick Tips</h3>
+                    <ul>
+                        <li><strong>Auto Mode:</strong> Respects user's OS preference</li>
+                        <li><strong>Manual Mode:</strong> Only toggles when user clicks button</li>
+                        <li><strong>Custom Colors:</strong> Works with all block themes</li>
+                        <li><strong>Custom CSS:</strong> Add theme-specific overrides</li>
+                    </ul>
+                </div>
+                
+                <div class="syntekpro-admin-box">
+                    <h3>🎨 Theme Compatibility</h3>
+                    <p>This plugin works with all WordPress block themes including:</p>
+                    <ul>
+                        <li>Twenty Twenty-Five</li>
+                        <li>Twenty Twenty-Four</li>
+                        <li>Twenty Twenty-Three</li>
+   Add dashboard widget
+ */
+function syntekpro_toggle_dashboard_widget() {
+    wp_add_dashboard_widget(
+        'syntekpro_toggle_widget',
+        '<img src="' . esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/toggle-icon.svg') . '" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;"> Toggle - Dark Mode',
+        'syntekpro_toggle_dashboard_widget_content'
+    );
+}
+add_action('wp_dashboard_setup', 'syntekpro_toggle_dashboard_widget');
+
+/**
+ * Dashboard widget content
+ */
+function syntekpro_toggle_dashboard_widget_content() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <div class="syntekpro-dashboard-widget">
+        <div class="syntekpro-widget-stats">
+            <div class="syntekpro-widget-stat">
+                <span class="dashicons dashicons-admin-appearance"></span>
+                <strong>Mode:</strong> <?php echo esc_html(ucfirst($options['default_mode'])); ?>
+            </div>
+            <div class="syntekpro-widget-stat">
+                <span class="dashicons dashicons-visibility"></span>
+                <strong>Status:</strong> <?php echo $options['enable_toggle'] === '1' ? '<span style="color:#46b450;">Active</span>' : '<span style="color:#dc3232;">Inactive</span>'; ?>
+            </div>
+            <div class="syntekpro-widget-stat">
+                <span class="dashicons dashicons-location-alt"></span>
+                <strong>Position:</strong> <?php echo esc_html(ucwords(str_replace('-', ' ', $options['button_position']))); ?>
+            </div>
+        </div>
+        
+        <div class="syntekpro-widget-actions">
+            <a href="<?php echo esc_url(admin_url('admin.php?page=syntekpro-toggle')); ?>" class="button button-primary">
+                <span class="dashicons dashicons-admin-settings"></span> Settings
+            </a>
+            <a href="<?php echo esc_url(admin_url('admin.php?page=syntekpro-toggle-options')); ?>" class="button button-secondary">
+                <span class="dashicons dashicons-admin-generic"></span> Options
+            </a>
+            <a href="<?php echo esc_url(home_url()); ?>" class="button button-secondary" target="_blank">
+                <span class="dashicons dashicons-external"></span> View Site
+            </a>
+        </div>
+        
+        <style>
+            .syntekpro-dashboard-widget {
+                padding: 10px 0;
+            }
+            .syntekpro-widget-stats {
+                margin-bottom: 15px;
+            }
+            .syntekpro-widget-stat {
+                padding: 8px 0;
+                border-bottom: 1px solid #f0f0f1;
+            }
+            .syntekpro-widget-stat:last-child {
+                border-bottom: none;
+            }
+            .syntekpro-widget-stat .dashicons {
+                color: #2271b1;
+                margin-right: 5px;
+            }
+            .syntekpro-widget-actions {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            .syntekpro-widget-actions .button {
+                flex: 1;
+                text-align: center;
+                min-width: 100px;
+            }
+            .syntekpro-widget-actions .dashicons {
+                font-size: 14px;
+                height: 14px;
+                width: 14px;
+                vertical-align: middle;
+                margin-right: 3px;
+            }
+        </style>
+    </div>
+    <?php
+}
+
+/**
+ * Enqueue admin scripts and styles
+ */
+function syntekpro_toggle_admin_enqueue_scripts($hook) {
+    if ($hook !== 'toplevel_page_syntekpro-toggle' && $hook !== 'toggle_page_syntekpro-toggle-options
+                <div class="syntekpro-admin-box">
+                    <h3>📚 Support</h3>
+                    <p><a href="https://plugins.syntekpro.com/toggle" target="_blank">Documentation</a></p>
+                    <p><a href="https://github.com/syntekpro/Syntekpro-Toggle/issues" target="_blank">Report Issue</a></p>
+                    <p><a href="mailto:development@syntekpro.com">Email Support</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="syntekpro-footer">
+            <div class="syntekpro-footer-content">
+                <span>Powered by</span>
+                <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-logo.svg'); ?>" alt="SyntekPro" class="syntekpro-footer-logo">
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Options page HTML
+ */
+function syntekpro_toggle_options_page() {
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+    
+    $active_tab = 'options';
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <div class="wrap syntekpro-toggle-admin">
+        <!-- Header -->
+        <div class="syntekpro-header">
+            <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-toggle-logo.svg'); ?>" alt="Syntekpro Toggle" class="syntekpro-header-logo">
+            <div class="syntekpro-header-version">Version <?php echo esc_html(SYNTEKPRO_TOGGLE_VERSION); ?></div>
+        </div>
+        
+        <!-- Tabs -->
+        <h2 class="nav-tab-wrapper">
+            <a href="?page=syntekpro-toggle&tab=settings" class="nav-tab <?php echo $active_tab === 'settings' ? 'nav-tab-active' : ''; ?>">
+                <span class="dashicons dashicons-admin-settings"></span> Settings
+            </a>
+            <a href="?page=syntekpro-toggle-options" class="nav-tab <?php echo $active_tab === 'options' ? 'nav-tab-active' : ''; ?>">
+                <span class="dashicons dashicons-admin-generic"></span> Options
+            </a>
+        </h2>
+        
+        <div class="syntekpro-content-wrapper">
+            <div class="syntekpro-main-content">
+                <div class="syntekpro-options-grid">
+                    <!-- Current Settings Overview -->
+                    <div class="syntekpro-option-card">
+                        <div class="syntekpro-option-icon">
+                            <span class="dashicons dashicons-admin-appearance"></span>
+                        </div>
+                        <h3>Current Mode</h3>
+                        <p class="syntekpro-option-value"><?php echo esc_html(ucfirst($options['default_mode'])); ?></p>
+                        <p class="description">Default mode when users visit your site</p>
+                    </div>
+                    
+                    <div class="syntekpro-option-card">
+                        <div class="syntekpro-option-icon">
+                            <span class="dashicons dashicons-visibility"></span>
+                        </div>
+                        <h3>Toggle Button</h3>
+                        <p class="syntekpro-option-value"><?php echo $options['enable_toggle'] === '1' ? 'Enabled' : 'Disabled'; ?></p>
+                        <p class="description">Toggle button visibility status</p>
+                    </div>
+                    
+                    <div class="syntekpro-option-card">
+                        <div class="syntekpro-option-icon">
+                            <span class="dashicons dashicons-location-alt"></span>
+                        </div>
+                        <h3>Button Position</h3>
+                        <p class="syntekpro-option-value"><?php echo esc_html(ucwords(str_replace('-', ' ', $options['button_position']))); ?></p>
+                        <p class="description">Current button placement</p>
+                    </div>
+                    
+                    <div class="syntekpro-option-card">
+                        <div class="syntekpro-option-icon">
+                            <span class="dashicons dashicons-image-crop"></span>
+                        </div>
+                        <h3>Button Size</h3>
+                        <p class="syntekpro-option-value"><?php echo esc_html($options['button_size']); ?>px</p>
+                        <p class="description">Toggle button dimensions</p>
+                    </div>
+                    
+                    <div class="syntekpro-option-card">
+                        <div class="syntekpro-option-icon">
+                            <span class="dashicons dashicons-art"></span>
+                        </div>
+                        <h3>Background Color</h3>
+                        <p class="syntekpro-option-value">
+                            <span class="color-preview" style="background-color: <?php echo esc_attr($options['bg_color']); ?>"></span>
+                            <?php echo esc_html($options['bg_color']); ?>
+                        </p>
+                        <p class="description">Dark mode background</p>
+                    </div>
+                    
+                    <div class="syntekpro-option-card">
+                        <div class="syntekpro-option-icon">
+                            <span class="dashicons dashicons-editor-textcolor"></span>
+                        </div>
+                        <h3>Text Color</h3>
+                        <p class="syntekpro-option-value">
+                            <span class="color-preview" style="background-color: <?php echo esc_attr($options['text_color']); ?>"></span>
+                            <?php echo esc_html($options['text_color']); ?>
+                        </p>
+                        <p class="description">Dark mode text color</p>
+                    </div>
+                    
+                    <div class="syntekpro-option-card">
+                        <div class="syntekpro-option-icon">
+                            <span class="dashicons dashicons-admin-links"></span>
+                        </div>
+                        <h3>Link Color</h3>
+                        <p class="syntekpro-option-value">
+                            <span class="color-preview" style="background-color: <?php echo esc_attr($options['link_color']); ?>"></span>
+                            <?php echo esc_html($options['link_color']); ?>
+                        </p>
+                        <p class="description">Dark mode link color</p>
+                    </div>
+                    
+                    <div class="syntekpro-option-card">
+                        <div class="syntekpro-option-icon">
+                            <span class="dashicons dashicons-performance"></span>
+                        </div>
+                        <h3>Transition Speed</h3>
+                        <p class="syntekpro-option-value"><?php echo esc_html($options['transition_speed']); ?>s</p>
+                        <p class="description">Color change animation speed</p>
+                    </div>
+                </div>
+                
+                <div class="syntekpro-options-actions">
+                    <a href="?page=syntekpro-toggle" class="button button-primary button-large">
+                        <span class="dashicons dashicons-edit"></span> Edit Settings
+                    </a>
+                    <a href="<?php echo esc_url(home_url()); ?>" class="button button-secondary button-large" target="_blank">
+                        <span class="dashicons dashicons-external"></span> View Site
+                    </a>
+                </div>
             </div>
             
-            <div class="syntekpro-admin-box">
-                <h3>📚 Support</h3>
-                <p><a href="https://plugins.syntekpro.com/toggle" target="_blank">Documentation</a></p>
-                <p><a href="https://github.com/syntekpro/Syntekpro-Toggle/issues" target="_blank">Report Issue</a></p>
-                <p><a href="mailto:development@syntekpro.com">Email Support</a></p>
+            <div class="syntekpro-sidebar">
+                <div class="syntekpro-admin-box">
+                    <h3>📊 Plugin Stats</h3>
+                    <ul class="syntekpro-stats-list">
+                        <li><strong>Version:</strong> <?php echo esc_html(SYNTEKPRO_TOGGLE_VERSION); ?></li>
+                        <li><strong>Active:</strong> <?php echo $options['enable_toggle'] === '1' ? 'Yes' : 'No'; ?></li>
+                        <li><strong>Theme Support:</strong> All Block Themes</li>
+                    </ul>
+                </div>
+                
+                <div class="syntekpro-admin-box">
+                    <h3>🚀 Quick Actions</h3>
+                    <p><a href="?page=syntekpro-toggle" class="button button-secondary" style="width:100%;margin-bottom:8px;">Settings</a></p>
+                    <p><a href="<?php echo esc_url(admin_url('plugins.php')); ?>" class="button button-secondary" style="width:100%;margin-bottom:8px;">All Plugins</a></p>
+                    <p><a href="<?php echo esc_url(admin_url('themes.php')); ?>" class="button button-secondary" style="width:100%;">Themes</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="syntekpro-footer">
+            <div class="syntekpro-footer-content">
+                <span>Powered by</span>
+                <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-logo.svg'); ?>" alt="SyntekPro" class="syntekpro-footer-logo">
             </div>
         </div>
     </div>

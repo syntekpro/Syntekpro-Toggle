@@ -1,16 +1,19 @@
 # Syntekpro-Toggle
 
-A lightweight WordPress plugin with a powerful admin panel for Dark/Light mode toggle. Customize colors, positions, and behaviors with full support for ALL WordPress block themes.
+A professional WordPress plugin with a dedicated admin interface for Dark/Light mode toggle. Full-featured admin panel with custom branding, dashboard widget, and support for ALL WordPress block themes.
 
-![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)
 ![WordPress](https://img.shields.io/badge/wordpress-5.0+-green.svg)
 ![PHP](https://img.shields.io/badge/php-7.2+-purple.svg)
 ![License](https://img.shields.io/badge/license-GPL--2.0+-orange.svg)
 
 ## 🌟 Features
 
-- **⚙️ Admin Settings Panel**: Full control from WordPress dashboard
-- **🎨 Color Customization**: WordPress color picker for all dark mode colors
+- **🎯 Dedicated Admin Page**: Full-fledged sidebar menu (not hidden in Settings)
+- **🎨 Professional Interface**: Custom branded header and footer with logos
+- **📊 Dashboard Widget**: Quick stats and actions on WordPress dashboard
+- **📑 Tabbed Interface**: Organized Settings and Options pages
+- **⚙️ Color Customization**: WordPress color picker for all dark mode colors
 - **🌓 Multiple Modes**: Auto/Light/Dark/Manual default modes
 - **📍 Flexible Positioning**: Place toggle button in any corner
 - **💾 LocalStorage Persistence**: Remembers user's manual toggle choice
@@ -38,9 +41,11 @@ A lightweight WordPress plugin with a powerful admin panel for Dark/Light mode t
    ```
 
 2. Upload the `Syntekpro-Toggle` folder to your `/wp-content/plugins/` directory
+Access the plugin from **WordPress Admin → Toggle** (sidebar menu)
 
-3. Activate the plugin through the 'Plugins' menu in WordPress
+5. Customize colors, position, and behavior as needed!
 
+6. Check the dashboard widget for quick stats
 4. Go to **Settings → Dark Mode Toggle** to configure options
 
 5. Customize colors, position, and behavior as needed!
@@ -49,7 +54,38 @@ A lightweight WordPress plugin with a powerful admin panel for Dark/Light mode t
 
 1. Download the ZIP file from the [releases page](https://github.com/syntekpro/Syntekpro-Toggle/releases)
 2. Go to WordPress Admin → Plugins → Add New → Upload Plugin
-3. Choose the ZIP file and click "Install Now"
+3. Choose the ZIPToggle** in the WordPress admin sidebar
+
+## 🎨 Interface
+
+### Admin Menu Location
+Access the plugin directly from the WordPress sidebar menu as **"Toggle"** with a custom icon.
+
+### Dashboard Widget
+Quick overview widget on the WordPress dashboard showing:
+- Current mode status
+- Toggle button status (Active/Inactive)
+- Button position
+- Quick links to Settings and Options
+
+### Settings Page
+**Access: Toggle → Settings**
+
+Comprehensive settings with a beautiful branded interface featuring:
+- Custom Syntekpro-Toggle header with logo (light yellow background)
+- Tabbed navigation for Settings and Options
+- All configuration options with WordPress color pickers
+- Professional sidebar with tips and support links
+- Branded footer with "Powered by SyntekPro" and animated logo
+
+### Options Page
+**Access: Toggle → Options**
+
+Visual overview of all current settings displayed in cards:
+- Current mode, button status, position, size
+- Color previews for all dark mode colors
+- Transition speed
+- Quick action buttons
 4. Activate the plugin
 5. Navigate to **Settings → Dark Mode Toggle**
 Admin-Configurable Behavior
@@ -118,11 +154,17 @@ The plugin overrides Twenty Twenty-Five theme variables:
 
 ### Using Admin Panel (Recommended)
 
-1. Go to **Settings → Dark Mode Toggle**
+1. Go to **Toggle → Settings** in WordPress admin
 2. Adjust colors using the color pickers
 3. Set button position and size
 4. Add custom CSS if needed
 5. Save settings
+
+### View Current Configuration
+
+1. Go to **Toggle → Options** for a visual overview
+2. See all settings at a glance with color previews
+3. Quick access to edit settings
 
 ### Changing Colors Programmatically
 
@@ -204,7 +246,7 @@ wp_enqueue_script(..., false); // false = head, true = footer
 
 ### Theme colors don't change
 
-1. Go to **Settings → Dark Mode Toggle**
+1. Go to **Toggle → Settings** in WordPress admin
 2. Use the color pickers to adjust colors
 3. If specific elements aren't changing, add custom CSS:
    ```css

@@ -5,6 +5,57 @@ All notable changes to Syntekpro-Toggle will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-02-10
+
+### 🎉 Major UI Overhaul - Professional Admin Interface
+
+#### ✨ Added
+- **Dedicated Sidebar Menu** - Plugin now appears as "Toggle" in WordPress sidebar (not in Settings submenu)
+- **Custom Menu Icon** - Branded toggle icon in WordPress admin sidebar and top bar
+- **Professional Header** - Custom header with Syntekpro-Toggle logo and light yellow background
+- **Branded Footer** - Footer with "Powered by SyntekPro" and logo that animates on hover
+- **Dashboard Widget** - Quick stats widget on WordPress dashboard showing:
+  - Current mode status
+  - Toggle button status
+  - Button position
+  - Quick action links to Settings and Options
+- **Tabbed Interface** - Clean tab navigation between Settings and Options pages
+- **Options Page** - New visual overview page with cards displaying:
+  - All current settings at a glance
+  - Color previews for all colors
+  - Current configuration stats
+  - Quick edit access
+- **Custom Branding Assets** - Added `/assets/img/` folder with:
+  - Syntekpro-Toggle logo SVG
+  - SyntekPro logo SVG
+  - Toggle icon SVG
+
+#### 🎨 UI/UX Improvements
+- Light yellow gradient background (#fffbea to #fff9db) for header and footer
+- Animated hover effect on footer logo (scales up and adds shadow)
+- Card-based options display with hover animations
+- Professional color-coded statistics
+- Responsive grid layout for options cards
+- Improved sidebar organization
+- Better visual hierarchy throughout admin pages
+
+#### 🔧 Technical Changes
+- Changed from `add_options_page` to `add_menu_page` (top-level menu)
+- Added submenu pages for Settings and Options
+- Created dashboard widget function
+- Updated admin enqueue hooks for new page slugs
+- Enhanced CSS with new classes for header, footer, tabs, and cards
+- Added visual color preview elements
+- Improved responsive breakpoints
+
+#### 📝 Documentation
+- Updated README with new admin interface documentation
+- Added dashboard widget description
+- Updated screenshots references
+- Added interface section explaining all new features
+
+---
+
 ## [1.1.0] - 2026-02-10
 
 ### 🎉 Major Update - Admin Panel & Enhanced Theme Support
@@ -165,6 +216,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **1.2.0** (2026-02-10) - Professional admin interface, dedicated menu, dashboard widget
 - **1.1.0** (2026-02-10) - Admin panel, enhanced theme support, color customization
 - **1.0.0** (2026-02-10) - Initial release
 
