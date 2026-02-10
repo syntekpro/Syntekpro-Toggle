@@ -1,0 +1,251 @@
+/**
+ * Syntekpro-Toggle - Dark Mode Styles
+ * CSS Variables for Twenty Twenty-Five Theme
+ */
+
+/* ===================================
+   Default Light Mode (Theme Variables)
+   =================================== */
+:root {
+    /* Smooth transitions for all color changes */
+    --syntekpro-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ===================================
+   Dark Mode Overrides
+   Target Twenty Twenty-Five Theme Variables
+   =================================== */
+html.dark-mode,
+html.dark-mode body {
+    /* Override Twenty Twenty-Five color variables */
+    --wp--preset--color--base: #1a1a1a !important;
+    --wp--preset--color--contrast: #ffffff !important;
+    --wp--preset--color--primary: #ffffff !important;
+    --wp--preset--color--secondary: #e0e0e0 !important;
+    --wp--preset--color--tertiary: #cccccc !important;
+    
+    /* Custom fallback colors */
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+    
+    /* Smooth transition */
+    transition: var(--syntekpro-transition);
+}
+
+/* Text elements in dark mode */
+html.dark-mode body,
+html.dark-mode p,
+html.dark-mode h1,
+html.dark-mode h2,
+html.dark-mode h3,
+html.dark-mode h4,
+html.dark-mode h5,
+html.dark-mode h6,
+html.dark-mode span,
+html.dark-mode div {
+    color: #ffffff;
+    transition: var(--syntekpro-transition);
+}
+
+/* Links in dark mode */
+html.dark-mode a {
+    color: #6ea8fe;
+    transition: var(--syntekpro-transition);
+}
+
+html.dark-mode a:hover {
+    color: #9ec5fe;
+}
+
+/* Headers and navigation in dark mode */
+html.dark-mode header,
+html.dark-mode nav,
+html.dark-mode footer {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+    transition: var(--syntekpro-transition);
+}
+
+/* Content areas in dark mode */
+html.dark-mode article,
+html.dark-mode section,
+html.dark-mode main {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+    transition: var(--syntekpro-transition);
+}
+
+/* Input fields and forms in dark mode */
+html.dark-mode input,
+html.dark-mode textarea,
+html.dark-mode select {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+    border-color: #444444 !important;
+    transition: var(--syntekpro-transition);
+}
+
+/* Buttons in dark mode */
+html.dark-mode button,
+html.dark-mode .wp-block-button__link {
+    background-color: #383838 !important;
+    color: #ffffff !important;
+    border-color: #555555 !important;
+    transition: var(--syntekpro-transition);
+}
+
+/* Code blocks in dark mode */
+html.dark-mode code,
+html.dark-mode pre {
+    background-color: #2d2d2d !important;
+    color: #f8f8f2 !important;
+    border-color: #444444 !important;
+    transition: var(--syntekpro-transition);
+}
+
+/* Tables in dark mode */
+html.dark-mode table,
+html.dark-mode th,
+html.dark-mode td {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+    border-color: #444444 !important;
+    transition: var(--syntekpro-transition);
+}
+
+/* Sidebar and widgets in dark mode */
+html.dark-mode aside,
+html.dark-mode .widget {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+    transition: var(--syntekpro-transition);
+}
+
+/* ===================================
+   Toggle Button Styles
+   =================================== */
+.syntekpro-toggle-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #333333;
+    color: #ffffff;
+    border: 2px solid #555555;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.syntekpro-toggle-btn:hover {
+    background-color: #444444;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.05);
+}
+
+.syntekpro-toggle-btn:active {
+    transform: scale(0.95);
+}
+
+/* Icon container */
+.syntekpro-toggle-btn span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+.syntekpro-toggle-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+}
+
+/* Icon visibility - Sun shows in dark mode, Moon shows in light mode */
+.syntekpro-icon-sun {
+    display: none;
+}
+
+.syntekpro-icon-moon {
+    display: block;
+}
+
+html.dark-mode .syntekpro-icon-sun {
+    display: block;
+}
+
+html.dark-mode .syntekpro-icon-moon {
+    display: none;
+}
+
+/* Light mode button appearance */
+html:not(.dark-mode) .syntekpro-toggle-btn {
+    background-color: #f0f0f0;
+    color: #333333;
+    border-color: #cccccc;
+}
+
+html:not(.dark-mode) .syntekpro-toggle-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* ===================================
+   Responsive Design
+   =================================== */
+@media (max-width: 768px) {
+    .syntekpro-toggle-btn {
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .syntekpro-toggle-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* ===================================
+   Accessibility
+   =================================== */
+.syntekpro-toggle-btn:focus {
+    outline: 2px solid #6ea8fe;
+    outline-offset: 2px;
+}
+
+.syntekpro-toggle-btn:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    html.dark-mode,
+    html.dark-mode *,
+    .syntekpro-toggle-btn {
+        transition: none !important;
+    }
+}
+
+/* ===================================
+   Print Styles (Force Light Mode)
+   =================================== */
+@media print {
+    html.dark-mode,
+    html.dark-mode body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+    
+    .syntekpro-toggle-btn {
+        display: none !important;
+    }
+}
