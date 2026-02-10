@@ -481,26 +481,32 @@ function syntekpro_toggle_dashboard_widget_content() {
  * Enqueue admin scripts and styles
  */
 function syntekpro_toggle_admin_enqueue_scripts($hook) {
-    if ($hook !== 'toplevel_page_syntekpro-toggle' && $hook !== 'toggle_page_syntekpro-toggle-options
-                <div class="syntekpro-admin-box">
-                    <h3>📚 Support</h3>
-                    <p><a href="https://plugins.syntekpro.com/toggle" target="_blank">Documentation</a></p>
-                    <p><a href="https://github.com/syntekpro/Syntekpro-Toggle/issues" target="_blank">Report Issue</a></p>
-                    <p><a href="mailto:development@syntekpro.com">Email Support</a></p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Footer -->
-        <div class="syntekpro-footer">
-            <div class="syntekpro-footer-content">
-                <span>Powered by</span>
-                <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-logo.svg'); ?>" alt="SyntekPro" class="syntekpro-footer-logo">
-            </div>
-        </div>
-    </div>
-    <?php
+    if ($hook !== 'toplevel_page_syntekpro-toggle' && $hook !== 'toggle_page_syntekpro-toggle-options') {
+        return;
+    }
+    
+    // WordPress color picker
+    wp_enqueue_style('wp-color-picker');
+    wp_enqueue_script('wp-color-picker');
+    
+    // Admin CSS
+    wp_enqueue_style(
+        'syntekpro-toggle-admin',
+        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'admin.css',
+        array(),
+        SYNTEKPRO_TOGGLE_VERSION
+    );
+    
+    // Admin JS
+    wp_enqueue_script(
+        'syntekpro-toggle-admin',
+        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'admin.js',
+        array('jquery', 'wp-color-picker'),
+        SYNTEKPRO_TOGGLE_VERSION,
+        true
+    );
 }
+add_action('admin_enqueue_scripts', 'syntekpro_toggle_admin_enqueue_scripts');
 
 /**
  * Options page HTML
