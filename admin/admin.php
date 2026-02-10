@@ -655,7 +655,9 @@ function syntekpro_toggle_options_page() {
         <div class="syntekpro-footer">
             <div class="syntekpro-footer-content">
                 <span>Powered by</span>
-                <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-logo.png'); ?>" alt="SyntekPro" class="syntekpro-footer-logo">
+                <a href="https://syntekpro.com" target="_blank" rel="noopener noreferrer" style="line-height: 0; display: inline-flex; align-items: center;">
+                    <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-logo.png'); ?>" alt="SyntekPro" class="syntekpro-footer-logo">
+                </a>
             </div>
         </div>
     </div>

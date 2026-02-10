@@ -6,8 +6,10 @@
    WordPress Admin Menu Icon
    =================================== */
 #adminmenu .toplevel_page_syntekpro-toggle .wp-menu-image img {
-    width: 20px !important;
-    height: 20px !important;
+    width: 18px !important;
+    height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
     padding: 0 !important;
     opacity: 0.6;
 }
@@ -33,7 +35,8 @@
     margin: 20px 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    position: relative;
     box-shadow: 0 2px 8px rgba(255, 235, 59, 0.1);
 }
 
@@ -55,6 +58,8 @@
     font-weight: 600;
     color: #666;
     border: 1px solid rgba(0, 0, 0, 0.1);
+    position: absolute;
+    right: 30px;
 }
 
 /* ===================================
@@ -359,16 +364,16 @@
 }
 
 .syntekpro-footer-logo {
-    height: 30px;
+    height: 20px;
     width: auto;
     transition: all 0.3s ease;
     filter: grayscale(0%);
+    vertical-align: middle;
 }
 
 .syntekpro-footer-logo:hover {
-    transform: scale(1.2) translateY(-3px);
+    transform: translateY(-4px);
     filter: drop-shadow(0 4px 8px rgba(34, 113, 177, 0.4));
-    cursor: pointer;
 }
 
 /* ===================================
