@@ -21,7 +21,7 @@ function syntekpro_toggle_admin_menu() {
         'manage_options',
         'syntekpro-toggle',
         'syntekpro_toggle_settings_page',
-        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/toggle-icon.svg',
+        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/toggle-icon.png',
         30
     );
     
@@ -349,7 +349,7 @@ function syntekpro_toggle_settings_page() {
     <div class="wrap syntekpro-toggle-admin">
         <!-- Header -->
         <div class="syntekpro-header">
-            <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-toggle-logo.svg'); ?>" alt="Syntekpro Toggle" class="syntekpro-header-logo">
+            <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-toggle-logo.png'); ?>" alt="Syntekpro Toggle" class="syntekpro-header-logo">
             <div class="syntekpro-header-version">Version <?php echo esc_html(SYNTEKPRO_TOGGLE_VERSION); ?></div>
         </div>
         
@@ -397,7 +397,7 @@ function syntekpro_toggle_settings_page() {
 function syntekpro_toggle_dashboard_widget() {
     wp_add_dashboard_widget(
         'syntekpro_toggle_widget',
-        '<img src="' . esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/toggle-icon.svg') . '" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;"> Toggle - Dark Mode',
+        '<img src="' . esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/toggle-icon.png') . '" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;"> Toggle - Dark Mode',
         'syntekpro_toggle_dashboard_widget_content'
     );
 }
@@ -522,7 +522,7 @@ function syntekpro_toggle_options_page() {
     <div class="wrap syntekpro-toggle-admin">
         <!-- Header -->
         <div class="syntekpro-header">
-            <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-toggle-logo.svg'); ?>" alt="Syntekpro Toggle" class="syntekpro-header-logo">
+            <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-toggle-logo.png'); ?>" alt="Syntekpro Toggle" class="syntekpro-header-logo">
             <div class="syntekpro-header-version">Version <?php echo esc_html(SYNTEKPRO_TOGGLE_VERSION); ?></div>
         </div>
         
@@ -655,7 +655,7 @@ function syntekpro_toggle_options_page() {
         <div class="syntekpro-footer">
             <div class="syntekpro-footer-content">
                 <span>Powered by</span>
-                <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-logo.svg'); ?>" alt="SyntekPro" class="syntekpro-footer-logo">
+                <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-logo.png'); ?>" alt="SyntekPro" class="syntekpro-footer-logo">
             </div>
         </div>
     </div>
