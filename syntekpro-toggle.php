@@ -30,7 +30,7 @@ define('SYNTEKPRO_TOGGLE_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 // Include admin functionality
 if (is_admin()) {
-    require_once SYNTEKPRO_TOGGLE_PLUGIN_DIR . 'admin.php';
+    require_once SYNTEKPRO_TOGGLE_PLUGIN_DIR . 'admin/admin.php';
 }
 
 /**
@@ -40,7 +40,7 @@ function syntekpro_toggle_enqueue_assets() {
     // Enqueue CSS
     wp_enqueue_style(
         'syntekpro-toggle-style',
-        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'style.css',
+        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'public/css/style.css',
         array(),
         SYNTEKPRO_TOGGLE_VERSION,
         'all'
@@ -49,7 +49,7 @@ function syntekpro_toggle_enqueue_assets() {
     // Enqueue JavaScript in HEAD (critical for preventing FOUC)
     wp_enqueue_script(
         'syntekpro-toggle-script',
-        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'script.js',
+        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'public/js/script.js',
         array(),
         SYNTEKPRO_TOGGLE_VERSION,
         false // false = load in head, true = load in footer

@@ -492,7 +492,7 @@ function syntekpro_toggle_admin_enqueue_scripts($hook) {
     // Admin CSS
     wp_enqueue_style(
         'syntekpro-toggle-admin',
-        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'admin.css',
+        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'admin/css/admin.css',
         array(),
         SYNTEKPRO_TOGGLE_VERSION
     );
@@ -500,7 +500,7 @@ function syntekpro_toggle_admin_enqueue_scripts($hook) {
     // Admin JS
     wp_enqueue_script(
         'syntekpro-toggle-admin',
-        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'admin.js',
+        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'admin/js/admin.js',
         array('jquery', 'wp-color-picker'),
         SYNTEKPRO_TOGGLE_VERSION,
         true
