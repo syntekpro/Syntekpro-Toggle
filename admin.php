@@ -663,37 +663,6 @@ function syntekpro_toggle_options_page() {
 }
 
 /**
- * Enqueue admin scripts and styles
- */
-function syntekpro_toggle_admin_enqueue_scripts($hook) {
-    if ($hook !== 'settings_page_syntekpro-toggle') {
-        return;
-    }
-    
-    // WordPress color picker
-    wp_enqueue_style('wp-color-picker');
-    wp_enqueue_script('wp-color-picker');
-    
-    // Admin CSS
-    wp_enqueue_style(
-        'syntekpro-toggle-admin',
-        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'admin.css',
-        array(),
-        SYNTEKPRO_TOGGLE_VERSION
-    );
-    
-    // Admin JS
-    wp_enqueue_script(
-        'syntekpro-toggle-admin',
-        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'admin.js',
-        array('jquery', 'wp-color-picker'),
-        SYNTEKPRO_TOGGLE_VERSION,
-        true
-    );
-}
-add_action('admin_enqueue_scripts', 'syntekpro_toggle_admin_enqueue_scripts');
-
-/**
  * Output custom CSS based on settings
  */
 function syntekpro_toggle_custom_css() {
