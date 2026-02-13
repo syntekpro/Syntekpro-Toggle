@@ -3,7 +3,7 @@
  * Plugin Name: Syntekpro-Toggle
  * Plugin URI: https://plugins.syntekpro.com/toggle
  * Description: A lightweight Dark/Light mode toggle that respects OS preferences and remembers user choices.
- * Version: 1.3.7
+ * Version: 1.3.8
  * Requires at least: 5.0
  * Requires PHP: 7.2
  * Author: Syntekpro
@@ -14,7 +14,7 @@
  * Domain Path: /languages
  * 
  * @package Syntekpro_Toggle
- * @version 1.3.7
+ * @version 1.3.8
  * @author Syntekpro <development@syntekpro.com>
  */
 
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('SYNTEKPRO_TOGGLE_VERSION', '1.3.7');
+define('SYNTEKPRO_TOGGLE_VERSION', '1.3.8');
 define('SYNTEKPRO_TOGGLE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SYNTEKPRO_TOGGLE_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -104,7 +104,7 @@ function syntekpro_toggle_inline_script() {
 add_action('wp_head', 'syntekpro_toggle_inline_script', 1);
 
 /**
- * Add toggle button to footer
+ * Add toggle button to frontend
  */
 function syntekpro_toggle_button() {
     $options = function_exists('syntekpro_toggle_get_options') ? syntekpro_toggle_get_options() : array('enable_toggle' => '1');

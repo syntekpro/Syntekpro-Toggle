@@ -21,7 +21,7 @@ function syntekpro_toggle_admin_menu() {
         'manage_options',
         'syntekpro-toggle',
         'syntekpro_toggle_frontend_page',
-        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/Syntekpro Toggle  icon Grey.png',
+        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/Syntekpro%20Toggle%20%20icon%20Grey.png',
         30
     );
     
@@ -72,6 +72,30 @@ function syntekpro_toggle_admin_menu() {
     );
 }
 add_action('admin_menu', 'syntekpro_toggle_admin_menu');
+
+/**
+ * Replace WordPress default footer text with custom message
+ */
+function syntekpro_toggle_admin_footer_text($footer_text) {
+    // Only replace on Syntekpro Toggle pages
+    if (isset($_GET['page']) && strpos($_GET['page'], 'syntekpro-toggle') === 0) {
+        return 'Thanks For Using <a href="https://plugins.syntekpro.com/toggle" target="_blank" rel="noopener noreferrer">SyntekPro Toggle</a>';
+    }
+    return $footer_text;
+}
+add_filter('admin_footer_text', 'syntekpro_toggle_admin_footer_text');
+
+/**
+ * Replace WordPress version with plugin version on the right side
+ */
+function syntekpro_toggle_admin_footer_version($version_text) {
+    // Only replace on Syntekpro Toggle pages
+    if (isset($_GET['page']) && strpos($_GET['page'], 'syntekpro-toggle') === 0) {
+        return '<a href="https://plugins.syntekpro.com/toggle" target="_blank" rel="noopener noreferrer">Version ' . esc_html(SYNTEKPRO_TOGGLE_VERSION) . '</a>';
+    }
+    return $version_text;
+}
+add_filter('update_footer', 'syntekpro_toggle_admin_footer_version', 11);
 
 /**
  * Force menu icon size globally (sidebar)
@@ -215,55 +239,118 @@ function syntekpro_toggle_menu_icon_css() {
             color: var(--syntekpro-admin-text);
         }
 
-        /* Floating admin toggle button */
+        /* Floating admin toggle button - Same design as frontend */
         .syntekpro-admin-fab {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 62px;
-            height: 34px;
-            border-radius: 999px;
-            border: 1px solid var(--syntekpro-admin-border, #2a3243);
-            background: var(--syntekpro-admin-surface, #191e2a);
-            color: var(--syntekpro-admin-text, #e7e9ee);
-            display: inline-flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 4px 6px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #333333;
+            color: #ffffff;
+            border: 2px solid #555555;
             cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
             z-index: 9999;
-            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
-            gap: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
         }
         .syntekpro-admin-fab:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(0,0,0,0.4);
+            background-color: #444444;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            transform: scale(1.05);
+        }
+        .syntekpro-admin-fab:active {
+            transform: scale(0.95);
         }
         .syntekpro-admin-fab .syntekpro-fab-icon {
-            font-size: 16px;
+            font-size: 24px;
             line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .syntekpro-admin-fab .syntekpro-fab-thumb {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: #ffffff;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.25);
-            transition: transform 0.2s ease, background 0.2s ease;
-            transform: translateX(0);
+        
+        /* Admin SVG Icons */
+        .syntekpro-admin-fab .syntekpro-icon-sun,
+        .syntekpro-admin-fab .syntekpro-icon-moon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+        }
+        
+        .syntekpro-admin-fab .syntekpro-icon-sun svg,
+        .syntekpro-admin-fab .syntekpro-icon-moon svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+        }
+        
+        /* Show moon in light mode, hide sun */
+        .syntekpro-admin-fab .syntekpro-icon-moon {
+            display: flex;
+        }
+        .syntekpro-admin-fab .syntekpro-icon-sun {
+            display: none;
+        }
+        
+        /* Show sun in dark mode, hide moon */
+        .syntekpro-admin-fab.is-dark .syntekpro-icon-sun {
+            display: flex;
+        }
+        .syntekpro-admin-fab.is-dark .syntekpro-icon-moon {
+            display: none;
         }
         .syntekpro-admin-fab.is-dark {
-            background: var(--syntekpro-admin-accent, #2563eb);
+            background-color: #333333;
             color: #ffffff;
-            border-color: var(--syntekpro-admin-border, #1e4fc1);
+            border-color: #555555;
         }
         .syntekpro-admin-fab.is-dark .syntekpro-fab-thumb {
-            transform: translateX(18px);
-            background: #f8fafc;
+            display: none;
         }
         .syntekpro-admin-fab.is-dark .syntekpro-fab-icon {
             color: #ffffff;
+        }
+        
+        /* Light mode button appearance */
+        body:not(.syntekpro-admin-dark) .syntekpro-admin-fab {
+            background-color: #f0f0f0;
+            color: #333333;
+            border-color: #cccccc;
+        }
+        body:not(.syntekpro-admin-dark) .syntekpro-admin-fab:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .syntekpro-admin-fab {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .syntekpro-admin-fab .syntekpro-icon-sun svg,
+            .syntekpro-admin-fab .syntekpro-icon-moon svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+        
+        /* Accessibility */
+        .syntekpro-admin-fab:focus {
+            outline: 2px solid #6ea8fe;
+            outline-offset: 2px;
+        }
+        .syntekpro-admin-fab:focus:not(:focus-visible) {
+            outline: none;
         }
         <?php endif; ?>
     </style>
@@ -324,11 +411,7 @@ function syntekpro_toggle_admin_ui_script() {
                 if (fab) {
                     fab.classList.toggle('is-dark', state);
                     fab.setAttribute('aria-pressed', state ? 'true' : 'false');
-                    const icon = fab.querySelector('.syntekpro-fab-icon');
-                    if (icon) {
-                        icon.classList.toggle('dashicons-visibility', !state);
-                        icon.classList.toggle('dashicons-hidden', state);
-                    }
+                    fab.setAttribute('aria-label', state ? 'Switch to Light Mode' : 'Switch to Dark Mode');
                 }
                 document.querySelectorAll('.syntekpro-admin-dark-toggle').forEach(btn => {
                     const textNode = btn.querySelector('.syntekpro-admin-dark-toggle-text');
@@ -364,7 +447,7 @@ function syntekpro_toggle_admin_ui_script() {
                 fab.type = 'button';
                 fab.className = 'syntekpro-admin-fab';
                 fab.setAttribute('aria-label', 'Toggle admin dark mode');
-                fab.innerHTML = '<span class="syntekpro-fab-icon dashicons dashicons-visibility"></span><span class="syntekpro-fab-thumb"></span>';
+                fab.innerHTML = '<span class="syntekpro-icon-sun" style="display:none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span><span class="syntekpro-icon-moon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>';
                 fab.addEventListener('click', function(e) {
                     e.preventDefault();
                     isDark = !isDark;
@@ -396,7 +479,9 @@ add_action('admin_footer', 'syntekpro_toggle_admin_ui_script');
  * Register settings
  */
 function syntekpro_toggle_register_settings() {
-    register_setting('syntekpro_toggle_settings', 'syntekpro_toggle_options', 'syntekpro_toggle_sanitize_options');
+    register_setting('syntekpro_toggle_settings', 'syntekpro_toggle_options', array(
+        'sanitize_callback' => 'syntekpro_toggle_sanitize_options'
+    ));
     
     // Frontend Page - General Settings Section
     add_settings_section(
@@ -886,15 +971,6 @@ function syntekpro_toggle_page_header($page_title = 'Toggle Settings') {
  */
 function syntekpro_toggle_page_footer() {
     ?>
-        <!-- Footer -->
-        <div class="syntekpro-footer">
-            <div class="syntekpro-footer-content">
-                <span>Powered by</span>
-                <a href="https://syntekpro.com" target="_blank" rel="noopener noreferrer" class="syntekpro-footer-link">
-                    <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-logo.png'); ?>" alt="SyntekPro" class="syntekpro-footer-logo">
-                </a>
-            </div>
-        </div>
     </div>
     <?php
 }
@@ -1030,7 +1106,7 @@ function syntekpro_toggle_dashboard_widget() {
     }
     wp_add_dashboard_widget(
         'syntekpro_toggle_widget',
-        '<img src="' . esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/toggle-icon.png') . '" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;"> Toggle - Dark Mode',
+        '<img src="' . esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/Syntekpro%20Toggle%20%20icon%20Grey.png') . '" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;"> Toggle - Dark Mode',
         'syntekpro_toggle_dashboard_widget_content'
     );
 }
