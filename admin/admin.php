@@ -110,12 +110,12 @@ function syntekpro_toggle_menu_icon_css() {
             justify-content: center !important;
         }
         #adminmenu .toplevel_page_syntekpro-toggle .wp-menu-image img {
-            width: 16px !important;
-            height: 16px !important;
-            max-width: 16px !important;
-            max-height: 16px !important;
-            min-width: 16px !important;
-            min-height: 16px !important;
+            width: 18px !important;
+            height: 18px !important;
+            max-width: 18px !important;
+            max-height: 18px !important;
+            min-width: 18px !important;
+            min-height: 18px !important;
             object-fit: contain !important;
             padding: 0 !important;
             margin: 0 !important;
@@ -141,14 +141,14 @@ function syntekpro_toggle_menu_icon_css() {
             line-height: 30px;
         }
         #wpadminbar #wp-admin-bar-syntekpro-toggle-admin .ab-icon {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             margin: 0;
             display: block;
         }
         #wpadminbar #wp-admin-bar-syntekpro-toggle-admin .ab-icon img {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             display: block;
             vertical-align: middle;
         }

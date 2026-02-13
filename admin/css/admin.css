@@ -89,7 +89,7 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
 }
 
 .syntekpro-header-logo {
-    height: 75px;
+    height: 100px;
     width: auto;
     transition: transform 0.3s ease;
 }
