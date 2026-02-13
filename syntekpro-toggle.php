@@ -3,7 +3,7 @@
  * Plugin Name: Syntekpro-Toggle
  * Plugin URI: https://plugins.syntekpro.com/toggle
  * Description: A lightweight Dark/Light mode toggle that respects OS preferences and remembers user choices.
- * Version: 1.3.9
+ * Version: 1.4.0
  * Requires at least: 5.0
  * Requires PHP: 7.2
  * Author: Syntekpro
@@ -14,7 +14,7 @@
  * Domain Path: /languages
  * 
  * @package Syntekpro_Toggle
- * @version 1.3.9
+ * @version 1.4.0
  * @author Syntekpro <development@syntekpro.com>
  */
 
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('SYNTEKPRO_TOGGLE_VERSION', '1.3.9');
+define('SYNTEKPRO_TOGGLE_VERSION', '1.4.0');
 define('SYNTEKPRO_TOGGLE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SYNTEKPRO_TOGGLE_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -107,16 +107,39 @@ add_action('wp_head', 'syntekpro_toggle_inline_script', 1);
  * Add toggle button to frontend
  */
 function syntekpro_toggle_button() {
-    $options = function_exists('syntekpro_toggle_get_options') ? syntekpro_toggle_get_options() : array('enable_toggle' => '1');
+    $options = function_exists('syntekpro_toggle_get_options') ? syntekpro_toggle_get_options() : array('enable_toggle' => '1', 'toggle_theme' => 'default', 'button_position' => 'bottom-right', 'button_size' => '50');
     
     // Don't show button if disabled in settings
     if (isset($options['enable_toggle']) && $options['enable_toggle'] !== '1') {
         return;
     }
+    
+    // Get theme, position, and size
+    $theme = isset($options['toggle_theme']) ? $options['toggle_theme'] : 'default';
+    $position = isset($options['button_position']) ? $options['button_position'] : 'bottom-right';
+    $size = isset($options['button_size']) ? intval($options['button_size']) : 50;
+    
+    // Parse position
+    $position_parts = explode('-', $position);
+    $vertical = $position_parts[0]; // top or bottom
+    $horizontal = $position_parts[1]; // left or right
+    
+    // Generate position styles
+    $position_style = $vertical . ': 30px; ' . $horizontal . ': 30px;';
+    
+    // Generate size styles (adjust pill width proportionally)
+    $size_style = 'width: ' . $size . 'px; height: ' . $size . 'px;';
+    if ($theme === 'pill') {
+        $pill_width = intval($size * 1.4);
+        $size_style = 'width: ' . $pill_width . 'px; height: ' . $size . 'px;';
+    }
+    
+    // Calculate icon size (80% of button size)
+    $icon_size = intval($size * 0.48);
     ?>
-    <button id="syntekpro-dark-mode-toggle" class="syntekpro-toggle-btn" aria-label="Toggle Dark Mode">
+    <button id="syntekpro-dark-mode-toggle" class="syntekpro-toggle-btn theme-<?php echo esc_attr($theme); ?>" aria-label="Toggle Dark Mode" style="<?php echo esc_attr($position_style . $size_style); ?>">
         <span class="syntekpro-icon-sun" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="<?php echo esc_attr($icon_size); ?>" height="<?php echo esc_attr($icon_size); ?>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="5"></circle>
                 <line x1="12" y1="1" x2="12" y2="3"></line>
                 <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -129,7 +152,7 @@ function syntekpro_toggle_button() {
             </svg>
         </span>
         <span class="syntekpro-icon-moon" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="<?php echo esc_attr($icon_size); ?>" height="<?php echo esc_attr($icon_size); ?>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
         </span>

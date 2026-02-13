@@ -167,7 +167,7 @@ html.dark-mode .wp-block-navigation-item a {
 }
 
 /* ===================================
-   Toggle Button Styles
+   Toggle Button Styles - Base
    =================================== */
 .syntekpro-toggle-btn {
     position: fixed;
@@ -243,6 +243,373 @@ html:not(.dark-mode) .syntekpro-toggle-btn:hover {
 }
 
 /* ===================================
+   Toggle Button Themes
+   =================================== */
+
+/* Theme: Default (classic circular) */
+.syntekpro-toggle-btn.theme-default {
+    /* Already styled by base styles */
+}
+
+/* Theme: Minimal */
+.syntekpro-toggle-btn.theme-minimal {
+    background-color: #f8f9fa;
+    color: #212529;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-minimal {
+    background-color: #212529;
+    color: #f8f9fa;
+    border-color: #495057;
+}
+.syntekpro-toggle-btn.theme-minimal:hover {
+    background-color: #e9ecef;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-minimal:hover {
+    background-color: #343a40;
+}
+
+/* Theme: Neumorphic */
+.syntekpro-toggle-btn.theme-neumorphic {
+    background: #e0e5ec;
+    color: #333;
+    border: none;
+    box-shadow: 8px 8px 16px #a3b1c6, -8px -8px 16px #ffffff;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-neumorphic {
+    background: #2c3e50;
+    color: #ecf0f1;
+    box-shadow: 8px 8px 16px #1a252f, -8px -8px 16px #3e5771;
+}
+.syntekpro-toggle-btn.theme-neumorphic:hover {
+    box-shadow: 4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-neumorphic:hover {
+    box-shadow: 4px 4px 8px #1a252f, -4px -4px 8px #3e5771;
+}
+
+/* Theme: Glassmorphic */
+.syntekpro-toggle-btn.theme-glassmorphic {
+    background: rgba(255, 255, 255, 0.25);
+    color: #333;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-glassmorphic {
+    background: rgba(0, 0, 0, 0.25);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.18);
+}
+.syntekpro-toggle-btn.theme-glassmorphic:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-glassmorphic:hover {
+    background: rgba(0, 0, 0, 0.35);
+}
+
+/* Theme: Neon */
+.syntekpro-toggle-btn.theme-neon {
+    background: #0a0e27;
+    color: #00ffff;
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 20px #00ffff, inset 0 0 20px rgba(0, 255, 255, 0.2);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-neon {
+    color: #ff00ff;
+    border-color: #ff00ff;
+    box-shadow: 0 0 20px #ff00ff, inset 0 0 20px rgba(255, 0, 255, 0.2);
+}
+.syntekpro-toggle-btn.theme-neon:hover {
+    box-shadow: 0 0 30px #00ffff, inset 0 0 30px rgba(0, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-neon:hover {
+    box-shadow: 0 0 30px #ff00ff, inset 0 0 30px rgba(255, 0, 255, 0.3);
+}
+
+/* Theme: Gradient */
+.syntekpro-toggle-btn.theme-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-gradient {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+}
+.syntekpro-toggle-btn.theme-gradient:hover {
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+/* Theme: Retro */
+.syntekpro-toggle-btn.theme-retro {
+    background: linear-gradient(45deg, #ff006e, #ffbe0b);
+    color: #fff;
+    border: 3px solid #000;
+    border-radius: 8px;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-retro {
+    background: linear-gradient(45deg, #00b4d8, #90e0ef);
+    border-color: #023e8a;
+    box-shadow: 4px 4px 0 rgba(2, 62, 138, 0.8);
+}
+.syntekpro-toggle-btn.theme-retro:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Theme: Modern */
+.syntekpro-toggle-btn.theme-modern {
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-modern {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+}
+.syntekpro-toggle-btn.theme-modern:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Theme: Flat */
+.syntekpro-toggle-btn.theme-flat {
+    background: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    box-shadow: none;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-flat {
+    background: #e74c3c;
+}
+.syntekpro-toggle-btn.theme-flat:hover {
+    background: #2980b9;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-flat:hover {
+    background: #c0392b;
+}
+
+/* Theme: Material */
+.syntekpro-toggle-btn.theme-material {
+    background: #2196F3;
+    color: #fff;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-material {
+    background: #FF9800;
+}
+.syntekpro-toggle-btn.theme-material:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Theme: iOS Style */
+.syntekpro-toggle-btn.theme-ios {
+    background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+    color: #333;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-ios {
+    background: linear-gradient(180deg, #3a3a3c 0%, #2c2c2e 100%);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+.syntekpro-toggle-btn.theme-ios:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+/* Theme: Cyberpunk */
+.syntekpro-toggle-btn.theme-cyberpunk {
+    background: linear-gradient(135deg, #f72585, #7209b7, #3a0ca3);
+    color: #00ff41;
+    border: 1px solid #00ff41;
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(247, 37, 133, 0.6);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-cyberpunk {
+    background: linear-gradient(135deg, #06ffa5, #0a84ff, #bf0eff);
+    color: #000;
+    border-color: #000;
+    box-shadow: 0 0 20px rgba(10, 132, 255, 0.6);
+}
+.syntekpro-toggle-btn.theme-cyberpunk:hover {
+    box-shadow: 0 0 30px rgba(247, 37, 133, 0.8);
+}
+
+/* Theme: Elegant */
+.syntekpro-toggle-btn.theme-elegant {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: #ecf0f1;
+    border: 2px solid rgba(236, 240, 241, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-elegant {
+    background: linear-gradient(135deg, #bdc3c7, #95a5a6);
+    color: #2c3e50;
+    border-color: rgba(44, 62, 80, 0.2);
+}
+.syntekpro-toggle-btn.theme-elegant:hover {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Theme: Playful */
+.syntekpro-toggle-btn.theme-playful {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 15px rgba(240, 147, 251, 0.5);
+    animation: playful-bounce 2s infinite;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-playful {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.5);
+}
+.syntekpro-toggle-btn.theme-playful:hover {
+    animation: playful-wiggle 0.5s;
+}
+@keyframes playful-bounce {
+    0%, 100% { transform: scale(1) translateY(0); }
+    50% { transform: scale(1.05) translateY(-3px); }
+}
+@keyframes playful-wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+/* Theme: Professional */
+.syntekpro-toggle-btn.theme-professional {
+    background: #1a1a2e;
+    color: #eee;
+    border: 1px solid #16213e;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-professional {
+    background: #f8f9fa;
+    color: #1a1a2e;
+    border-color: #dee2e6;
+}
+.syntekpro-toggle-btn.theme-professional:hover {
+    background: #0f3460;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-professional:hover {
+    background: #e9ecef;
+}
+
+/* Theme: Square */
+.syntekpro-toggle-btn.theme-square {
+    background: #444;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-square {
+    background: #ddd;
+    color: #333;
+}
+.syntekpro-toggle-btn.theme-square:hover {
+    background: #555;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-square:hover {
+    background: #ccc;
+}
+
+/* Theme: Pill */
+.syntekpro-toggle-btn.theme-pill {
+    background: #5e60ce;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    width: 70px;
+    box-shadow: 0 4px 12px rgba(94, 96, 206, 0.4);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-pill {
+    background: #80ed99;
+    color: #333;
+    box-shadow: 0 4px 12px rgba(128, 237, 153, 0.4);
+}
+.syntekpro-toggle-btn.theme-pill:hover {
+    box-shadow: 0 6px 16px rgba(94, 96, 206, 0.6);
+}
+
+/* Theme: Hexagon */
+.syntekpro-toggle-btn.theme-hexagon {
+    background: #ff6b6b;
+    color: #fff;
+    border: none;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-hexagon {
+    background: #51cf66;
+    box-shadow: 0 4px 12px rgba(81, 207, 102, 0.4);
+}
+.syntekpro-toggle-btn.theme-hexagon:hover {
+    box-shadow: 0 6px 16px rgba(255, 107, 107, 0.6);
+}
+
+/* Theme: Diamond */
+.syntekpro-toggle-btn.theme-diamond {
+    background: #4ecdc4;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(78, 205, 196, 0.4);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-diamond {
+    background: #ffd93d;
+    color: #333;
+    box-shadow: 0 4px 12px rgba(255, 217, 61, 0.4);
+}
+.syntekpro-toggle-btn.theme-diamond:hover {
+    transform: scale(1.1) rotate(45deg);
+}
+.syntekpro-toggle-btn.theme-diamond span {
+    transform: rotate(45deg);
+}
+.syntekpro-toggle-btn.theme-diamond:hover span {
+    transform: rotate(0deg);
+}
+
+/* Theme: Morphing */
+.syntekpro-toggle-btn.theme-morphing {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    color: #fff;
+    border: none;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    box-shadow: 0 4px 15px rgba(250, 112, 154, 0.4);
+    animation: morph-shape 3s infinite;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-morphing {
+    background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+    box-shadow: 0 4px 15px rgba(48, 207, 208, 0.4);
+}
+.syntekpro-toggle-btn.theme-morphing:hover {
+    animation-duration: 1s;
+}
+@keyframes morph-shape {
+    0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+    25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+    50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+    75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+}
+
+/* ===================================
    Responsive Design
    =================================== */
 @media (max-width: 768px) {
@@ -251,6 +618,10 @@ html:not(.dark-mode) .syntekpro-toggle-btn:hover {
         height: 45px;
         bottom: 20px;
         right: 20px;
+    }
+    
+    .syntekpro-toggle-btn.theme-pill {
+        width: 60px;
     }
     
     .syntekpro-toggle-btn svg {
@@ -277,6 +648,7 @@ html:not(.dark-mode) .syntekpro-toggle-btn:hover {
     html.dark-mode *,
     .syntekpro-toggle-btn {
         transition: none !important;
+        animation: none !important;
     }
 }
 
