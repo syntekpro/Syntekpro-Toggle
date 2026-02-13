@@ -742,7 +742,7 @@ function syntekpro_toggle_get_default_options() {
         'enable_toggle' => '1',
         'button_position' => 'bottom-right',
         'button_size' => '50',
-        'color_scheme_mode' => 'dynamic',
+        'color_scheme_mode' => 'preset',
         'color_preset' => 'default',
         'bg_color' => '#1a1a1a',
         'text_color' => '#ffffff',
@@ -786,7 +786,7 @@ function syntekpro_toggle_sanitize_options($input) {
     $sanitized['enable_toggle'] = isset($input['enable_toggle']) ? '1' : '0';
     $sanitized['button_position'] = isset($input['button_position']) ? sanitize_text_field($input['button_position']) : 'bottom-right';
     $sanitized['button_size'] = isset($input['button_size']) ? absint($input['button_size']) : 50;
-    $sanitized['color_scheme_mode'] = isset($input['color_scheme_mode']) ? sanitize_text_field($input['color_scheme_mode']) : 'dynamic';
+    $sanitized['color_scheme_mode'] = isset($input['color_scheme_mode']) ? sanitize_text_field($input['color_scheme_mode']) : 'preset';
     $sanitized['color_preset'] = isset($input['color_preset']) ? sanitize_text_field($input['color_preset']) : 'default';
     $sanitized['bg_color'] = isset($input['bg_color']) ? sanitize_hex_color($input['bg_color']) : '#1a1a1a';
     $sanitized['text_color'] = isset($input['text_color']) ? sanitize_hex_color($input['text_color']) : '#ffffff';
@@ -917,12 +917,6 @@ function syntekpro_toggle_color_scheme_mode_callback() {
     ?>
     <div class="syntekpro-color-scheme-modes">
         <label class="syntekpro-mode-option">
-            <input type="radio" name="syntekpro_toggle_options[color_scheme_mode]" value="dynamic" <?php checked($options['color_scheme_mode'], 'dynamic'); ?>>
-            <span class="mode-icon">🔄</span>
-            <strong>Dynamic</strong>
-            <p class="description">Automatically adjusts colors based on content</p>
-        </label>
-        <label class="syntekpro-mode-option">
             <input type="radio" name="syntekpro_toggle_options[color_scheme_mode]" value="preset" <?php checked($options['color_scheme_mode'], 'preset'); ?>>
             <span class="mode-icon">🎨</span>
             <strong>Presets</strong>
@@ -973,24 +967,53 @@ function syntekpro_toggle_color_preset_callback() {
     );
     ?>
     <div id="preset-container" style="<?php echo $options['color_scheme_mode'] !== 'preset' ? 'display:none;' : ''; ?>">
-        <div class="syntekpro-preset-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 10px;">
+        <div class="syntekpro-preset-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-top: 10px;">
             <?php foreach ($presets as $key => $preset): ?>
-                <label class="preset-option" style="cursor: pointer; border: 2px solid #ddd; border-radius: 8px; padding: 12px; transition: all 0.3s;">
-                    <input type="radio" name="syntekpro_toggle_options[color_preset]" value="<?php echo esc_attr($key); ?>" <?php checked($options['color_preset'], $key); ?> style="margin-bottom: 8px;">
-                    <strong><?php echo esc_html($preset['name']); ?></strong>
-                    <div class="preset-colors" style="display: flex; gap: 4px; margin-top: 8px;">
-                        <span style="background: <?php echo esc_attr($preset['bg']); ?>; width: 25%; height: 30px; border-radius: 4px;" title="Background"></span>
-                        <span style="background: <?php echo esc_attr($preset['secondary']); ?>; width: 25%; height: 30px; border-radius: 4px;" title="Secondary"></span>
-                        <span style="background: <?php echo esc_attr($preset['link']); ?>; width: 25%; height: 30px; border-radius: 4px;" title="Link"></span>
-                        <span style="background: <?php echo esc_attr($preset['text']); ?>; width: 25%; height: 30px; border-radius: 4px;" title="Text"></span>
+                <label class="preset-option" style="cursor: pointer; border: 2px solid #ddd; border-radius: 8px; padding: 0; transition: all 0.3s; overflow: hidden;">
+                    <input type="radio" name="syntekpro_toggle_options[color_preset]" value="<?php echo esc_attr($key); ?>" <?php checked($options['color_preset'], $key); ?> style="position: absolute; opacity: 0;">
+                    
+                    <!-- Mini Browser Window Preview -->
+                    <div class="preset-window" style="background: <?php echo esc_attr($preset['bg']); ?>; padding: 0; position: relative;">
+                        <!-- Browser Header -->
+                        <div class="window-header" style="background: <?php echo esc_attr($preset['secondary']); ?>; padding: 6px 8px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <div style="display: flex; gap: 3px;">
+                                <span style="width: 6px; height: 6px; border-radius: 50%; background: <?php echo esc_attr($preset['link']); ?>; opacity: 0.7;"></span>
+                                <span style="width: 6px; height: 6px; border-radius: 50%; background: <?php echo esc_attr($preset['link']); ?>; opacity: 0.5;"></span>
+                                <span style="width: 6px; height: 6px; border-radius: 50%; background: <?php echo esc_attr($preset['link']); ?>; opacity: 0.3;"></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Content Area -->
+                        <div class="window-content" style="padding: 12px 10px; min-height: 100px;">
+                            <!-- Header -->
+                            <div style="background: <?php echo esc_attr($preset['secondary']); ?>; height: 8px; width: 80%; border-radius: 2px; margin-bottom: 8px;"></div>
+                            
+                            <!-- Text Lines -->
+                            <div style="background: <?php echo esc_attr($preset['text']); ?>; height: 4px; width: 100%; border-radius: 2px; margin-bottom: 4px; opacity: 0.7;"></div>
+                            <div style="background: <?php echo esc_attr($preset['text']); ?>; height: 4px; width: 90%; border-radius: 2px; margin-bottom: 4px; opacity: 0.6;"></div>
+                            <div style="background: <?php echo esc_attr($preset['text']); ?>; height: 4px; width: 95%; border-radius: 2px; margin-bottom: 8px; opacity: 0.5;"></div>
+                            
+                            <!-- Link -->
+                            <div style="background: <?php echo esc_attr($preset['link']); ?>; height: 4px; width: 50%; border-radius: 2px; margin-bottom: 8px;"></div>
+                            
+                            <!-- More Text -->
+                            <div style="background: <?php echo esc_attr($preset['text']); ?>; height: 4px; width: 85%; border-radius: 2px; margin-bottom: 4px; opacity: 0.6;"></div>
+                            <div style="background: <?php echo esc_attr($preset['text']); ?>; height: 4px; width: 75%; border-radius: 2px; opacity: 0.5;"></div>
+                        </div>
+                        
+                        <!-- Theme Name Badge -->
+                        <div style="background: rgba(0,0,0,0.3); color: <?php echo esc_attr($preset['text']); ?>; padding: 6px 10px; text-align: center; font-size: 11px; font-weight: 600; border-top: 1px solid rgba(255,255,255,0.1);">
+                            <?php echo esc_html($preset['name']); ?>
+                        </div>
                     </div>
                 </label>
             <?php endforeach; ?>
         </div>
     </div>
     <style>
-        .preset-option:hover { border-color: #2271b1; background: #f0f6fc; }
-        .preset-option input[type="radio"]:checked { accent-color: #2271b1; }
+        .preset-option:hover { border-color: #2271b1; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .preset-option input[type="radio"]:checked ~ .preset-window { box-shadow: inset 0 0 0 2px #2271b1; }
+        .preset-option:has(input[type="radio"]:checked) { border-color: #2271b1; border-width: 3px; }
     </style>
     <script>
         jQuery(document).ready(function($) {
