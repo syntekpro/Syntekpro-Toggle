@@ -54,6 +54,12 @@ function syntekpro_toggle_enqueue_assets() {
         SYNTEKPRO_TOGGLE_VERSION,
         false // false = load in head, true = load in footer
     );
+    
+    // Localize script with AJAX data for analytics tracking
+    wp_localize_script('syntekpro-toggle-script', 'syntekproToggleAjax', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('syntekpro_analytics_nonce')
+    ));
 }
 add_action('wp_enqueue_scripts', 'syntekpro_toggle_enqueue_assets');
 
@@ -160,3 +166,33 @@ function syntekpro_toggle_button() {
     <?php
 }
 add_action('wp_footer', 'syntekpro_toggle_button');
+
+/**
+ * AJAX Handler for Analytics Tracking
+ */
+function syntekpro_toggle_ajax_track_analytics() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'syntekpro_analytics_nonce')) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+    
+    // Get event type and data
+    $event_type = isset($_POST['event_type']) ? sanitize_text_field($_POST['event_type']) : '';
+    $event_data = isset($_POST['event_data']) ? json_decode(stripslashes($_POST['event_data']), true) : array();
+    
+    if (empty($event_type)) {
+        wp_send_json_error('No event type provided');
+        return;
+    }
+    
+    // Track the event using the function from admin.php
+    if (function_exists('syntekpro_toggle_track_event')) {
+        syntekpro_toggle_track_event($event_type, $event_data);
+        wp_send_json_success('Event tracked');
+    } else {
+        wp_send_json_error('Tracking function not available');
+    }
+}
+add_action('wp_ajax_syntekpro_track_analytics', 'syntekpro_toggle_ajax_track_analytics');
+add_action('wp_ajax_nopriv_syntekpro_track_analytics', 'syntekpro_toggle_ajax_track_analytics');

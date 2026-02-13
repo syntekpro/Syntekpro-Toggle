@@ -1,6 +1,6 @@
 /**
  * Syntekpro-Toggle - Dark Mode Script
- * Handles dark mode toggle with localStorage persistence
+ * Handles dark mode toggle with localStorage persistence and analytics tracking
  */
 
 (function() {
@@ -11,6 +11,9 @@
         defaultMode: 'auto',
         enableToggle: true
     };
+
+    // Track page view on load (if analytics enabled)
+    trackAnalyticsEvent('page_view');
 
     // Wait for DOM to be ready
     if (document.readyState === 'loading') {
@@ -35,6 +38,12 @@
             
             // Save preference to localStorage
             localStorage.setItem('syntekpro-dark-mode', isDarkMode);
+            
+            // Track toggle click
+            trackAnalyticsEvent('toggle_click');
+            
+            // Track mode change
+            trackAnalyticsEvent('mode_change', { mode: isDarkMode ? 'dark' : 'light' });
             
             // Update button appearance
             updateToggleButton();
@@ -74,6 +83,38 @@
             toggleBtn.setAttribute('aria-label', 'Switch to Dark Mode');
             if (sunIcon) sunIcon.style.display = 'none';
             if (moonIcon) moonIcon.style.display = 'block';
+        }
+    }
+
+    /**
+     * Track analytics event via AJAX
+     */
+    function trackAnalyticsEvent(eventType, eventData) {
+        // Only track if AJAX URL is available (WordPress environment)
+        if (typeof syntekproToggleAjax === 'undefined') {
+            return;
+        }
+
+        var data = new FormData();
+        data.append('action', 'syntekpro_track_analytics');
+        data.append('nonce', syntekproToggleAjax.nonce);
+        data.append('event_type', eventType);
+        
+        if (eventData) {
+            data.append('event_data', JSON.stringify(eventData));
+        }
+
+        // Send non-blocking request
+        if (navigator.sendBeacon) {
+            navigator.sendBeacon(syntekproToggleAjax.ajax_url, data);
+        } else {
+            fetch(syntekproToggleAjax.ajax_url, {
+                method: 'POST',
+                body: data,
+                keepalive: true
+            }).catch(function() {
+                // Silently fail - analytics shouldn't break functionality
+            });
         }
     }
 })();
