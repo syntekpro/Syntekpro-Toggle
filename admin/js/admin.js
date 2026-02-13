@@ -197,7 +197,8 @@
         });
 
         // Collapsible settings sections (h2/h3) in admin forms and .wrap areas
-        (function initCollapsibleSections() {
+        // DISABLED: Using admin.php collapsible system instead to avoid duplication
+        // (function initCollapsibleSections() {
             var $container = $('.syntekpro-toggle-admin');
             if (!$container.length) return;
 
@@ -248,6 +249,7 @@
                     });
                 });
         })();
+        // } DISABLED - Using admin.php collapsible system instead */
     });
     
 })(jQuery);

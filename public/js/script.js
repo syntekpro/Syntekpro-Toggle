@@ -79,11 +79,74 @@
             toggleBtn.setAttribute('aria-label', 'Switch to Light Mode');
             if (sunIcon) sunIcon.style.display = 'block';
             if (moonIcon) moonIcon.style.display = 'none';
+            applyMediaFilters();
         } else {
             toggleBtn.setAttribute('aria-label', 'Switch to Dark Mode');
             if (sunIcon) sunIcon.style.display = 'none';
             if (moonIcon) moonIcon.style.display = 'block';
+            removeMediaFilters();
         }
+    }
+
+    /**
+     * Apply filters to images, videos, and slides when dark mode is enabled
+     */
+    function applyMediaFilters() {
+        if (!window.syntekproToggleSettings || !window.syntekproToggleSettings.mediaSettings) {
+            return;
+        }
+
+        const mediaSettings = window.syntekproToggleSettings.mediaSettings;
+        const root = document.documentElement;
+
+        // Apply image filters (or set to default if disabled)
+        if (mediaSettings.enableImageFilter) {
+            const imageBrightness = (mediaSettings.imageBrightness || 100) / 100;
+            const imageContrast = (mediaSettings.imageContrast || 100) / 100;
+            root.style.setProperty('--syntekpro-image-brightness', imageBrightness);
+            root.style.setProperty('--syntekpro-image-contrast', imageContrast);
+        } else {
+            // Set to default values when disabled
+            root.style.setProperty('--syntekpro-image-brightness', '1');
+            root.style.setProperty('--syntekpro-image-contrast', '1');
+        }
+
+        // Apply video filters (or set to default if disabled)
+        if (mediaSettings.enableVideoFilter) {
+            const videoBrightness = (mediaSettings.videoBrightness || 100) / 100;
+            const videoContrast = (mediaSettings.videoContrast || 100) / 100;
+            root.style.setProperty('--syntekpro-video-brightness', videoBrightness);
+            root.style.setProperty('--syntekpro-video-contrast', videoContrast);
+        } else {
+            // Set to default values when disabled
+            root.style.setProperty('--syntekpro-video-brightness', '1');
+            root.style.setProperty('--syntekpro-video-contrast', '1');
+        }
+
+        // Apply slide filters (or set to default if disabled)
+        if (mediaSettings.enableSlideFilter) {
+            const slideBrightness = (mediaSettings.slideBrightness || 100) / 100;
+            const slideInvert = mediaSettings.slideInvert ? 1 : 0;
+            root.style.setProperty('--syntekpro-slide-brightness', slideBrightness);
+            root.style.setProperty('--syntekpro-slide-invert', slideInvert);
+        } else {
+            // Set to default values when disabled
+            root.style.setProperty('--syntekpro-slide-brightness', '1');
+            root.style.setProperty('--syntekpro-slide-invert', '0');
+        }
+    }
+
+    /**
+     * Remove media filters when dark mode is disabled
+     */
+    function removeMediaFilters() {
+        const root = document.documentElement;
+        root.style.removeProperty('--syntekpro-image-brightness');
+        root.style.removeProperty('--syntekpro-image-contrast');
+        root.style.removeProperty('--syntekpro-video-brightness');
+        root.style.removeProperty('--syntekpro-video-contrast');
+        root.style.removeProperty('--syntekpro-slide-brightness');
+        root.style.removeProperty('--syntekpro-slide-invert');
     }
 
     /**

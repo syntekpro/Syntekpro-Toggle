@@ -2,7 +2,7 @@
 
 A professional WordPress plugin with a dedicated admin interface for Dark/Light mode toggle. Full-featured admin panel with custom branding, dashboard widget, and support for ALL WordPress block themes.
 
-![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)
 ![WordPress](https://img.shields.io/badge/wordpress-5.0+-green.svg)
 ![PHP](https://img.shields.io/badge/php-7.2+-purple.svg)
 ![License](https://img.shields.io/badge/license-GPL--2.0+-orange.svg)

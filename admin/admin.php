@@ -751,8 +751,8 @@ function syntekpro_toggle_collapsible_sections_script() {
             cursor: pointer;
             user-select: none;
             padding: 12px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #ffffff;
+            background: #f5f5f5;
+            color: #333;
             margin: 25px 0 15px;
             border-radius: 8px;
             font-size: 16px;
@@ -760,24 +760,28 @@ function syntekpro_toggle_collapsible_sections_script() {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
         }
         
         h2.syntekpro-section-title:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-            transform: translateY(-2px);
+            background: #f0f0f0;
+            box-shadow: 0 2px 6px rgba(102, 126, 234, 0.2);
+            transform: translateX(2px);
         }
         
         h2.syntekpro-section-title .syntekpro-toggle-indicator {
-            font-size: 12px;
+            font-size: 14px;
             transition: transform 0.3s ease;
-            opacity: 0.85;
+            opacity: 0.8;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             margin-left: 8px;
             flex-shrink: 0;
+            width: 20px;
+            height: 20px;
         }
         
         h2.syntekpro-section-title.collapsed .syntekpro-toggle-indicator::before {
@@ -792,6 +796,7 @@ function syntekpro_toggle_collapsible_sections_script() {
             content: attr(data-icon);
             margin-right: 8px;
             font-size: 16px;
+            flex-shrink: 0;
         }
         
         .syntekpro-section-content {
@@ -813,23 +818,24 @@ function syntekpro_toggle_collapsible_sections_script() {
     </style>
     <script>
         jQuery(document).ready(function($) {
-            // Transform section headings into collapsible headers
+            // Collapsible section headings - prevent duplicates with Set
+            var processedHeadings = new Set();
+            
             $('h2, h3').each(function() {
                 var $heading = $(this);
                 var headingText = $heading.text().trim();
                 
-                // Skip if already processed or empty
-                if ($heading.data('collapsible-processed') || !headingText) {
+                // Skip if already processed, empty, too short, or is nav/already styled
+                if (processedHeadings.has(this) || 
+                    !headingText || 
+                    headingText.length < 4 || 
+                    $heading.closest('.nav-tab-wrapper').length ||
+                    $heading.hasClass('syntekpro-section-title') ||
+                    $heading.hasClass('syntekpro-section-heading')) {
                     return;
                 }
                 
-                // Don't process page titles or very short headings
-                if (headingText.length < 4) {
-                    return;
-                }
-                
-                // Mark as processed to prevent duplicate processing
-                $heading.data('collapsible-processed', true);
+                processedHeadings.add(this);
                 
                 // Extract emoji if present at the start
                 var emojiMatch = headingText.match(/^([\u{1F300}-\u{1F9FF}])/u);
@@ -846,19 +852,22 @@ function syntekpro_toggle_collapsible_sections_script() {
                             .html(titleText + '<span class="syntekpro-toggle-indicator"></span>')
                             .css('cursor', 'pointer');
                     
-                    // Add click handler
-                    $heading.on('click', function() {
-                        $(this).toggleClass('collapsed');
-                        $content.toggleClass('collapsed');
+                    // Add click handler - only toggle on indicator click to avoid conflict with links
+                    $heading.on('click', function(e) {
+                        if ($(e.target).closest('.syntekpro-toggle-indicator').length || e.target.tagName === 'SPAN') {
+                            $(this).toggleClass('collapsed');
+                            $content.toggleClass('collapsed');
+                        }
                     });
                 }
             });
             
-            // Add keyboard accessibility
-            $('.syntekpro-section-title').attr('tabindex', '0').on('keypress', function(e) {
+            // Keyboard accessibility support
+            $(document).on('keypress', '.syntekpro-section-title', function(e) {
                 if (e.which === 13 || e.which === 32) { // Enter or Space
                     e.preventDefault();
-                    $(this).click();
+                    $(this).toggleClass('collapsed');
+                    $(this).nextUntil('h2, h3, .submit').parent('.syntekpro-section-content').toggleClass('collapsed');
                 }
             });
         });
@@ -1017,6 +1026,102 @@ function syntekpro_toggle_register_settings() {
         'syntekpro_toggle_grayscale_callback',
         'syntekpro-toggle-frontend-adjustments',
         'syntekpro_toggle_color_adjustments_section'
+    );
+    
+    // Images Settings Section
+    add_settings_section(
+        'syntekpro_toggle_images_section',
+        '🖼️ Images Settings',
+        'syntekpro_toggle_images_section_callback',
+        'syntekpro-toggle-frontend-images'
+    );
+    
+    add_settings_field(
+        'enable_image_filter',
+        'Enable Image Filters',
+        'syntekpro_toggle_enable_image_filter_callback',
+        'syntekpro-toggle-frontend-images',
+        'syntekpro_toggle_images_section'
+    );
+    
+    add_settings_field(
+        'image_brightness',
+        'Image Brightness',
+        'syntekpro_toggle_image_brightness_callback',
+        'syntekpro-toggle-frontend-images',
+        'syntekpro_toggle_images_section'
+    );
+    
+    add_settings_field(
+        'image_contrast',
+        'Image Contrast',
+        'syntekpro_toggle_image_contrast_callback',
+        'syntekpro-toggle-frontend-images',
+        'syntekpro_toggle_images_section'
+    );
+    
+    // Videos Settings Section
+    add_settings_section(
+        'syntekpro_toggle_videos_section',
+        '🎬 Videos Settings',
+        'syntekpro_toggle_videos_section_callback',
+        'syntekpro-toggle-frontend-videos'
+    );
+    
+    add_settings_field(
+        'enable_video_filter',
+        'Enable Video Filters',
+        'syntekpro_toggle_enable_video_filter_callback',
+        'syntekpro-toggle-frontend-videos',
+        'syntekpro_toggle_videos_section'
+    );
+    
+    add_settings_field(
+        'video_brightness',
+        'Video Brightness',
+        'syntekpro_toggle_video_brightness_callback',
+        'syntekpro-toggle-frontend-videos',
+        'syntekpro_toggle_videos_section'
+    );
+    
+    add_settings_field(
+        'video_contrast',
+        'Video Contrast',
+        'syntekpro_toggle_video_contrast_callback',
+        'syntekpro-toggle-frontend-videos',
+        'syntekpro_toggle_videos_section'
+    );
+    
+    // Slides Settings Section
+    add_settings_section(
+        'syntekpro_toggle_slides_section',
+        '📊 Slides Settings',
+        'syntekpro_toggle_slides_section_callback',
+        'syntekpro-toggle-frontend-slides'
+    );
+    
+    add_settings_field(
+        'enable_slide_filter',
+        'Enable Slide Filters',
+        'syntekpro_toggle_enable_slide_filter_callback',
+        'syntekpro-toggle-frontend-slides',
+        'syntekpro_toggle_slides_section'
+    );
+    
+    add_settings_field(
+        'slide_brightness',
+        'Slide Brightness',
+        'syntekpro_toggle_slide_brightness_callback',
+        'syntekpro-toggle-frontend-slides',
+        'syntekpro_toggle_slides_section'
+    );
+    
+    add_settings_field(
+        'slide_invert',
+        'Slide Invert Colors',
+        'syntekpro_toggle_slide_invert_callback',
+        'syntekpro-toggle-frontend-slides',
+        'syntekpro_toggle_slides_section'
     );
     
     // Admin UI Page - Admin UI Section
@@ -1225,6 +1330,15 @@ function syntekpro_toggle_get_default_options() {
         'contrast' => '100',
         'sepia' => '0',
         'grayscale' => '0',
+        'enable_image_filter' => '1',
+        'image_brightness' => '100',
+        'image_contrast' => '100',
+        'enable_video_filter' => '1',
+        'video_brightness' => '100',
+        'video_contrast' => '100',
+        'enable_slide_filter' => '1',
+        'slide_brightness' => '100',
+        'slide_invert' => '0',
         'custom_css' => '',
         'transition_speed' => '0.3',
         'enable_admin_bar_icon' => '1',
@@ -1260,42 +1374,189 @@ function syntekpro_toggle_get_options() {
  * Sanitize options
  */
 function syntekpro_toggle_sanitize_options($input) {
-    $sanitized = array();
+    // Get existing options to preserve settings not in current form
+    $existing = get_option('syntekpro_toggle_options', array());
+    $defaults = syntekpro_toggle_get_default_options();
+    $existing = wp_parse_args($existing, $defaults);
     
-    $sanitized['default_mode'] = isset($input['default_mode']) ? sanitize_text_field($input['default_mode']) : 'auto';
-    $sanitized['enable_toggle'] = isset($input['enable_toggle']) ? '1' : '0';
-    $sanitized['button_position'] = isset($input['button_position']) ? sanitize_text_field($input['button_position']) : 'bottom-right';
-    $sanitized['button_size'] = isset($input['button_size']) ? absint($input['button_size']) : 50;
-    $sanitized['toggle_theme'] = isset($input['toggle_theme']) ? sanitize_text_field($input['toggle_theme']) : 'default';
-    $sanitized['color_scheme_mode'] = isset($input['color_scheme_mode']) ? sanitize_text_field($input['color_scheme_mode']) : 'preset';
-    $sanitized['color_preset'] = isset($input['color_preset']) ? sanitize_text_field($input['color_preset']) : 'default';
-    $sanitized['bg_color'] = isset($input['bg_color']) ? sanitize_hex_color($input['bg_color']) : '#1a1a1a';
-    $sanitized['text_color'] = isset($input['text_color']) ? sanitize_hex_color($input['text_color']) : '#ffffff';
-    $sanitized['link_color'] = isset($input['link_color']) ? sanitize_hex_color($input['link_color']) : '#6ea8fe';
-    $sanitized['secondary_bg_color'] = isset($input['secondary_bg_color']) ? sanitize_hex_color($input['secondary_bg_color']) : '#2d2d2d';
-    $sanitized['brightness'] = isset($input['brightness']) ? max(0, min(200, absint($input['brightness']))) : 100;
-    $sanitized['contrast'] = isset($input['contrast']) ? max(0, min(200, absint($input['contrast']))) : 100;
-    $sanitized['sepia'] = isset($input['sepia']) ? max(0, min(100, absint($input['sepia']))) : 0;
-    $sanitized['grayscale'] = isset($input['grayscale']) ? max(0, min(100, absint($input['grayscale']))) : 0;
-    $sanitized['custom_css'] = isset($input['custom_css']) ? wp_strip_all_tags($input['custom_css']) : '';
-    $sanitized['transition_speed'] = isset($input['transition_speed']) ? floatval($input['transition_speed']) : 0.3;
-    $sanitized['enable_admin_bar_icon'] = isset($input['enable_admin_bar_icon']) ? '1' : '0';
-    $sanitized['enable_dashboard_widget'] = isset($input['enable_dashboard_widget']) ? '1' : '0';
-    $sanitized['enable_admin_dark_mode'] = isset($input['enable_admin_dark_mode']) ? '1' : '0';
-    $sanitized['admin_toggle_theme'] = isset($input['admin_toggle_theme']) ? sanitize_text_field($input['admin_toggle_theme']) : 'default';
-    $sanitized['admin_color_scheme_mode'] = isset($input['admin_color_scheme_mode']) ? sanitize_text_field($input['admin_color_scheme_mode']) : 'preset';
-    $sanitized['admin_color_preset'] = isset($input['admin_color_preset']) ? sanitize_text_field($input['admin_color_preset']) : 'default';
-    $sanitized['admin_bg_color'] = isset($input['admin_bg_color']) ? sanitize_hex_color($input['admin_bg_color']) : '#0f1115';
-    $sanitized['admin_text_color'] = isset($input['admin_text_color']) ? sanitize_hex_color($input['admin_text_color']) : '#e7e9ee';
-    $sanitized['admin_accent_color'] = isset($input['admin_accent_color']) ? sanitize_hex_color($input['admin_accent_color']) : '#2563eb';
-    $sanitized['admin_surface_color'] = isset($input['admin_surface_color']) ? sanitize_hex_color($input['admin_surface_color']) : '#191e2a';
-    $sanitized['admin_border_color'] = isset($input['admin_border_color']) ? sanitize_hex_color($input['admin_border_color']) : '#2a3243';
-    $sanitized['admin_link_color'] = isset($input['admin_link_color']) ? sanitize_hex_color($input['admin_link_color']) : '#9fc3ff';
-    $sanitized['admin_link_hover_color'] = isset($input['admin_link_hover_color']) ? sanitize_hex_color($input['admin_link_hover_color']) : '#c8dcff';
-    $sanitized['enable_analytics'] = isset($input['enable_analytics']) ? '1' : '0';
-    $sanitized['analytics_track_toggles'] = isset($input['analytics_track_toggles']) ? '1' : '0';
-    $sanitized['analytics_track_pageviews'] = isset($input['analytics_track_pageviews']) ? '1' : '0';
-    $sanitized['analytics_track_modes'] = isset($input['analytics_track_modes']) ? '1' : '0';
+    // Start with existing options
+    $sanitized = $existing;
+    
+    // Only update fields that are present in the input
+    if (isset($input['default_mode'])) {
+        $sanitized['default_mode'] = sanitize_text_field($input['default_mode']);
+    }
+    
+    // Checkboxes need special handling - they're only present when checked
+    // We need to check if the form containing this field was submitted
+    if (array_key_exists('enable_toggle', $input)) {
+        $sanitized['enable_toggle'] = isset($input['enable_toggle']) ? '1' : '0';
+    }
+    
+    if (isset($input['button_position'])) {
+        $sanitized['button_position'] = sanitize_text_field($input['button_position']);
+    }
+    
+    if (isset($input['button_size'])) {
+        $sanitized['button_size'] = absint($input['button_size']);
+    }
+    
+    if (isset($input['toggle_theme'])) {
+        $sanitized['toggle_theme'] = sanitize_text_field($input['toggle_theme']);
+    }
+    
+    if (isset($input['color_scheme_mode'])) {
+        $sanitized['color_scheme_mode'] = sanitize_text_field($input['color_scheme_mode']);
+    }
+    
+    if (isset($input['color_preset'])) {
+        $sanitized['color_preset'] = sanitize_text_field($input['color_preset']);
+    }
+    
+    if (isset($input['bg_color'])) {
+        $sanitized['bg_color'] = sanitize_hex_color($input['bg_color']);
+    }
+    
+    if (isset($input['text_color'])) {
+        $sanitized['text_color'] = sanitize_hex_color($input['text_color']);
+    }
+    
+    if (isset($input['link_color'])) {
+        $sanitized['link_color'] = sanitize_hex_color($input['link_color']);
+    }
+    
+    if (isset($input['secondary_bg_color'])) {
+        $sanitized['secondary_bg_color'] = sanitize_hex_color($input['secondary_bg_color']);
+    }
+    
+    if (isset($input['brightness'])) {
+        $sanitized['brightness'] = max(0, min(200, absint($input['brightness'])));
+    }
+    
+    if (isset($input['contrast'])) {
+        $sanitized['contrast'] = max(0, min(200, absint($input['contrast'])));
+    }
+    
+    if (isset($input['sepia'])) {
+        $sanitized['sepia'] = max(0, min(100, absint($input['sepia'])));
+    }
+    
+    if (isset($input['grayscale'])) {
+        $sanitized['grayscale'] = max(0, min(100, absint($input['grayscale'])));
+    }
+    
+    // Media filter settings - check if form was submitted
+    if (array_key_exists('enable_image_filter', $input)) {
+        $sanitized['enable_image_filter'] = isset($input['enable_image_filter']) ? '1' : '0';
+    }
+    
+    if (isset($input['image_brightness'])) {
+        $sanitized['image_brightness'] = max(50, min(150, absint($input['image_brightness'])));
+    }
+    
+    if (isset($input['image_contrast'])) {
+        $sanitized['image_contrast'] = max(50, min(200, absint($input['image_contrast'])));
+    }
+    
+    if (array_key_exists('enable_video_filter', $input)) {
+        $sanitized['enable_video_filter'] = isset($input['enable_video_filter']) ? '1' : '0';
+    }
+    
+    if (isset($input['video_brightness'])) {
+        $sanitized['video_brightness'] = max(50, min(150, absint($input['video_brightness'])));
+    }
+    
+    if (isset($input['video_contrast'])) {
+        $sanitized['video_contrast'] = max(50, min(200, absint($input['video_contrast'])));
+    }
+    
+    if (array_key_exists('enable_slide_filter', $input)) {
+        $sanitized['enable_slide_filter'] = isset($input['enable_slide_filter']) ? '1' : '0';
+    }
+    
+    if (isset($input['slide_brightness'])) {
+        $sanitized['slide_brightness'] = max(50, min(150, absint($input['slide_brightness'])));
+    }
+    
+    if (array_key_exists('slide_invert', $input)) {
+        $sanitized['slide_invert'] = isset($input['slide_invert']) ? '1' : '0';
+    }
+    
+    if (isset($input['custom_css'])) {
+        $sanitized['custom_css'] = wp_strip_all_tags($input['custom_css']);
+    }
+    
+    if (isset($input['transition_speed'])) {
+        $sanitized['transition_speed'] = floatval($input['transition_speed']);
+    }
+    
+    if (array_key_exists('enable_admin_bar_icon', $input)) {
+        $sanitized['enable_admin_bar_icon'] = isset($input['enable_admin_bar_icon']) ? '1' : '0';
+    }
+    
+    if (array_key_exists('enable_dashboard_widget', $input)) {
+        $sanitized['enable_dashboard_widget'] = isset($input['enable_dashboard_widget']) ? '1' : '0';
+    }
+    
+    if (array_key_exists('enable_admin_dark_mode', $input)) {
+        $sanitized['enable_admin_dark_mode'] = isset($input['enable_admin_dark_mode']) ? '1' : '0';
+    }
+    
+    if (isset($input['admin_toggle_theme'])) {
+        $sanitized['admin_toggle_theme'] = sanitize_text_field($input['admin_toggle_theme']);
+    }
+    
+    if (isset($input['admin_color_scheme_mode'])) {
+        $sanitized['admin_color_scheme_mode'] = sanitize_text_field($input['admin_color_scheme_mode']);
+    }
+    
+    if (isset($input['admin_color_preset'])) {
+        $sanitized['admin_color_preset'] = sanitize_text_field($input['admin_color_preset']);
+    }
+    
+    if (isset($input['admin_bg_color'])) {
+        $sanitized['admin_bg_color'] = sanitize_hex_color($input['admin_bg_color']);
+    }
+    
+    if (isset($input['admin_text_color'])) {
+        $sanitized['admin_text_color'] = sanitize_hex_color($input['admin_text_color']);
+    }
+    
+    if (isset($input['admin_accent_color'])) {
+        $sanitized['admin_accent_color'] = sanitize_hex_color($input['admin_accent_color']);
+    }
+    
+    if (isset($input['admin_surface_color'])) {
+        $sanitized['admin_surface_color'] = sanitize_hex_color($input['admin_surface_color']);
+    }
+    
+    if (isset($input['admin_border_color'])) {
+        $sanitized['admin_border_color'] = sanitize_hex_color($input['admin_border_color']);
+    }
+    
+    if (isset($input['admin_link_color'])) {
+        $sanitized['admin_link_color'] = sanitize_hex_color($input['admin_link_color']);
+    }
+    
+    if (isset($input['admin_link_hover_color'])) {
+        $sanitized['admin_link_hover_color'] = sanitize_hex_color($input['admin_link_hover_color']);
+    }
+    
+    if (array_key_exists('enable_analytics', $input)) {
+        $sanitized['enable_analytics'] = isset($input['enable_analytics']) ? '1' : '0';
+    }
+    
+    if (array_key_exists('analytics_track_toggles', $input)) {
+        $sanitized['analytics_track_toggles'] = isset($input['analytics_track_toggles']) ? '1' : '0';
+    }
+    
+    if (array_key_exists('analytics_track_pageviews', $input)) {
+        $sanitized['analytics_track_pageviews'] = isset($input['analytics_track_pageviews']) ? '1' : '0';
+    }
+    
+    if (array_key_exists('analytics_track_modes', $input)) {
+        $sanitized['analytics_track_modes'] = isset($input['analytics_track_modes']) ? '1' : '0';
+    }
     
     return $sanitized;
 }
@@ -1313,6 +1574,18 @@ function syntekpro_toggle_color_scheme_section_callback() {
 
 function syntekpro_toggle_color_adjustments_section_callback() {
     echo '<p>Fine-tune the visual appearance with brightness, contrast, sepia, and grayscale filters.</p>';
+}
+
+function syntekpro_toggle_images_section_callback() {
+    echo '<p>Apply filters and adjustments to images in dark mode for better visibility and consistency.</p>';
+}
+
+function syntekpro_toggle_videos_section_callback() {
+    echo '<p>Apply filters and adjustments to videos in dark mode for improved viewing experience.</p>';
+}
+
+function syntekpro_toggle_slides_section_callback() {
+    echo '<p>Apply filters and adjustments to presentation slides (SlideShare, Impress, etc.) in dark mode.</p>';
 }
 
 function syntekpro_toggle_advanced_section_callback() {
@@ -1716,6 +1989,104 @@ function syntekpro_toggle_grayscale_callback() {
     <input type="range" name="syntekpro_toggle_options[grayscale]" value="<?php echo esc_attr($options['grayscale']); ?>" min="0" max="100" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
     <output><?php echo esc_attr($options['grayscale']); ?>%</output>
     <p class="description">Convert to grayscale (0-100%, default: 0%)</p>
+    <?php
+}
+
+/**
+ * Images Settings Callbacks
+ */
+function syntekpro_toggle_enable_image_filter_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[enable_image_filter]" value="1" <?php checked($options['enable_image_filter'], '1'); ?>>
+        Apply filters to images in dark mode
+    </label>
+    <p class="description">Enable automatic filter adjustments for images when dark mode is active.</p>
+    <?php
+}
+
+function syntekpro_toggle_image_brightness_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="range" name="syntekpro_toggle_options[image_brightness]" value="<?php echo esc_attr($options['image_brightness']); ?>" min="0" max="150" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
+    <output><?php echo esc_attr($options['image_brightness']); ?>%</output>
+    <p class="description">Adjust image brightness in dark mode (50-150%, default: 100% = normal)</p>
+    <?php
+}
+
+function syntekpro_toggle_image_contrast_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="range" name="syntekpro_toggle_options[image_contrast]" value="<?php echo esc_attr($options['image_contrast']); ?>" min="0" max="200" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
+    <output><?php echo esc_attr($options['image_contrast']); ?>%</output>
+    <p class="description">Adjust image contrast in dark mode (50-200%, default: 100% = normal)</p>
+    <?php
+}
+
+/**
+ * Videos Settings Callbacks
+ */
+function syntekpro_toggle_enable_video_filter_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[enable_video_filter]" value="1" <?php checked($options['enable_video_filter'], '1'); ?>>
+        Apply filters to videos in dark mode
+    </label>
+    <p class="description">Enable automatic filter adjustments for embedded videos when dark mode is active.</p>
+    <?php
+}
+
+function syntekpro_toggle_video_brightness_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="range" name="syntekpro_toggle_options[video_brightness]" value="<?php echo esc_attr($options['video_brightness']); ?>" min="0" max="150" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
+    <output><?php echo esc_attr($options['video_brightness']); ?>%</output>
+    <p class="description">Adjust video brightness in dark mode (50-150%, default: 100% = normal)</p>
+    <?php
+}
+
+function syntekpro_toggle_video_contrast_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="range" name="syntekpro_toggle_options[video_contrast]" value="<?php echo esc_attr($options['video_contrast']); ?>" min="0" max="200" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
+    <output><?php echo esc_attr($options['video_contrast']); ?>%</output>
+    <p class="description">Adjust video contrast in dark mode (50-200%, default: 100% = normal)</p>
+    <?php
+}
+
+/**
+ * Slides Settings Callbacks
+ */
+function syntekpro_toggle_enable_slide_filter_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[enable_slide_filter]" value="1" <?php checked($options['enable_slide_filter'], '1'); ?>>
+        Apply filters to slides in dark mode
+    </label>
+    <p class="description">Enable automatic filter adjustments for presentation slides when dark mode is active.</p>
+    <?php
+}
+
+function syntekpro_toggle_slide_brightness_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="range" name="syntekpro_toggle_options[slide_brightness]" value="<?php echo esc_attr($options['slide_brightness']); ?>" min="0" max="150" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
+    <output><?php echo esc_attr($options['slide_brightness']); ?>%</output>
+    <p class="description">Adjust slide brightness in dark mode (50-150%, default: 100% = normal)</p>
+    <?php
+}
+
+function syntekpro_toggle_slide_invert_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[slide_invert]" value="1" <?php checked($options['slide_invert'], '1'); ?>>
+        Invert slide colors
+    </label>
+    <p class="description">Invert colors on slides for better visibility in dark mode.</p>
     <?php
 }
 
@@ -2150,7 +2521,7 @@ function syntekpro_toggle_frontend_page() {
     }
     
     if (isset($_GET['settings-updated'])) {
-        add_settings_error('syntekpro_toggle_messages', 'syntekpro_toggle_message', 'Settings Saved', 'updated');
+        add_settings_error('syntekpro_toggle_messages', 'syntekpro_toggle_message', '✓ Settings saved successfully! Your changes have been applied.', 'updated');
     }
     
     settings_errors('syntekpro_toggle_messages');
@@ -2164,17 +2535,26 @@ function syntekpro_toggle_frontend_page() {
         <!-- Left Sidebar Navigation -->
         <div class="syntekpro-sidebar-nav" style="width: 220px; flex-shrink: 0;">
             <div class="syntekpro-nav-section">
-                <a href="#" class="syntekpro-nav-item active" data-section="analytics">
-                    <span class="dashicons dashicons-chart-bar"></span> Analytics
-                </a>
-                <a href="#" class="syntekpro-nav-item" data-section="general">
+                <a href="#" class="syntekpro-nav-item active" data-section="general">
                     <span class="dashicons dashicons-admin-appearance"></span> General
                 </a>
                 <a href="#" class="syntekpro-nav-item" data-section="colors">
                     <span class="dashicons dashicons-art"></span> Colors
                 </a>
                 <a href="#" class="syntekpro-nav-item" data-section="adjustments">
-                    <span class="dashicons dashicons-slides"></span> Adjustments
+                    <span class="dashicons dashicons-image-filter"></span> Adjustments
+                </a>
+                <a href="#" class="syntekpro-nav-item" data-section="images">
+                    <span class="dashicons dashicons-format-image"></span> Images
+                </a>
+                <a href="#" class="syntekpro-nav-item" data-section="videos">
+                    <span class="dashicons dashicons-format-video"></span> Videos
+                </a>
+                <a href="#" class="syntekpro-nav-item" data-section="slides">
+                    <span class="dashicons dashicons-slides"></span> Slides
+                </a>
+                <a href="#" class="syntekpro-nav-item" data-section="analytics">
+                    <span class="dashicons dashicons-chart-bar"></span> Analytics
                 </a>
                 <a href="#" class="syntekpro-nav-item" data-section="advanced">
                     <span class="dashicons dashicons-admin-tools"></span> Advanced
@@ -2185,7 +2565,7 @@ function syntekpro_toggle_frontend_page() {
         <!-- Main Content Area -->
         <div class="syntekpro-main-content" style="flex: 1;">
             <!-- Analytics Section -->
-            <div class="syntekpro-section-panel active" id="section-analytics">
+            <div class="syntekpro-section-panel" id="section-analytics">
                 <?php if ($options['enable_analytics'] === '1'): ?>
                 <h2 style="margin-top: 0; margin-bottom: 20px;">📊 Analytics Overview</h2>
                 <div class="syntekpro-analytics-grid">
@@ -2267,7 +2647,7 @@ function syntekpro_toggle_frontend_page() {
             </div>
             
             <!-- General Settings Section -->
-            <div class="syntekpro-section-panel" id="section-general">
+            <div class="syntekpro-section-panel active" id="section-general">
                 <h2>General Settings</h2>
                 <form action="options.php" method="post">
                     <?php
@@ -2276,6 +2656,7 @@ function syntekpro_toggle_frontend_page() {
                     <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php do_settings_sections('syntekpro-toggle-frontend-general'); ?>
                     </div>
+                    <?php submit_button('Save General Settings'); ?>
                 </form>
             </div>
             
@@ -2289,6 +2670,7 @@ function syntekpro_toggle_frontend_page() {
                     <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php do_settings_sections('syntekpro-toggle-frontend-colors'); ?>
                     </div>
+                    <?php submit_button('Save Color Settings'); ?>
                 </form>
             </div>
             
@@ -2302,6 +2684,49 @@ function syntekpro_toggle_frontend_page() {
                     <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php do_settings_sections('syntekpro-toggle-frontend-adjustments'); ?>
                     </div>
+                    <?php submit_button('Save Adjustment Settings'); ?>
+                </form>
+            </div>
+            
+            <!-- Images Settings Section -->
+            <div class="syntekpro-section-panel" id="section-images">
+                <h2>🖼️ Images Settings</h2>
+                <form action="options.php" method="post">
+                    <?php
+                    settings_fields('syntekpro_toggle_settings');
+                    ?>
+                    <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php do_settings_sections('syntekpro-toggle-frontend-images'); ?>
+                    </div>
+                    <?php submit_button('Save Image Settings'); ?>
+                </form>
+            </div>
+            
+            <!-- Videos Settings Section -->
+            <div class="syntekpro-section-panel" id="section-videos">
+                <h2>🎬 Videos Settings</h2>
+                <form action="options.php" method="post">
+                    <?php
+                    settings_fields('syntekpro_toggle_settings');
+                    ?>
+                    <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php do_settings_sections('syntekpro-toggle-frontend-videos'); ?>
+                    </div>
+                    <?php submit_button('Save Video Settings'); ?>
+                </form>
+            </div>
+            
+            <!-- Slides Settings Section -->
+            <div class="syntekpro-section-panel" id="section-slides">
+                <h2>📊 Slides Settings</h2>
+                <form action="options.php" method="post">
+                    <?php
+                    settings_fields('syntekpro_toggle_settings');
+                    ?>
+                    <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php do_settings_sections('syntekpro-toggle-frontend-slides'); ?>
+                    </div>
+                    <?php submit_button('Save Slide Settings'); ?>
                 </form>
             </div>
             
@@ -2320,6 +2745,60 @@ function syntekpro_toggle_frontend_page() {
     </div>
     
     <style>
+        /* Settings Updated Message Styling */
+        .wrap .notice {
+            margin: 20px 0;
+            padding: 12px 20px;
+            border-left: 4px solid #00a32a;
+            background: #f0f6fc;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .wrap .notice.notice-success {
+            border-left-color: #00a32a;
+            background: #edfaef;
+        }
+        
+        .wrap .notice.notice-error {
+            border-left-color: #d63638;
+            background: #fcf0f1;
+        }
+        
+        .wrap .notice p {
+            margin: 0.5em 0;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* Submit Button Styling */
+        .syntekpro-section-panel .submit {
+            margin-top: 20px;
+            padding: 0;
+        }
+        
+        .syntekpro-section-panel .button-primary {
+            background: #667eea;
+            border-color: #667eea;
+            color: #fff;
+            padding: 10px 20px;
+            height: auto;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .syntekpro-section-panel .button-primary:hover {
+            background: #5568d3;
+            border-color: #5568d3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+        
+        .syntekpro-section-panel .button-primary:active {
+            transform: translateY(0);
+        }
+        
         .syntekpro-sidebar-nav {
             background: #f9f9f9;
             border: 1px solid #ddd;
@@ -2340,13 +2819,15 @@ function syntekpro_toggle_frontend_page() {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 12px 15px;
+            padding: 14px 15px;
             text-decoration: none;
             color: #333;
             border-radius: 6px;
             transition: all 0.3s ease;
             border-left: 3px solid transparent;
             cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
         }
         
         .syntekpro-nav-item:hover {
@@ -2355,15 +2836,16 @@ function syntekpro_toggle_frontend_page() {
         }
         
         .syntekpro-nav-item.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            border-left-color: #fff;
+            background: #e8e8f5;
+            color: #667eea;
+            border-left-color: #667eea;
+            font-weight: 600;
         }
         
         .syntekpro-nav-item .dashicons {
-            font-size: 18px;
-            width: 18px;
-            height: 18px;
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
             flex-shrink: 0;
         }
         
@@ -2411,7 +2893,7 @@ function syntekpro_toggle_admin_ui_page() {
     }
     
     if (isset($_GET['settings-updated'])) {
-        add_settings_error('syntekpro_toggle_messages', 'syntekpro_toggle_message', 'Settings Saved', 'updated');
+        add_settings_error('syntekpro_toggle_messages', 'syntekpro_toggle_message', '✓ Settings saved successfully! Your changes have been applied.', 'updated');
     }
     
     settings_errors('syntekpro_toggle_messages');
@@ -2483,13 +2965,15 @@ function syntekpro_toggle_admin_ui_page() {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 12px 15px;
+            padding: 14px 15px;
             text-decoration: none;
             color: #333;
             border-radius: 6px;
             transition: all 0.3s ease;
             border-left: 3px solid transparent;
             cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
         }
         
         .syntekpro-nav-item:hover {
@@ -2498,15 +2982,16 @@ function syntekpro_toggle_admin_ui_page() {
         }
         
         .syntekpro-nav-item.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            border-left-color: #fff;
+            background: #e8e8f5;
+            color: #667eea;
+            border-left-color: #667eea;
+            font-weight: 600;
         }
         
         .syntekpro-nav-item .dashicons {
-            font-size: 18px;
-            width: 18px;
-            height: 18px;
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
             flex-shrink: 0;
         }
         
@@ -2547,6 +3032,7 @@ function syntekpro_toggle_admin_ui_page() {
 
 /**
  * Settings Page - DEPRECATED (functionality moved to Frontend Settings)
+
  * Kept for backward compatibility but no longer used in menu
  */
 function syntekpro_toggle_settings_page() {
@@ -3079,61 +3565,66 @@ function syntekpro_toggle_analytics_page() {
     <style>
         .syntekpro-analytics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
         }
         
         .syntekpro-analytics-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            gap: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
         }
         
         .syntekpro-analytics-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
         }
         
         .analytics-icon {
-            font-size: 48px;
+            font-size: 40px;
             line-height: 1;
-            opacity: 0.9;
+            color: #667eea;
         }
         
         .analytics-icon .dashicons {
-            width: 48px;
-            height: 48px;
-            font-size: 48px;
+            width: 40px;
+            height: 40px;
+            font-size: 40px;
         }
         
         .analytics-data h3 {
-            margin: 0 0 5px 0;
-            font-size: 32px;
+            margin: 5px 0 0 0;
+            font-size: 28px;
             font-weight: 700;
+            color: #333;
         }
         
         .analytics-data p {
             margin: 0;
-            font-size: 14px;
-            opacity: 0.9;
+            font-size: 13px;
+            color: #666;
         }
         
         .syntekpro-mode-stats {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
         
         .mode-stat-item {
             padding: 15px;
-            background: #f9f9f9;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
             border-radius: 8px;
         }
         
@@ -3148,14 +3639,16 @@ function syntekpro_toggle_analytics_page() {
             display: flex;
             align-items: center;
             gap: 8px;
+            font-weight: 500;
+            color: #333;
         }
         
         .progress-bar {
-            height: 20px;
-            background: #e0e0e0;
-            border-radius: 10px;
+            height: 16px;
+            background: #e8e8e8;
+            border-radius: 8px;
             overflow: hidden;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
         
         .progress-fill {
@@ -3349,146 +3842,3 @@ function syntekpro_toggle_add_activity(&$analytics, $text, $icon) {
 function syntekpro_toggle_reset_analytics() {
     delete_option('syntekpro_toggle_analytics');
 }
-
-/**
- * Output custom CSS based on settings
- */
-function syntekpro_toggle_custom_css() {
-    $options = syntekpro_toggle_get_options();
-    
-    // Get colors based on mode
-    $bg_color = $options['bg_color'];
-    $text_color = $options['text_color'];
-    $link_color = $options['link_color'];
-    $secondary_bg_color = $options['secondary_bg_color'];
-    
-    // Apply preset colors if preset mode is selected
-    if ($options['color_scheme_mode'] === 'preset' && !empty($options['color_preset'])) {
-        $presets = array(
-            'default' => array('bg' => '#1a1a1a', 'text' => '#ffffff', 'link' => '#6ea8fe', 'secondary' => '#2d2d2d'),
-            'midnight' => array('bg' => '#0f1419', 'text' => '#e6edf3', 'link' => '#58a6ff', 'secondary' => '#1c2128'),
-            'carbon' => array('bg' => '#0d0d0d', 'text' => '#f0f0f0', 'link' => '#4a9eff', 'secondary' => '#1a1a1a'),
-            'slate' => array('bg' => '#1e1e1e', 'text' => '#d4d4d4', 'link' => '#569cd6', 'secondary' => '#2d2d2d'),
-            'ocean' => array('bg' => '#001f3f', 'text' => '#e8f4f8', 'link' => '#7fdbff', 'secondary' => '#002a52'),
-            'forest' => array('bg' => '#0d1b0d', 'text' => '#e8f5e9', 'link' => '#81c784', 'secondary' => '#1b2f1b'),
-            'purple' => array('bg' => '#1a0d2e', 'text' => '#f3e5f5', 'link' => '#ce93d8', 'secondary' => '#2e1a3e'),
-            'dracula' => array('bg' => '#282a36', 'text' => '#f8f8f2', 'link' => '#8be9fd', 'secondary' => '#44475a'),
-            'nord' => array('bg' => '#2e3440', 'text' => '#eceff4', 'link' => '#88c0d0', 'secondary' => '#3b4252'),
-            'monokai' => array('bg' => '#272822', 'text' => '#f8f8f2', 'link' => '#66d9ef', 'secondary' => '#3e3d32'),
-            'solarized' => array('bg' => '#002b36', 'text' => '#839496', 'link' => '#268bd2', 'secondary' => '#073642'),
-            'gruvbox' => array('bg' => '#282828', 'text' => '#ebdbb2', 'link' => '#83a598', 'secondary' => '#3c3836'),
-            'material' => array('bg' => '#263238', 'text' => '#eeffff', 'link' => '#82aaff', 'secondary' => '#37474f'),
-            'one' => array('bg' => '#282c34', 'text' => '#abb2bf', 'link' => '#61afef', 'secondary' => '#21252b'),
-            'tokyo' => array('bg' => '#1a1b26', 'text' => '#c0caf5', 'link' => '#7aa2f7', 'secondary' => '#24283b'),
-            'ayu' => array('bg' => '#0f1419', 'text' => '#e6e1cf', 'link' => '#59c2ff', 'secondary' => '#191e2a'),
-            'cobalt' => array('bg' => '#193549', 'text' => '#ffffff', 'link' => '#80ffbb', 'secondary' => '#234e6d'),
-            'espresso' => array('bg' => '#2a211c', 'text' => '#bdae9d', 'link' => '#6c99bb', 'secondary' => '#392e28'),
-            'synthwave' => array('bg' => '#262335', 'text' => '#f92aad', 'link' => '#72f1b8', 'secondary' => '#382e3c'),
-            'rose' => array('bg' => '#191724', 'text' => '#e0def4', 'link' => '#c4a7e7', 'secondary' => '#1f1d2e'),
-        );
-        
-        if (isset($presets[$options['color_preset']])) {
-            $preset = $presets[$options['color_preset']];
-            $bg_color = $preset['bg'];
-            $text_color = $preset['text'];
-            $link_color = $preset['link'];
-            $secondary_bg_color = $preset['secondary'];
-        }
-    }
-    
-    // Build filter string for color adjustments
-    $filters = array();
-    if ($options['brightness'] != 100) {
-        $filters[] = 'brightness(' . ($options['brightness'] / 100) . ')';
-    }
-    if ($options['contrast'] != 100) {
-        $filters[] = 'contrast(' . ($options['contrast'] / 100) . ')';
-    }
-    if ($options['sepia'] > 0) {
-        $filters[] = 'sepia(' . ($options['sepia'] / 100) . ')';
-    }
-    if ($options['grayscale'] > 0) {
-        $filters[] = 'grayscale(' . ($options['grayscale'] / 100) . ')';
-    }
-    $filter_css = !empty($filters) ? 'filter: ' . implode(' ', $filters) . ';' : '';
-    
-    ?>
-    <style id="syntekpro-toggle-custom-css">
-        :root {
-            --syntekpro-transition-speed: <?php echo esc_attr($options['transition_speed']); ?>s;
-        }
-        
-        html.dark-mode,
-        html.dark-mode body {
-            --wp--preset--color--base: <?php echo esc_attr($bg_color); ?> !important;
-            --wp--preset--color--contrast: <?php echo esc_attr($text_color); ?> !important;
-            --wp--preset--color--primary: <?php echo esc_attr($text_color); ?> !important;
-            background-color: <?php echo esc_attr($bg_color); ?> !important;
-            color: <?php echo esc_attr($text_color); ?> !important;
-            <?php echo $filter_css; ?>
-        }
-        
-        html.dark-mode a {
-            color: <?php echo esc_attr($link_color); ?>;
-        }
-        
-        html.dark-mode header,
-        html.dark-mode nav,
-        html.dark-mode footer,
-        html.dark-mode aside,
-        html.dark-mode .widget {
-            background-color: <?php echo esc_attr($secondary_bg_color); ?> !important;
-        }
-        
-        <?php
-        $position = $options['button_position'];
-        $size = $options['button_size'];
-        
-        // Parse position
-        $positions = array(
-            'bottom-right' => array('bottom' => '30px', 'right' => '30px', 'top' => 'auto', 'left' => 'auto'),
-            'bottom-left' => array('bottom' => '30px', 'left' => '30px', 'top' => 'auto', 'right' => 'auto'),
-            'top-right' => array('top' => '30px', 'right' => '30px', 'bottom' => 'auto', 'left' => 'auto'),
-            'top-left' => array('top' => '30px', 'left' => '30px', 'bottom' => 'auto', 'right' => 'auto'),
-        );
-        
-        $pos = isset($positions[$position]) ? $positions[$position] : $positions['bottom-right'];
-        ?>
-        
-        .syntekpro-toggle-btn {
-            width: <?php echo esc_attr($size); ?>px;
-            height: <?php echo esc_attr($size); ?>px;
-            top: <?php echo esc_attr($pos['top']); ?>;
-            bottom: <?php echo esc_attr($pos['bottom']); ?>;
-            left: <?php echo esc_attr($pos['left']); ?>;
-            right: <?php echo esc_attr($pos['right']); ?>;
-            <?php if ($options['enable_toggle'] !== '1') : ?>
-            display: none !important;
-            <?php endif; ?>
-        }
-        
-        <?php if (!empty($options['custom_css'])) : ?>
-        html.dark-mode {
-            <?php echo wp_strip_all_tags($options['custom_css']); ?>
-        }
-        <?php endif; ?>
-    </style>
-    <?php
-}
-add_action('wp_head', 'syntekpro_toggle_custom_css', 100);
-
-/**
- * Pass settings to JavaScript
- */
-function syntekpro_toggle_localize_script() {
-    $options = syntekpro_toggle_get_options();
-    ?>
-    <script>
-        window.syntekproToggleSettings = {
-            defaultMode: '<?php echo esc_js($options['default_mode']); ?>',
-            enableToggle: <?php echo $options['enable_toggle'] === '1' ? 'true' : 'false'; ?>
-        };
-    </script>
-    <?php
-}
-add_action('wp_head', 'syntekpro_toggle_localize_script', 2);

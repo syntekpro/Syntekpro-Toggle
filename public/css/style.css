@@ -167,6 +167,56 @@ html.dark-mode .wp-block-navigation-item a {
 }
 
 /* ===================================
+   Images, Videos, and Slides Filters
+   =================================== */
+
+/* Image filters in dark mode - exclude images inside slide containers */
+html.dark-mode img:not(.slides img):not(.slide img):not(.presentation img):not([class*="slide"] img):not(.reveal img):not(.slideshare img) {
+    filter: brightness(var(--syntekpro-image-brightness, 1)) contrast(var(--syntekpro-image-contrast, 1)) !important;
+    transition: filter 0.3s ease;
+}
+
+/* Video filters in dark mode - exclude videos inside slide containers */
+html.dark-mode video:not(.slides video):not(.slide video):not(.presentation video):not([class*="slide"] video):not(.reveal video):not(.slideshare video),
+html.dark-mode embed[type*="video"]:not(.slides embed):not(.slide embed):not(.presentation embed):not([class*="slide"] embed):not(.reveal embed):not(.slideshare embed),
+html.dark-mode object[type*="video"]:not(.slides object):not(.slide object):not(.presentation object):not([class*="slide"] object):not(.reveal object):not(.slideshare object) {
+    filter: brightness(var(--syntekpro-video-brightness, 1)) contrast(var(--syntekpro-video-contrast, 1)) !important;
+    transition: filter 0.3s ease;
+}
+
+/* Iframe filters (YouTube, Vimeo, etc.) - exclude iframes inside slide containers */
+html.dark-mode iframe:not(.slides iframe):not(.slide iframe):not(.presentation iframe):not([class*="slide"] iframe):not(.reveal iframe):not(.slideshare iframe) {
+    filter: brightness(var(--syntekpro-video-brightness, 1)) contrast(var(--syntekpro-video-contrast, 1)) !important;
+    transition: filter 0.3s ease;
+}
+
+/* Slide filters - apply to slide containers and their content */
+html.dark-mode .slides,
+html.dark-mode .slide,
+html.dark-mode .presentation,
+html.dark-mode [class*="slide"],
+html.dark-mode [data-transition],
+html.dark-mode .reveal,
+html.dark-mode .slideshare {
+    filter: brightness(var(--syntekpro-slide-brightness, 1)) invert(var(--syntekpro-slide-invert, 0)) !important;
+    transition: filter 0.3s ease;
+}
+
+/* WordPress gallery images */
+html.dark-mode .wp-block-gallery img,
+html.dark-mode .gallery img,
+html.dark-mode .wp-block-image img {
+    filter: brightness(var(--syntekpro-image-brightness, 1)) contrast(var(--syntekpro-image-contrast, 1)) !important;
+}
+
+/* WordPress video block */
+html.dark-mode .wp-block-video video,
+html.dark-mode .wp-block-video iframe,
+html.dark-mode .wp-block-embed iframe {
+    filter: brightness(var(--syntekpro-video-brightness, 1)) contrast(var(--syntekpro-video-contrast, 1)) !important;
+}
+
+/* ===================================
    Toggle Button Styles - Base
    =================================== */
 .syntekpro-toggle-btn {
