@@ -195,6 +195,59 @@
                 }, 500);
             }
         });
+
+        // Collapsible settings sections (h2/h3) in admin forms and .wrap areas
+        (function initCollapsibleSections() {
+            var $container = $('.syntekpro-toggle-admin');
+            if (!$container.length) return;
+
+            var $headings = $container.find('.wrap h2:not(.nav-tab-wrapper), .wrap h3, form h2, form h3');
+            if (!$headings.length) return;
+
+            $headings.each(function(index) {
+                    var $heading = $(this);
+                    if ($heading.hasClass('syntekpro-section-heading')) return;
+
+                    // Collect section content until the next heading at same level
+                    var $content = $heading.nextUntil('h2, h3');
+                    if (!$content.length) return;
+
+                    var $wrap = $('<div class="syntekpro-section-content"></div>');
+                    $content.wrapAll($wrap);
+
+                    var initiallyOpen = index === 0; // open first by default
+                    var $toggle = $('<button type="button" class="button-link syntekpro-section-toggle" aria-expanded="' + initiallyOpen + '"><span class="dashicons ' + (initiallyOpen ? 'dashicons-arrow-down' : 'dashicons-arrow-right') + '"></span></button>');
+                    $heading.addClass('syntekpro-section-heading').append($toggle);
+
+                    if (!initiallyOpen) {
+                        $wrap.hide();
+                    }
+
+                    var toggleContent = function(forceState) {
+                        var isOpen = $wrap.is(':visible');
+                        var nextState = typeof forceState === 'boolean' ? forceState : !isOpen;
+                        if (nextState) {
+                            $wrap.slideDown(150);
+                        } else {
+                            $wrap.slideUp(150);
+                        }
+                        $toggle.attr('aria-expanded', nextState);
+                        $toggle.find('.dashicons')
+                            .toggleClass('dashicons-arrow-down', nextState)
+                            .toggleClass('dashicons-arrow-right', !nextState);
+                    };
+
+                    $toggle.on('click', function(e) {
+                        e.preventDefault();
+                        toggleContent();
+                    });
+
+                    $heading.on('click', function(e) {
+                        if ($(e.target).closest('.syntekpro-section-toggle').length) return;
+                        toggleContent();
+                    });
+                });
+        })();
     });
     
 })(jQuery);

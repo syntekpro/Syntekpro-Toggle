@@ -5,23 +5,71 @@
 /* ===================================
    WordPress Admin Menu Icon
    =================================== */
-#adminmenu .toplevel_page_syntekpro-toggle .wp-menu-image img {
-    width: 18px !important;
-    height: 18px !important;
-    max-width: 18px !important;
-    max-height: 18px !important;
+/* Sidebar menu icon only */
+#adminmenu .toplevel_page_syntekpro-toggle div.wp-menu-image {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
     padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+}
+
+#adminmenu .toplevel_page_syntekpro-toggle div.wp-menu-image img {
+    width: 30px !important;
+    height: 30px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    object-fit: contain !important;
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
     opacity: 0.6;
 }
 
-#adminmenu .toplevel_page_syntekpro-toggle:hover .wp-menu-image img,
-#adminmenu .toplevel_page_syntekpro-toggle.current .wp-menu-image img {
+#adminmenu .toplevel_page_syntekpro-toggle:hover div.wp-menu-image img,
+#adminmenu .toplevel_page_syntekpro-toggle.current div.wp-menu-image img {
     opacity: 1;
+}
+
+/* Prevent icon from being large anywhere else */
+img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
+    max-width: 50px !important;
+    max-height: 50px !important;
+    width: auto !important;
+    height: auto !important;
 }
 
 .syntekpro-toggle-admin {
     max-width: 100%;
     margin-right: 20px;
+}
+
+/* Collapsible sections */
+.syntekpro-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+    padding-right: 6px;
+}
+
+.syntekpro-section-toggle {
+    margin-left: auto;
+    padding: 4px 6px;
+}
+
+.syntekpro-section-toggle .dashicons {
+    margin: 0;
+}
+
+.syntekpro-section-content {
+    margin-top: 6px;
 }
 
 /* ===================================
@@ -345,12 +393,15 @@
    Footer Styles
    =================================== */
 .syntekpro-footer {
-    background: linear-gradient(135deg, #fffbea 0%, #fff9db 100%);
-    border: 1px solid #f0e68c;
+    background: linear-gradient(135deg, #fffbea 0%, #fff9db 100%) !important;
+    border: 1px solid #f0e68c !important;
     border-radius: 8px;
-    padding: 15px 30px;
+    padding: 12px 20px;
     margin: 20px 0;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-shadow: 0 2px 8px rgba(255, 235, 59, 0.1);
 }
 
@@ -358,22 +409,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    font-size: 14px;
+    gap: 5px;
+    font-size: 13px;
     color: #666;
 }
 
+.syntekpro-footer-link {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+}
+
 .syntekpro-footer-logo {
-    height: 20px;
-    width: auto;
-    transition: all 0.3s ease;
-    filter: grayscale(0%);
-    vertical-align: middle;
+    height: 14px !important;
+    width: auto !important;
+    max-height: 14px !important;
+    transition: all 0.3s ease !important;
+    filter: none !important;
+    vertical-align: middle !important;
+    display: inline-block !important;
 }
 
 .syntekpro-footer-logo:hover {
-    transform: translateY(-4px);
-    filter: drop-shadow(0 4px 8px rgba(34, 113, 177, 0.4));
+    transform: scale(1.15) !important;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)) !important;
 }
 
 /* ===================================
@@ -464,4 +523,33 @@
 
 .syntekpro-info-icon:hover {
     background: #135e96;
+}
+
+/* ===================================
+   Buttons
+   =================================== */
+.syntekpro-toggle-admin .button-primary {
+    background: #d63638 !important;
+    border-color: #b22222 #9f1f1f #9f1f1f !important;
+    box-shadow: 0 1px 0 #9f1f1f !important;
+    text-shadow: 0 -1px 1px #9f1f1f, 1px 0 1px #9f1f1f, 0 1px 1px #9f1f1f, -1px 0 1px #9f1f1f !important;
+}
+
+.syntekpro-toggle-admin .button-primary:hover,
+.syntekpro-toggle-admin .button-primary:focus {
+    background: #e04446 !important;
+    border-color: #b22222 !important;
+}
+
+.syntekpro-toggle-admin .button-primary:active {
+    background: #c42f31 !important;
+    border-color: #9f1f1f !important;
+}
+
+.syntekpro-toggle-admin .button-primary[disabled],
+.syntekpro-toggle-admin .button-primary:disabled {
+    background: #f7a0a1 !important;
+    border-color: #e88a8b !important;
+    color: #fff !important;
+    text-shadow: none !important;
 }
