@@ -21,7 +21,7 @@ function syntekpro_toggle_admin_menu() {
         'manage_options',
         'syntekpro-toggle',
         'syntekpro_toggle_frontend_page',
-        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/Syntekpro%20Toggle%20%20icon%20Grey.png',
+        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/Syntekpro%20Toggle%20%20icon%20Grey%20New.png',
         30
     );
     
@@ -367,7 +367,7 @@ function syntekpro_toggle_adminbar_icon($wp_admin_bar) {
         return;
     }
 
-    $icon_url = SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/Syntekpro%20Toggle%20%20icon%20Grey.png';
+    $icon_url = SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/Syntekpro%20Toggle%20%20icon%20Grey%20New.png';
     $wp_admin_bar->add_node(array(
         'id'    => 'syntekpro-toggle-admin',
         'title' => '<span class="ab-icon" aria-hidden="true"><img src="' . esc_url($icon_url) . '" alt=""/></span><span class="screen-reader-text">Toggle admin dark mode</span>',
@@ -959,7 +959,7 @@ function syntekpro_toggle_page_header($page_title = 'Toggle Settings') {
     <div class="wrap syntekpro-toggle-admin">
         <!-- Header -->
         <div class="syntekpro-header">
-            <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-toggle-logo.png'); ?>" alt="Syntekpro Toggle" class="syntekpro-header-logo">
+            <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-toggle-logo%20New.png'); ?>" alt="Syntekpro Toggle" class="syntekpro-header-logo">
             <div class="syntekpro-header-version">Version <?php echo esc_html(SYNTEKPRO_TOGGLE_VERSION); ?></div>
         </div>
         <h1><?php echo esc_html($page_title); ?></h1>
@@ -1106,7 +1106,7 @@ function syntekpro_toggle_dashboard_widget() {
     }
     wp_add_dashboard_widget(
         'syntekpro_toggle_widget',
-        '<img src="' . esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/Syntekpro%20Toggle%20%20icon%20Grey.png') . '" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;"> Toggle - Dark Mode',
+        '<img src="' . esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/Syntekpro%20Toggle%20%20icon%20Grey%20New.png') . '" style="width:16px;height:16px;vertical-align:middle;margin-right:5px;"> Toggle - Dark Mode',
         'syntekpro_toggle_dashboard_widget_content'
     );
 }
