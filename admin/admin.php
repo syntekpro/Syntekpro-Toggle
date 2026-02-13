@@ -880,14 +880,14 @@ function syntekpro_toggle_register_settings() {
         'syntekpro_toggle_general_section',
         'General Settings',
         'syntekpro_toggle_general_section_callback',
-        'syntekpro-toggle-frontend'
+        'syntekpro-toggle-frontend-general'
     );
     
     add_settings_field(
         'default_mode',
         'Default Mode',
         'syntekpro_toggle_default_mode_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
     );
     
@@ -895,7 +895,7 @@ function syntekpro_toggle_register_settings() {
         'enable_toggle',
         'Toggle Button',
         'syntekpro_toggle_enable_toggle_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
     );
     
@@ -903,7 +903,7 @@ function syntekpro_toggle_register_settings() {
         'button_position',
         'Button Position',
         'syntekpro_toggle_button_position_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
     );
     
@@ -911,7 +911,7 @@ function syntekpro_toggle_register_settings() {
         'button_size',
         'Button Size',
         'syntekpro_toggle_button_size_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
     );
     
@@ -919,7 +919,7 @@ function syntekpro_toggle_register_settings() {
         'toggle_theme',
         'Toggle Button Theme',
         'syntekpro_toggle_theme_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
     );
     
@@ -928,14 +928,14 @@ function syntekpro_toggle_register_settings() {
         'syntekpro_toggle_color_scheme_section',
         '🎨 Dark Mode Color Scheme',
         'syntekpro_toggle_color_scheme_section_callback',
-        'syntekpro-toggle-frontend'
+        'syntekpro-toggle-frontend-colors'
     );
     
     add_settings_field(
         'color_scheme_mode',
         'Color Scheme Mode',
         'syntekpro_toggle_color_scheme_mode_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-colors',
         'syntekpro_toggle_color_scheme_section'
     );
     
@@ -943,7 +943,7 @@ function syntekpro_toggle_register_settings() {
         'color_preset',
         'Color Preset',
         'syntekpro_toggle_color_preset_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-colors',
         'syntekpro_toggle_color_scheme_section'
     );
     
@@ -951,7 +951,7 @@ function syntekpro_toggle_register_settings() {
         'bg_color',
         'Background Color',
         'syntekpro_toggle_bg_color_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-colors',
         'syntekpro_toggle_color_scheme_section'
     );
     
@@ -959,7 +959,7 @@ function syntekpro_toggle_register_settings() {
         'text_color',
         'Text Color',
         'syntekpro_toggle_text_color_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-colors',
         'syntekpro_toggle_color_scheme_section'
     );
     
@@ -967,7 +967,7 @@ function syntekpro_toggle_register_settings() {
         'link_color',
         'Link Color',
         'syntekpro_toggle_link_color_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-colors',
         'syntekpro_toggle_color_scheme_section'
     );
     
@@ -975,7 +975,7 @@ function syntekpro_toggle_register_settings() {
         'secondary_bg_color',
         'Secondary Background',
         'syntekpro_toggle_secondary_bg_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-colors',
         'syntekpro_toggle_color_scheme_section'
     );
     
@@ -984,14 +984,14 @@ function syntekpro_toggle_register_settings() {
         'syntekpro_toggle_color_adjustments_section',
         '🎚️ Color Adjustments',
         'syntekpro_toggle_color_adjustments_section_callback',
-        'syntekpro-toggle-frontend'
+        'syntekpro-toggle-frontend-adjustments'
     );
     
     add_settings_field(
         'brightness',
         '☀️ Brightness',
         'syntekpro_toggle_brightness_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-adjustments',
         'syntekpro_toggle_color_adjustments_section'
     );
     
@@ -999,7 +999,7 @@ function syntekpro_toggle_register_settings() {
         'contrast',
         '🔲 Contrast',
         'syntekpro_toggle_contrast_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-adjustments',
         'syntekpro_toggle_color_adjustments_section'
     );
     
@@ -1007,7 +1007,7 @@ function syntekpro_toggle_register_settings() {
         'sepia',
         '📜 Sepia',
         'syntekpro_toggle_sepia_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-adjustments',
         'syntekpro_toggle_color_adjustments_section'
     );
     
@@ -1015,7 +1015,7 @@ function syntekpro_toggle_register_settings() {
         'grayscale',
         '⚫ Grayscale',
         'syntekpro_toggle_grayscale_callback',
-        'syntekpro-toggle-frontend',
+        'syntekpro-toggle-frontend-adjustments',
         'syntekpro_toggle_color_adjustments_section'
     );
     
@@ -1064,14 +1064,14 @@ function syntekpro_toggle_register_settings() {
         'syntekpro_toggle_admin_color_section',
         '🎨 Admin UI Color Scheme',
         'syntekpro_toggle_admin_color_section_callback',
-        'syntekpro-toggle-admin-ui'
+        'syntekpro-toggle-admin-color'
     );
     
     add_settings_field(
         'admin_color_scheme_mode',
         'Color Mode',
         'syntekpro_toggle_admin_color_scheme_mode_callback',
-        'syntekpro-toggle-admin-ui',
+        'syntekpro-toggle-admin-color',
         'syntekpro_toggle_admin_color_section'
     );
     
@@ -1079,7 +1079,7 @@ function syntekpro_toggle_register_settings() {
         'admin_color_preset',
         'Color Presets',
         'syntekpro_toggle_admin_color_preset_callback',
-        'syntekpro-toggle-admin-ui',
+        'syntekpro-toggle-admin-color',
         'syntekpro_toggle_admin_color_section'
     );
     
@@ -1087,56 +1087,56 @@ function syntekpro_toggle_register_settings() {
         'admin_bg_color',
         'Admin Background',
         'syntekpro_toggle_admin_bg_color_callback',
-        'syntekpro-toggle-admin-ui',
-        'syntekpro_toggle_admin_ui_section'
+        'syntekpro-toggle-admin-color',
+        'syntekpro_toggle_admin_color_section'
     );
 
     add_settings_field(
         'admin_text_color',
         'Admin Text',
         'syntekpro_toggle_admin_text_color_callback',
-        'syntekpro-toggle-admin-ui',
-        'syntekpro_toggle_admin_ui_section'
+        'syntekpro-toggle-admin-color',
+        'syntekpro_toggle_admin_color_section'
     );
 
     add_settings_field(
         'admin_accent_color',
         'Admin Accent',
         'syntekpro_toggle_admin_accent_color_callback',
-        'syntekpro-toggle-admin-ui',
-        'syntekpro_toggle_admin_ui_section'
+        'syntekpro-toggle-admin-color',
+        'syntekpro_toggle_admin_color_section'
     );
 
     add_settings_field(
         'admin_surface_color',
         'Admin Surface',
         'syntekpro_toggle_admin_surface_color_callback',
-        'syntekpro-toggle-admin-ui',
-        'syntekpro_toggle_admin_ui_section'
+        'syntekpro-toggle-admin-color',
+        'syntekpro_toggle_admin_color_section'
     );
 
     add_settings_field(
         'admin_border_color',
         'Admin Border',
         'syntekpro_toggle_admin_border_color_callback',
-        'syntekpro-toggle-admin-ui',
-        'syntekpro_toggle_admin_ui_section'
+        'syntekpro-toggle-admin-color',
+        'syntekpro_toggle_admin_color_section'
     );
 
     add_settings_field(
         'admin_link_color',
         'Admin Link',
         'syntekpro_toggle_admin_link_color_callback',
-        'syntekpro-toggle-admin-ui',
-        'syntekpro_toggle_admin_ui_section'
+        'syntekpro-toggle-admin-color',
+        'syntekpro_toggle_admin_color_section'
     );
 
     add_settings_field(
         'admin_link_hover_color',
         'Admin Link Hover',
         'syntekpro_toggle_admin_link_hover_color_callback',
-        'syntekpro-toggle-admin-ui',
-        'syntekpro_toggle_admin_ui_section'
+        'syntekpro-toggle-admin-color',
+        'syntekpro_toggle_admin_color_section'
     );
     
     // Advanced Settings Section - Now MERGED INTO FRONTEND PAGE
@@ -2160,119 +2160,244 @@ function syntekpro_toggle_frontend_page() {
     
     syntekpro_toggle_page_header('Frontend Settings');
     ?>
-    <div class="syntekpro-content-wrapper">
-        <div class="syntekpro-main-content">
-            <!-- Dashboard Analytics Overview -->
-            <?php if ($options['enable_analytics'] === '1'): ?>
-            <h2 style="margin-top: 0; margin-bottom: 20px;">📊 Analytics Overview</h2>
-            <div class="syntekpro-analytics-grid">
-                <div class="syntekpro-analytics-card">
-                    <div class="analytics-icon">
-                        <span class="dashicons dashicons-chart-line"></span>
-                    </div>
-                    <div class="analytics-data">
-                        <h3><?php echo number_format($analytics['total_toggles']); ?></h3>
-                        <p>Total Toggle Clicks</p>
-                    </div>
-                </div>
-                
-                <div class="syntekpro-analytics-card">
-                    <div class="analytics-icon">
-                        <span class="dashicons dashicons-visibility"></span>
-                    </div>
-                    <div class="analytics-data">
-                        <h3><?php echo number_format($analytics['page_views']); ?></h3>
-                        <p>Total Page Views</p>
-                    </div>
-                </div>
-                
-                <div class="syntekpro-analytics-card">
-                    <div class="analytics-icon">
-                        <span class="dashicons dashicons-admin-appearance"></span>
-                    </div>
-                    <div class="analytics-data">
-                        <h3><?php echo number_format($analytics['dark_mode_count']); ?></h3>
-                        <p>Dark Mode Uses</p>
-                    </div>
-                </div>
-                
-                <div class="syntekpro-analytics-card">
-                    <div class="analytics-icon">
-                        <span class="dashicons dashicons-lightbulb"></span>
-                    </div>
-                    <div class="analytics-data">
-                        <h3><?php echo number_format($analytics['light_mode_count']); ?></h3>
-                        <p>Light Mode Uses</p>
-                    </div>
-                </div>
+    <div class="syntekpro-content-wrapper" style="display: flex; gap: 20px; margin-top: 20px;">
+        <!-- Left Sidebar Navigation -->
+        <div class="syntekpro-sidebar-nav" style="width: 220px; flex-shrink: 0;">
+            <div class="syntekpro-nav-section">
+                <a href="#" class="syntekpro-nav-item active" data-section="analytics">
+                    <span class="dashicons dashicons-chart-bar"></span> Analytics
+                </a>
+                <a href="#" class="syntekpro-nav-item" data-section="general">
+                    <span class="dashicons dashicons-admin-appearance"></span> General
+                </a>
+                <a href="#" class="syntekpro-nav-item" data-section="colors">
+                    <span class="dashicons dashicons-art"></span> Colors
+                </a>
+                <a href="#" class="syntekpro-nav-item" data-section="adjustments">
+                    <span class="dashicons dashicons-slides"></span> Adjustments
+                </a>
+                <a href="#" class="syntekpro-nav-item" data-section="advanced">
+                    <span class="dashicons dashicons-admin-tools"></span> Advanced
+                </a>
             </div>
-            
-            <!-- Mode Preferences -->
-            <div class="syntekpro-admin-box" style="margin-top: 30px;">
-                <h3>🌓 Mode Preferences</h3>
-                <div class="syntekpro-mode-stats">
-                    <div class="mode-stat-item">
-                        <div class="mode-stat-bar">
-                            <div class="mode-stat-label">
-                                <span class="dashicons dashicons-admin-appearance"></span>
-                                <strong>Dark Mode</strong>
-                            </div>
-                            <div class="mode-stat-value"><?php echo number_format($analytics['dark_mode_count']); ?> uses</div>
+        </div>
+        
+        <!-- Main Content Area -->
+        <div class="syntekpro-main-content" style="flex: 1;">
+            <!-- Analytics Section -->
+            <div class="syntekpro-section-panel active" id="section-analytics">
+                <?php if ($options['enable_analytics'] === '1'): ?>
+                <h2 style="margin-top: 0; margin-bottom: 20px;">📊 Analytics Overview</h2>
+                <div class="syntekpro-analytics-grid">
+                    <div class="syntekpro-analytics-card">
+                        <div class="analytics-icon">
+                            <span class="dashicons dashicons-chart-line"></span>
                         </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: <?php echo $analytics['dark_mode_percentage']; ?>%; background: #667eea;"></div>
+                        <div class="analytics-data">
+                            <h3><?php echo number_format($analytics['total_toggles']); ?></h3>
+                            <p>Total Toggle Clicks</p>
                         </div>
-                        <div class="mode-stat-percentage"><?php echo number_format($analytics['dark_mode_percentage'], 1); ?>%</div>
                     </div>
                     
-                    <div class="mode-stat-item">
-                        <div class="mode-stat-bar">
-                            <div class="mode-stat-label">
-                                <span class="dashicons dashicons-lightbulb"></span>
-                                <strong>Light Mode</strong>
-                            </div>
-                            <div class="mode-stat-value"><?php echo number_format($analytics['light_mode_count']); ?> uses</div>
+                    <div class="syntekpro-analytics-card">
+                        <div class="analytics-icon">
+                            <span class="dashicons dashicons-visibility"></span>
                         </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: <?php echo $analytics['light_mode_percentage']; ?>%; background: #f59e0b;"></div>
+                        <div class="analytics-data">
+                            <h3><?php echo number_format($analytics['page_views']); ?></h3>
+                            <p>Total Page Views</p>
                         </div>
-                        <div class="mode-stat-percentage"><?php echo number_format($analytics['light_mode_percentage'], 1); ?>%</div>
+                    </div>
+                    
+                    <div class="syntekpro-analytics-card">
+                        <div class="analytics-icon">
+                            <span class="dashicons dashicons-admin-appearance"></span>
+                        </div>
+                        <div class="analytics-data">
+                            <h3><?php echo number_format($analytics['dark_mode_count']); ?></h3>
+                            <p>Dark Mode Uses</p>
+                        </div>
+                    </div>
+                    
+                    <div class="syntekpro-analytics-card">
+                        <div class="analytics-icon">
+                            <span class="dashicons dashicons-lightbulb"></span>
+                        </div>
+                        <div class="analytics-data">
+                            <h3><?php echo number_format($analytics['light_mode_count']); ?></h3>
+                            <p>Light Mode Uses</p>
+                        </div>
                     </div>
                 </div>
+                
+                <!-- Mode Preferences -->
+                <div class="syntekpro-admin-box" style="margin-top: 30px;">
+                    <h3>🌓 Mode Preferences</h3>
+                    <div class="syntekpro-mode-stats">
+                        <div class="mode-stat-item">
+                            <div class="mode-stat-bar">
+                                <div class="mode-stat-label">
+                                    <span class="dashicons dashicons-admin-appearance"></span>
+                                    <strong>Dark Mode</strong>
+                                </div>
+                                <div class="mode-stat-value"><?php echo number_format($analytics['dark_mode_count']); ?> uses</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: <?php echo $analytics['dark_mode_percentage']; ?>%; background: #667eea;"></div>
+                            </div>
+                            <div class="mode-stat-percentage"><?php echo number_format($analytics['dark_mode_percentage'], 1); ?>%</div>
+                        </div>
+                        
+                        <div class="mode-stat-item">
+                            <div class="mode-stat-bar">
+                                <div class="mode-stat-label">
+                                    <span class="dashicons dashicons-lightbulb"></span>
+                                    <strong>Light Mode</strong>
+                                </div>
+                                <div class="mode-stat-value"><?php echo number_format($analytics['light_mode_count']); ?> uses</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: <?php echo $analytics['light_mode_percentage']; ?>%; background: #f59e0b;"></div>
+                            </div>
+                            <div class="mode-stat-percentage"><?php echo number_format($analytics['light_mode_percentage'], 1); ?>%</div>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
             </div>
-            <?php endif; ?>
             
-            <!-- Frontend Settings Form -->
-            <h2 style="margin-top: 30px;">⚙️ Frontend Configuration</h2>
-            <form action="options.php" method="post">
-                <?php
-                settings_fields('syntekpro_toggle_settings');
-                do_settings_sections('syntekpro-toggle-frontend');
-                ?>
-            </form>
+            <!-- General Settings Section -->
+            <div class="syntekpro-section-panel" id="section-general">
+                <h2>General Settings</h2>
+                <form action="options.php" method="post">
+                    <?php
+                    settings_fields('syntekpro_toggle_settings');
+                    ?>
+                    <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php do_settings_sections('syntekpro-toggle-frontend-general'); ?>
+                    </div>
+                </form>
+            </div>
             
-            <!-- Advanced Settings -->
-            <h2 style="margin-top: 40px;">🔧 Advanced Settings</h2>
-            <form action="options.php" method="post">
-                <?php
-                settings_fields('syntekpro_toggle_settings');
-                do_settings_sections('syntekpro-toggle-frontend-advanced');
-                submit_button('Save All Settings');
-                ?>
-            </form>
-        </div>
-        <div class="syntekpro-sidebar">
-            <div class="syntekpro-admin-box">
-                <h3>🎨 Frontend Dark Mode</h3>
-                <p>Configure how dark mode works for your website visitors.</p>
-                <ul>
-                    <li><strong>Auto Mode:</strong> Respects user's OS preference</li>
-                    <li><strong>Manual Mode:</strong> Only toggles when user clicks button</li>
-                    <li><strong>Custom Colors:</strong> Works with all block themes</li>
-                </ul>
+            <!-- Colors Section -->
+            <div class="syntekpro-section-panel" id="section-colors">
+                <h2>Dark Mode Color Scheme</h2>
+                <form action="options.php" method="post">
+                    <?php
+                    settings_fields('syntekpro_toggle_settings');
+                    ?>
+                    <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php do_settings_sections('syntekpro-toggle-frontend-colors'); ?>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Color Adjustments Section -->
+            <div class="syntekpro-section-panel" id="section-adjustments">
+                <h2>Color Adjustments</h2>
+                <form action="options.php" method="post">
+                    <?php
+                    settings_fields('syntekpro_toggle_settings');
+                    ?>
+                    <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php do_settings_sections('syntekpro-toggle-frontend-adjustments'); ?>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Advanced Settings Section -->
+            <div class="syntekpro-section-panel" id="section-advanced">
+                <h2>Advanced Settings</h2>
+                <form action="options.php" method="post">
+                    <?php
+                    settings_fields('syntekpro_toggle_settings');
+                    do_settings_sections('syntekpro-toggle-frontend-advanced');
+                    submit_button('Save All Settings');
+                    ?>
+                </form>
             </div>
         </div>
     </div>
+    
+    <style>
+        .syntekpro-sidebar-nav {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            height: fit-content;
+            position: sticky;
+            top: 32px;
+        }
+        
+        .syntekpro-nav-section {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .syntekpro-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+        
+        .syntekpro-nav-item:hover {
+            background: #e8e8e8;
+            color: #667eea;
+        }
+        
+        .syntekpro-nav-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border-left-color: #fff;
+        }
+        
+        .syntekpro-nav-item .dashicons {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+        
+        .syntekpro-section-panel {
+            display: none;
+        }
+        
+        .syntekpro-section-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    
+    <script>
+    jQuery(document).ready(function($) {
+        $('.syntekpro-nav-item').on('click', function(e) {
+            e.preventDefault();
+            const section = $(this).data('section');
+            
+            // Remove active class from all nav items and panels
+            $('.syntekpro-nav-item').removeClass('active');
+            $('.syntekpro-section-panel').removeClass('active');
+            
+            // Add active class to clicked item and corresponding panel
+            $(this).addClass('active');
+            $('#section-' + section).addClass('active');
+        });
+    });
+    </script>
     <?php
     syntekpro_toggle_page_footer();
 }
@@ -2293,28 +2418,129 @@ function syntekpro_toggle_admin_ui_page() {
     
     syntekpro_toggle_page_header('Admin UI Settings');
     ?>
-    <div class="syntekpro-content-wrapper">
-        <div class="syntekpro-main-content">
-            <form action="options.php" method="post">
-                <?php
-                settings_fields('syntekpro_toggle_settings');
-                do_settings_sections('syntekpro-toggle-admin-ui');
-                submit_button('Save Settings');
-                ?>
-            </form>
+    <div class="syntekpro-content-wrapper" style="display: flex; gap: 20px; margin-top: 20px;">
+        <!-- Left Sidebar Navigation -->
+        <div class="syntekpro-sidebar-nav" style="width: 220px; flex-shrink: 0;">
+            <div class="syntekpro-nav-section">
+                <a href="#" class="syntekpro-nav-item active" data-section="settings">
+                    <span class="dashicons dashicons-admin-generic"></span> Settings
+                </a>
+                <a href="#" class="syntekpro-nav-item" data-section="colors">
+                    <span class="dashicons dashicons-art"></span> Colors
+                </a>
+            </div>
         </div>
-        <div class="syntekpro-sidebar">
-            <div class="syntekpro-admin-box">
-                <h3>🛠️ Admin Dark Mode</h3>
-                <p>Customize the WordPress admin dashboard dark mode experience.</p>
-                <ul>
-                    <li><strong>Top Bar Icon:</strong> Quick toggle access</li>
-                    <li><strong>Floating Button:</strong> Always available</li>
-                    <li><strong>Custom Colors:</strong> Match your brand</li>
-                </ul>
+        
+        <!-- Main Content Area -->
+        <div class="syntekpro-main-content" style="flex: 1;">
+            <!-- Admin UI Settings Section -->
+            <div class="syntekpro-section-panel active" id="section-settings">
+                <h2>Admin UI Settings</h2>
+                <form action="options.php" method="post">
+                    <?php
+                    settings_fields('syntekpro_toggle_settings');
+                    ?>
+                    <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php do_settings_sections('syntekpro-toggle-admin-ui'); ?>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Admin Colors Section -->
+            <div class="syntekpro-section-panel" id="section-colors">
+                <h2>Admin UI Color Scheme</h2>
+                <form action="options.php" method="post">
+                    <?php
+                    settings_fields('syntekpro_toggle_settings');
+                    ?>
+                    <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php do_settings_sections('syntekpro-toggle-admin-color'); ?>
+                    </div>
+                    <?php submit_button('Save Settings'); ?>
+                </form>
             </div>
         </div>
     </div>
+    
+    <style>
+        .syntekpro-sidebar-nav {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            height: fit-content;
+            position: sticky;
+            top: 32px;
+        }
+        
+        .syntekpro-nav-section {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .syntekpro-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+        
+        .syntekpro-nav-item:hover {
+            background: #e8e8e8;
+            color: #667eea;
+        }
+        
+        .syntekpro-nav-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border-left-color: #fff;
+        }
+        
+        .syntekpro-nav-item .dashicons {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+        
+        .syntekpro-section-panel {
+            display: none;
+        }
+        
+        .syntekpro-section-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    
+    <script>
+    jQuery(document).ready(function($) {
+        $('.syntekpro-nav-item').on('click', function(e) {
+            e.preventDefault();
+            const section = $(this).data('section');
+            
+            // Remove active class from all nav items and panels
+            $('.syntekpro-nav-item').removeClass('active');
+            $('.syntekpro-section-panel').removeClass('active');
+            
+            // Add active class to clicked item and corresponding panel
+            $(this).addClass('active');
+            $('#section-' + section).addClass('active');
+        });
+    });
+    </script>
     <?php
     syntekpro_toggle_page_footer();
 }
