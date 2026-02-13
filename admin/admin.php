@@ -2552,7 +2552,6 @@ function syntekpro_toggle_options_page() {
  * About Page
  */
 function syntekpro_toggle_about_page() {
-function syntekpro_toggle_about_page() {
     if (!current_user_can('manage_options')) {
         return;
     }
