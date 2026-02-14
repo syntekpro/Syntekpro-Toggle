@@ -25,9 +25,23 @@
             applyFrontendPreset();
         });
         
+        // Also trigger preset application when scheme mode changes
+        $(document).on('change', 'input[name="syntekpro_toggle_options[color_scheme_mode]"]', function() {
+            if ($(this).val() === 'preset') {
+                applyFrontendPreset();
+            }
+        });
+        
         // Handle Admin Color Presets
         $(document).on('change', 'input[name="syntekpro_toggle_options[admin_color_preset]"]', function() {
             applyAdminPreset();
+        });
+        
+        // Also trigger preset application when admin scheme mode changes
+        $(document).on('change', 'input[name="syntekpro_toggle_options[admin_color_scheme_mode]"]', function() {
+            if ($(this).val() === 'preset') {
+                applyAdminPreset();
+            }
         });
         
         // Live preview of settings (optional enhancement)
@@ -100,11 +114,26 @@
             
             var colors = frontendPresets[preset];
             
-            // Update color picker values
-            $('input[name="syntekpro_toggle_options[bg_color]"]').val(colors.bg).iris('color', colors.bg).trigger('change');
-            $('input[name="syntekpro_toggle_options[text_color]"]').val(colors.text).iris('color', colors.text).trigger('change');
-            $('input[name="syntekpro_toggle_options[link_color]"]').val(colors.link).iris('color', colors.link).trigger('change');
-            $('input[name="syntekpro_toggle_options[secondary_bg_color]"]').val(colors.secondary).iris('color', colors.secondary).trigger('change');
+            // Update color picker values - use proper WP color picker API
+            $('input[name="syntekpro_toggle_options[bg_color]"]')
+                .val(colors.bg)
+                .trigger('change')
+                .trigger('iris-change');
+                
+            $('input[name="syntekpro_toggle_options[text_color]"]')
+                .val(colors.text)
+                .trigger('change')
+                .trigger('iris-change');
+                
+            $('input[name="syntekpro_toggle_options[link_color]"]')
+                .val(colors.link)
+                .trigger('change')
+                .trigger('iris-change');
+                
+            $('input[name="syntekpro_toggle_options[secondary_bg_color]"]')
+                .val(colors.secondary)
+                .trigger('change')
+                .trigger('iris-change');
             
             updatePreview();
         }
@@ -116,20 +145,46 @@
             
             var colors = adminPresets[preset];
             
-            // Update color picker values
-            $('input[name="syntekpro_toggle_options[admin_bg_color]"]').val(colors.bg).iris('color', colors.bg).trigger('change');
-            $('input[name="syntekpro_toggle_options[admin_text_color]"]').val(colors.text).iris('color', colors.text).trigger('change');
-            $('input[name="syntekpro_toggle_options[admin_accent_color]"]').val(colors.accent).iris('color', colors.accent).trigger('change');
-            $('input[name="syntekpro_toggle_options[admin_surface_color]"]').val(colors.surface).iris('color', colors.surface).trigger('change');
+            // Update color picker values - use proper WP color picker API
+            $('input[name="syntekpro_toggle_options[admin_bg_color]"]')
+                .val(colors.bg)
+                .trigger('change')
+                .trigger('iris-change');
+                
+            $('input[name="syntekpro_toggle_options[admin_text_color]"]')
+                .val(colors.text)
+                .trigger('change')
+                .trigger('iris-change');
+                
+            $('input[name="syntekpro_toggle_options[admin_accent_color]"]')
+                .val(colors.accent)
+                .trigger('change')
+                .trigger('iris-change');
+                
+            $('input[name="syntekpro_toggle_options[admin_surface_color]"]')
+                .val(colors.surface)
+                .trigger('change')
+                .trigger('iris-change');
             
             // Also set border and link colors based on the preset
             var borderColor = colors.surface;
             var linkColor = colors.accent;
             var linkHoverColor = colors.accent;
             
-            $('input[name="syntekpro_toggle_options[admin_border_color]"]').val(borderColor).iris('color', borderColor).trigger('change');
-            $('input[name="syntekpro_toggle_options[admin_link_color]"]').val(linkColor).iris('color', linkColor).trigger('change');
-            $('input[name="syntekpro_toggle_options[admin_link_hover_color]"]').val(linkHoverColor).iris('color', linkHoverColor).trigger('change');
+            $('input[name="syntekpro_toggle_options[admin_border_color]"]')
+                .val(borderColor)
+                .trigger('change')
+                .trigger('iris-change');
+                
+            $('input[name="syntekpro_toggle_options[admin_link_color]"]')
+                .val(linkColor)
+                .trigger('change')
+                .trigger('iris-change');
+                
+            $('input[name="syntekpro_toggle_options[admin_link_hover_color]"]')
+                .val(linkHoverColor)
+                .trigger('change')
+                .trigger('iris-change');
             
             updatePreview();
         }

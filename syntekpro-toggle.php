@@ -217,6 +217,30 @@ add_action('wp_head', 'syntekpro_toggle_inline_script', 1);
 function syntekpro_toggle_custom_css() {
     $options = syntekpro_toggle_get_frontend_options();
     
+    // Default preset definitions
+    $presets = array(
+        'default' => array('bg' => '#1a1a1a', 'text' => '#ffffff', 'link' => '#6ea8fe', 'secondary' => '#2d2d2d'),
+        'midnight' => array('bg' => '#0f1419', 'text' => '#e6edf3', 'link' => '#58a6ff', 'secondary' => '#1c2128'),
+        'carbon' => array('bg' => '#0d0d0d', 'text' => '#f0f0f0', 'link' => '#4a9eff', 'secondary' => '#1a1a1a'),
+        'slate' => array('bg' => '#1e1e1e', 'text' => '#d4d4d4', 'link' => '#569cd6', 'secondary' => '#2d2d2d'),
+        'ocean' => array('bg' => '#001f3f', 'text' => '#e8f4f8', 'link' => '#7fdbff', 'secondary' => '#002a52'),
+        'forest' => array('bg' => '#0d1b0d', 'text' => '#e8f5e9', 'link' => '#81c784', 'secondary' => '#1b2f1b'),
+        'purple' => array('bg' => '#1a0d2e', 'text' => '#f3e5f5', 'link' => '#ce93d8', 'secondary' => '#2e1a3e'),
+        'dracula' => array('bg' => '#282a36', 'text' => '#f8f8f2', 'link' => '#8be9fd', 'secondary' => '#44475a'),
+        'nord' => array('bg' => '#2e3440', 'text' => '#eceff4', 'link' => '#88c0d0', 'secondary' => '#3b4252'),
+        'monokai' => array('bg' => '#272822', 'text' => '#f8f8f2', 'link' => '#66d9ef', 'secondary' => '#3e3d32'),
+        'solarized' => array('bg' => '#002b36', 'text' => '#839496', 'link' => '#268bd2', 'secondary' => '#073642'),
+        'gruvbox' => array('bg' => '#282828', 'text' => '#ebdbb2', 'link' => '#83a598', 'secondary' => '#3c3836'),
+        'material' => array('bg' => '#263238', 'text' => '#eeffff', 'link' => '#82aaff', 'secondary' => '#37474f'),
+        'one' => array('bg' => '#282c34', 'text' => '#abb2bf', 'link' => '#61afef', 'secondary' => '#21252b'),
+        'tokyo' => array('bg' => '#1a1b26', 'text' => '#c0caf5', 'link' => '#7aa2f7', 'secondary' => '#24283b'),
+        'ayu' => array('bg' => '#0f1419', 'text' => '#e6e1cf', 'link' => '#59c2ff', 'secondary' => '#191e2a'),
+        'cobalt' => array('bg' => '#193549', 'text' => '#ffffff', 'link' => '#80ffbb', 'secondary' => '#234e6d'),
+        'espresso' => array('bg' => '#2a211c', 'text' => '#bdae9d', 'link' => '#6c99bb', 'secondary' => '#392e28'),
+        'synthwave' => array('bg' => '#262335', 'text' => '#f92aad', 'link' => '#72f1b8', 'secondary' => '#382e3c'),
+        'rose' => array('bg' => '#191724', 'text' => '#e0def4', 'link' => '#c4a7e7', 'secondary' => '#1f1d2e'),
+    );
+    
     // Get colors based on mode
     $bg_color = $options['bg_color'];
     $text_color = $options['text_color'];
@@ -225,35 +249,20 @@ function syntekpro_toggle_custom_css() {
     
     // Apply preset colors if preset mode is selected
     if ($options['color_scheme_mode'] === 'preset' && !empty($options['color_preset'])) {
-        $presets = array(
-            'default' => array('bg' => '#1a1a1a', 'text' => '#ffffff', 'link' => '#6ea8fe', 'secondary' => '#2d2d2d'),
-            'midnight' => array('bg' => '#0f1419', 'text' => '#e6edf3', 'link' => '#58a6ff', 'secondary' => '#1c2128'),
-            'carbon' => array('bg' => '#0d0d0d', 'text' => '#f0f0f0', 'link' => '#4a9eff', 'secondary' => '#1a1a1a'),
-            'slate' => array('bg' => '#1e1e1e', 'text' => '#d4d4d4', 'link' => '#569cd6', 'secondary' => '#2d2d2d'),
-            'ocean' => array('bg' => '#001f3f', 'text' => '#e8f4f8', 'link' => '#7fdbff', 'secondary' => '#002a52'),
-            'forest' => array('bg' => '#0d1b0d', 'text' => '#e8f5e9', 'link' => '#81c784', 'secondary' => '#1b2f1b'),
-            'purple' => array('bg' => '#1a0d2e', 'text' => '#f3e5f5', 'link' => '#ce93d8', 'secondary' => '#2e1a3e'),
-            'dracula' => array('bg' => '#282a36', 'text' => '#f8f8f2', 'link' => '#8be9fd', 'secondary' => '#44475a'),
-            'nord' => array('bg' => '#2e3440', 'text' => '#eceff4', 'link' => '#88c0d0', 'secondary' => '#3b4252'),
-            'monokai' => array('bg' => '#272822', 'text' => '#f8f8f2', 'link' => '#66d9ef', 'secondary' => '#3e3d32'),
-            'solarized' => array('bg' => '#002b36', 'text' => '#839496', 'link' => '#268bd2', 'secondary' => '#073642'),
-            'gruvbox' => array('bg' => '#282828', 'text' => '#ebdbb2', 'link' => '#83a598', 'secondary' => '#3c3836'),
-            'material' => array('bg' => '#263238', 'text' => '#eeffff', 'link' => '#82aaff', 'secondary' => '#37474f'),
-            'one' => array('bg' => '#282c34', 'text' => '#abb2bf', 'link' => '#61afef', 'secondary' => '#21252b'),
-            'tokyo' => array('bg' => '#1a1b26', 'text' => '#c0caf5', 'link' => '#7aa2f7', 'secondary' => '#24283b'),
-            'ayu' => array('bg' => '#0f1419', 'text' => '#e6e1cf', 'link' => '#59c2ff', 'secondary' => '#191e2a'),
-            'cobalt' => array('bg' => '#193549', 'text' => '#ffffff', 'link' => '#80ffbb', 'secondary' => '#234e6d'),
-            'espresso' => array('bg' => '#2a211c', 'text' => '#bdae9d', 'link' => '#6c99bb', 'secondary' => '#392e28'),
-            'synthwave' => array('bg' => '#262335', 'text' => '#f92aad', 'link' => '#72f1b8', 'secondary' => '#382e3c'),
-            'rose' => array('bg' => '#191724', 'text' => '#e0def4', 'link' => '#c4a7e7', 'secondary' => '#1f1d2e'),
-        );
+        $preset_name = sanitize_text_field($options['color_preset']);
         
-        if (isset($presets[$options['color_preset']])) {
-            $preset = $presets[$options['color_preset']];
+        if (isset($presets[$preset_name])) {
+            $preset = $presets[$preset_name];
             $bg_color = $preset['bg'];
             $text_color = $preset['text'];
             $link_color = $preset['link'];
             $secondary_bg_color = $preset['secondary'];
+        } else {
+            // Fallback to default preset if selected preset is not found
+            $bg_color = $presets['default']['bg'];
+            $text_color = $presets['default']['text'];
+            $link_color = $presets['default']['link'];
+            $secondary_bg_color = $presets['default']['secondary'];
         }
     }
     
