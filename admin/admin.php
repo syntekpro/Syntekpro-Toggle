@@ -55,8 +55,8 @@ function syntekpro_toggle_admin_menu() {
     
     add_submenu_page(
         'syntekpro-toggle',
-        'Toggle Plus',
-        '⭐ Toggle Plus',
+        'Toggle+',
+        'Toggle+',
         'manage_options',
         'syntekpro-toggle-plus',
         'syntekpro_toggle_plus_page'
@@ -64,8 +64,8 @@ function syntekpro_toggle_admin_menu() {
     
     add_submenu_page(
         'syntekpro-toggle',
-        'Our Plugins',
-        'Our Plugins',
+        'Other Plugins',
+        'Other Plugins',
         'manage_options',
         'syntekpro-toggle-plugins',
         'syntekpro_toggle_plugins_page'
@@ -2009,7 +2009,7 @@ function syntekpro_toggle_button_size_callback() {
 }
 
 /**
- * Check if a feature is premium (requires Toggle Plus)
+ * Check if a feature is premium (requires Toggle+)
  */
 function syntekpro_toggle_is_premium_feature($feature_type, $feature_id) {
     // Features 1-5 are free (indices 0-4)
@@ -2057,7 +2057,7 @@ function syntekpro_toggle_theme_callback() {
         <?php foreach ($themes as $key => $theme):
             $is_premium = syntekpro_toggle_is_premium_feature('theme', $key);
         ?>
-            <label class="theme-option <?php echo $is_premium ? 'premium-locked' : ''; ?>" style="cursor: <?php echo $is_premium ? 'not-allowed' : 'pointer'; ?>; border: 2px solid <?php echo $is_premium ? '#f0ad4e' : '#ddd'; ?>; border-radius: 8px; padding: 15px; transition: all 0.3s; text-align: center; position: relative; <?php echo $is_premium ? 'opacity: 0.7; background: #fffbf0;' : ''; ?>" title="<?php echo $is_premium ? 'Premium - Toggle Plus Required' : 'Free'; ?>">
+            <label class="theme-option <?php echo $is_premium ? 'premium-locked' : ''; ?>" style="cursor: <?php echo $is_premium ? 'not-allowed' : 'pointer'; ?>; border: 2px solid <?php echo $is_premium ? '#f0ad4e' : '#ddd'; ?>; border-radius: 8px; padding: 15px; transition: all 0.3s; text-align: center; position: relative; <?php echo $is_premium ? 'opacity: 0.7; background: #fffbf0;' : ''; ?>" title="<?php echo $is_premium ? 'Premium - Toggle+ Required' : 'Free'; ?>">
                 <input type="radio" name="syntekpro_toggle_options[toggle_theme]" value="<?php echo esc_attr($key); ?>" <?php checked($options['toggle_theme'], $key); echo $is_premium ? ' disabled' : ''; ?> style="margin-bottom: 10px;">
                 
                 <!-- Premium Lock Badge -->
@@ -2081,7 +2081,7 @@ function syntekpro_toggle_theme_callback() {
         <?php endforeach; ?>
     </div>
     <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 12px; border-radius: 6px; margin-top: 15px; font-size: 13px; color: #856404;">
-        <strong>💡 Tip:</strong> Lock icons indicate premium features. <a href="?page=syntekpro-toggle-plus" style="color: #0066cc; text-decoration: none; font-weight: 600;">Unlock all features with Toggle Plus →</a>
+        <strong>💡 Tip:</strong> Lock icons indicate premium features. <a href="?page=syntekpro-toggle-plus" style="color: #0066cc; text-decoration: none; font-weight: 600;">Unlock all features with Toggle+ →</a>
     </div>
     <style>
         .theme-option:hover:not(.premium-locked) { border-color: #2271b1; background: #f0f6fc; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
@@ -2340,7 +2340,7 @@ function syntekpro_toggle_color_preset_callback() {
         </div>
     </div>
     <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 12px; border-radius: 6px; margin-top: 15px; font-size: 13px; color: #856404; display: <?php echo $options['color_scheme_mode'] !== 'preset' ? 'none' : 'block'; ?>">
-        <strong>💡 Tip:</strong> Lock icons indicate premium presets. <a href="?page=syntekpro-toggle-plus" style="color: #0066cc; text-decoration: none; font-weight: 600;">Get Toggle Plus for all presets →</a>
+        <strong>💡 Tip:</strong> Lock icons indicate premium presets. <a href="?page=syntekpro-toggle-plus" style="color: #0066cc; text-decoration: none; font-weight: 600;">Get Toggle+ for all presets →</a>
     </div>
     <style>
         /* Preset Grid */
@@ -4043,24 +4043,24 @@ function syntekpro_toggle_about_page() {
 }
 
 /**
- * Toggle Plus Premium Features Page
+ * Toggle+ Premium Features Page
  */
 function syntekpro_toggle_plus_page() {
     if (!current_user_can('manage_options')) {
         return;
     }
     
-    syntekpro_toggle_page_header('Toggle Plus - Premium Features');
+    syntekpro_toggle_page_header('Toggle+ - Premium Features');
     ?>
     <div class="syntekpro-content-wrapper">
         <div class="syntekpro-main-content">
             
             <!-- Hero Section -->
-            <div class="syntekpro-premium-hero" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 40px; border-radius: 12px; margin-bottom: 40px; text-align: center;">
-                <h2 style="color: white; margin: 0 0 15px 0; font-size: 2.5em; font-weight: 700;">✨ Toggle Plus</h2>
-                <p style="font-size: 1.3em; margin: 0 0 25px 0; opacity: 0.95;">Unlock Premium Features & Take Your Dark Mode to the Next Level</p>
-                <a href="https://plugins.syntekpro.com/toggle-plus" target="_blank" rel="noopener noreferrer" class="button button-light" style="background: white; color: #667eea; border-color: white; font-size: 16px; padding: 12px 30px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;">
-                    🚀 Upgrade to Toggle Plus
+            <div class="syntekpro-premium-hero" style="background: #ffffff; border: 2px solid #e0e0e0; color: #333; padding: 60px 40px; border-radius: 12px; margin-bottom: 40px; text-align: center;">
+                <h2 style="color: #333; margin: 0 0 15px 0; font-size: 2.5em; font-weight: 700;">Toggle+</h2>
+                <p style="font-size: 1.3em; margin: 0 0 25px 0; color: #555;">Unlock Premium Features & Take Your Dark Mode to the Next Level</p>
+                <a href="https://plugins.syntekpro.com/toggle-plus" target="_blank" rel="noopener noreferrer" class="button button-light" style="background: #667eea; color: white; border-color: #667eea; font-size: 16px; padding: 12px 30px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;">
+                    🚀 Upgrade to Toggle+
                 </a>
             </div>
             
@@ -4072,7 +4072,7 @@ function syntekpro_toggle_plus_page() {
                         <tr style="background: #f8f9ff; border-bottom: 2px solid #e0e0e0;">
                             <th style="padding: 20px; text-align: left; font-weight: 600; color: #333;">Feature</th>
                             <th style="padding: 20px; text-align: center; font-weight: 600; color: #333;">Free Edition</th>
-                            <th style="padding: 20px; text-align: center; font-weight: 600; color: #667eea;">Toggle Plus</th>
+                            <th style="padding: 20px; text-align: center; font-weight: 600; color: #667eea;">Toggle+</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -4132,7 +4132,7 @@ function syntekpro_toggle_plus_page() {
             
             <!-- Why Upgrade -->
             <div style="background: #f0f6ff; border-left: 4px solid #667eea; padding: 30px; border-radius: 8px; margin-bottom: 40px;">
-                <h3 style="color: #667eea; margin-top: 0;">💡 Why Upgrade to Toggle Plus?</h3>
+                <h3 style="color: #667eea; margin-top: 0;">💡 Why Upgrade to Toggle+?</h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div>
                         <h4 style="color: #333; margin-bottom: 8px;">🎨 Unlimited Customization</h4>
@@ -4154,13 +4154,13 @@ function syntekpro_toggle_plus_page() {
             </div>
             
             <!-- Upgrade CTA -->
-            <div style="text-align: center; padding: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; color: white;">
-                <h2 style="color: white; margin-top: 0;">Ready to Unlock Premium Features?</h2>
-                <p style="font-size: 1.1em; margin-bottom: 25px;">Join thousands of WordPress users enjoying the full power of Syntekpro Toggle</p>
-                <a href="https://plugins.syntekpro.com/toggle-plus" target="_blank" rel="noopener noreferrer" class="button button-light" style="background: white; color: #667eea; border-color: white; font-size: 16px; padding: 14px 40px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;">
-                    🚀 Upgrade Now - Get Toggle Plus
+            <div style="text-align: center; padding: 40px; background: #ffffff; border: 2px solid #667eea; border-radius: 12px; color: #333;">
+                <h2 style="color: #333; margin-top: 0;">Ready to Unlock Premium Features?</h2>
+                <p style="font-size: 1.1em; margin-bottom: 25px; color: #555;">Join thousands of WordPress users enjoying the full power of Syntekpro Toggle</p>
+                <a href="https://plugins.syntekpro.com/toggle-plus" target="_blank" rel="noopener noreferrer" class="button button-light" style="background: #667eea; color: white; border-color: #667eea; font-size: 16px; padding: 14px 40px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;">
+                    🚀 Upgrade Now - Get Toggle+
                 </a>
-                <p style="margin: 20px 0 0 0; opacity: 0.9; font-size: 0.95em;">30-day money-back guarantee • No questions asked</p>
+                <p style="margin: 20px 0 0 0; color: #666; font-size: 0.95em;">30-day money-back guarantee • No questions asked</p>
             </div>
         </div>
     </div>
@@ -4176,7 +4176,7 @@ function syntekpro_toggle_plugins_page() {
         return;
     }
     
-    syntekpro_toggle_page_header('Our Plugins - By SyntekPro');
+    syntekpro_toggle_page_header('Other Plugins - By SyntekPro');
     
     // Plugin data
     $plugins = array(
@@ -4213,9 +4213,9 @@ function syntekpro_toggle_plugins_page() {
         <div class="syntekpro-main-content">
             
             <!-- Hero Section -->
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 50px 40px; border-radius: 12px; margin-bottom: 40px; text-align: center;">
-                <h2 style="color: white; margin: 0 0 10px 0; font-size: 2.2em; font-weight: 700;">🚀 SyntekPro Plugins Suite</h2>
-                <p style="font-size: 1.1em; margin: 0; opacity: 0.95;">Powerful WordPress plugins built for professionals</p>
+            <div style="background: #ffffff; border: 2px solid #e0e0e0; color: #333; padding: 50px 40px; border-radius: 12px; margin-bottom: 40px; text-align: center;">
+                <h2 style="color: #333; margin: 0 0 10px 0; font-size: 2.2em; font-weight: 700;">🚀 SyntekPro Plugins Suite</h2>
+                <p style="font-size: 1.1em; margin: 0; color: #555;">Powerful WordPress plugins built for professionals</p>
             </div>
             
             <!-- Plugin Cards -->
@@ -4285,10 +4285,10 @@ function syntekpro_toggle_plugins_page() {
             </div>
             
             <!-- Connect CTA -->
-            <div style="text-align: center; padding: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; color: white;">
-                <h2 style="color: white; margin-top: 0;">Want to Explore More?</h2>
-                <p style="font-size: 1em; margin-bottom: 25px;">Visit all our plugins and extensions on SyntekPro.com</p>
-                <a href="https://plugins.syntekpro.com" target="_blank" rel="noopener noreferrer" class="button button-light" style="background: white; color: #667eea; border-color: white; font-size: 15px; padding: 12px 35px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;">
+            <div style="text-align: center; padding: 40px; background: #ffffff; border: 2px solid #667eea; border-radius: 12px; color: #333;">
+                <h2 style="color: #333; margin-top: 0;">Want to Explore More?</h2>
+                <p style="font-size: 1em; margin-bottom: 25px; color: #555;">Visit all our plugins and extensions on SyntekPro.com</p>
+                <a href="https://plugins.syntekpro.com" target="_blank" rel="noopener noreferrer" class="button button-light" style="background: #667eea; color: white; border-color: #667eea; font-size: 15px; padding: 12px 35px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;">
                     🌐 Visit Our Store
                 </a>
             </div>
