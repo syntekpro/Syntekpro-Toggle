@@ -2008,6 +2008,26 @@ function syntekpro_toggle_button_size_callback() {
     <?php
 }
 
+/**
+ * Check if a feature is premium (requires Toggle Plus)
+ */
+function syntekpro_toggle_is_premium_feature($feature_type, $feature_id) {
+    // Features 1-5 are free (indices 0-4)
+    if ($feature_type === 'theme') {
+        $free_themes = array(
+            'default', 'minimal', 'neumorphic', 'glassmorphic', 'neon'
+        );
+        return !in_array($feature_id, $free_themes, true);
+    }
+    
+    // Only 'default' preset is free
+    if ($feature_type === 'preset') {
+        return $feature_id !== 'default';
+    }
+    
+    return false;
+}
+
 function syntekpro_toggle_theme_callback() {
     $options = syntekpro_toggle_get_options();
     $themes = array(
@@ -2034,22 +2054,39 @@ function syntekpro_toggle_theme_callback() {
     );
     ?>
     <div class="syntekpro-toggle-themes-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-top: 10px;">
-        <?php foreach ($themes as $key => $theme): ?>
-            <label class="theme-option" style="cursor: pointer; border: 2px solid #ddd; border-radius: 8px; padding: 15px; transition: all 0.3s; text-align: center;">
-                <input type="radio" name="syntekpro_toggle_options[toggle_theme]" value="<?php echo esc_attr($key); ?>" <?php checked($options['toggle_theme'], $key); ?> style="margin-bottom: 10px;">
+        <?php foreach ($themes as $key => $theme):
+            $is_premium = syntekpro_toggle_is_premium_feature('theme', $key);
+        ?>
+            <label class="theme-option <?php echo $is_premium ? 'premium-locked' : ''; ?>" style="cursor: <?php echo $is_premium ? 'not-allowed' : 'pointer'; ?>; border: 2px solid <?php echo $is_premium ? '#f0ad4e' : '#ddd'; ?>; border-radius: 8px; padding: 15px; transition: all 0.3s; text-align: center; position: relative; <?php echo $is_premium ? 'opacity: 0.7; background: #fffbf0;' : ''; ?>" title="<?php echo $is_premium ? 'Premium - Toggle Plus Required' : 'Free'; ?>">
+                <input type="radio" name="syntekpro_toggle_options[toggle_theme]" value="<?php echo esc_attr($key); ?>" <?php checked($options['toggle_theme'], $key); echo $is_premium ? ' disabled' : ''; ?> style="margin-bottom: 10px;">
+                
+                <!-- Premium Lock Badge -->
+                <?php if ($is_premium): ?>
+                <div style="position: absolute; top: 8px; right: 8px; background: #f0ad4e; color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                    🔒
+                </div>
+                <?php endif; ?>
+                
                 <div class="theme-preview syntekpro-theme-<?php echo esc_attr($key); ?>" style="width: 50px; height: 50px; margin: 0 auto 10px; position: relative; display: flex; align-items: center; justify-content: center;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
                 </div>
                 <strong style="display: block; margin-bottom: 3px;"><?php echo esc_html($theme['name']); ?></strong>
-                <span style="font-size: 11px; color: #666; display: block;"><?php echo esc_html($theme['desc']); ?></span>
+                <span style="font-size: 11px; color: <?php echo $is_premium ? '#f0ad4e' : '#666'; ?>; display: block;">
+                    <?php echo esc_html($theme['desc']); ?>
+                    <?php echo $is_premium ? '<br><strong style="color: #f0ad4e;">🔒 Premium</strong>' : ''; ?>
+                </span>
             </label>
         <?php endforeach; ?>
     </div>
+    <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 12px; border-radius: 6px; margin-top: 15px; font-size: 13px; color: #856404;">
+        <strong>💡 Tip:</strong> Lock icons indicate premium features. <a href="?page=syntekpro-toggle-plus" style="color: #0066cc; text-decoration: none; font-weight: 600;">Unlock all features with Toggle Plus →</a>
+    </div>
     <style>
-        .theme-option:hover { border-color: #2271b1; background: #f0f6fc; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .theme-option:hover:not(.premium-locked) { border-color: #2271b1; background: #f0f6fc; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         .theme-option:has(input[type="radio"]:checked) { border-color: #2271b1; border-width: 3px; background: #f0f6fc; }
+        .premium-locked:hover { border-color: #f0ad4e; opacity: 0.7; }
         
         /* Theme Preview Styles */
         .syntekpro-theme-default { background: #333; color: #fff; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
@@ -2249,9 +2286,17 @@ function syntekpro_toggle_color_preset_callback() {
     </div>
     <div id="preset-container" style="<?php echo $options['color_scheme_mode'] !== 'preset' ? 'display:none;' : ''; ?>">
         <div class="syntekpro-preset-grid">
-            <?php foreach ($presets as $key => $preset): ?>
-                <label class="syntekpro-preset-card">
-                    <input type="radio" name="syntekpro_toggle_options[color_preset]" value="<?php echo esc_attr($key); ?>" <?php checked($options['color_preset'], $key); ?>>
+            <?php foreach ($presets as $key => $preset):
+                $is_premium = syntekpro_toggle_is_premium_feature('preset', $key);
+            ?>
+                <label class="syntekpro-preset-card <?php echo $is_premium ? 'premium-locked' : ''; ?>" style="<?php echo $is_premium ? 'opacity: 0.7; background: #fffbf0; border-color: #f0ad4e;' : ''; ?>">
+                    <input type="radio" name="syntekpro_toggle_options[color_preset]" value="<?php echo esc_attr($key); ?>" <?php checked($options['color_preset'], $key); echo $is_premium ? ' disabled' : ''; ?>>
+                    
+                    <?php if ($is_premium): ?>
+                    <div style="position: absolute; top: 8px; right: 8px; background: #f0ad4e; color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 5;">
+                        🔒
+                    </div>
+                    <?php endif; ?>
                     
                     <!-- Mini Browser Window Preview -->
                     <div class="preset-window" style="background: <?php echo esc_attr($preset['bg']); ?>;">
@@ -2277,7 +2322,12 @@ function syntekpro_toggle_color_preset_callback() {
                         
                         <!-- Theme Name Badge -->
                         <div class="window-footer" style="color: <?php echo esc_attr($preset['text']); ?>;">
-                            <?php echo esc_html($preset['name']); ?>
+                            <?php 
+                            echo esc_html($preset['name']);
+                            if ($is_premium) {
+                                echo '<div style="font-size: 9px; margin-top: 2px; color: #f0ad4e;">🔒 PREMIUM</div>';
+                            }
+                            ?>
                         </div>
                         
                         <!-- Selected Label -->
@@ -2288,6 +2338,9 @@ function syntekpro_toggle_color_preset_callback() {
                 </label>
             <?php endforeach; ?>
         </div>
+    </div>
+    <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 12px; border-radius: 6px; margin-top: 15px; font-size: 13px; color: #856404; display: <?php echo $options['color_scheme_mode'] !== 'preset' ? 'none' : 'block'; ?>">
+        <strong>💡 Tip:</strong> Lock icons indicate premium presets. <a href="?page=syntekpro-toggle-plus" style="color: #0066cc; text-decoration: none; font-weight: 600;">Get Toggle Plus for all presets →</a>
     </div>
     <style>
         /* Preset Grid */
@@ -2314,6 +2367,10 @@ function syntekpro_toggle_color_preset_callback() {
             position: relative;
         }
         
+        .syntekpro-preset-card.premium-locked {
+            cursor: not-allowed;
+        }
+        
         .syntekpro-preset-card input[type="radio"] {
             position: absolute;
             opacity: 0;
@@ -2324,6 +2381,12 @@ function syntekpro_toggle_color_preset_callback() {
             border-color: #2271b1;
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(34, 113, 177, 0.2);
+        }
+        
+        .syntekpro-preset-card.premium-locked:hover {
+            border-color: #f0ad4e;
+            transform: none;
+            box-shadow: 0 4px 8px rgba(240, 173, 78, 0.2);
         }
         
         .syntekpro-preset-card:has(input:checked) {
