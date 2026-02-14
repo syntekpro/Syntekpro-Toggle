@@ -2251,6 +2251,11 @@ function syntekpro_toggle_color_preset_callback() {
                         <div class="window-footer" style="color: <?php echo esc_attr($preset['text']); ?>;">
                             <?php echo esc_html($preset['name']); ?>
                         </div>
+                        
+                        <!-- Selected Label -->
+                        <div class="preset-selected-label" style="display: none; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(34, 113, 177, 0.9); color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; white-space: nowrap;">
+                            SELECTED
+                        </div>
                     </div>
                 </label>
             <?php endforeach; ?>
@@ -2297,6 +2302,31 @@ function syntekpro_toggle_color_preset_callback() {
             border-color: #2271b1;
             border-width: 3px;
             box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.1);
+        }
+        
+        /* Checkmark indicator */
+        .syntekpro-preset-card:has(input:checked)::after {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #2271b1;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(34, 113, 177, 0.4);
+        }
+        
+        /* Selected label */
+        .syntekpro-preset-card:has(input:checked) .preset-selected-label {
+            display: flex;
         }
         
         /* Window Structure */
@@ -2856,6 +2886,11 @@ function syntekpro_toggle_admin_color_preset_callback() {
                         <div class="admin-window-footer" style="color: <?php echo esc_attr($preset['text']); ?>;">
                             <?php echo esc_html($preset['name']); ?>
                         </div>
+                        
+                        <!-- Selected Label -->
+                        <div class="admin-preset-selected-label" style="display: none; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(37, 99, 235, 0.9); color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; white-space: nowrap;">
+                            SELECTED
+                        </div>
                     </div>
                 </label>
             <?php endforeach; ?>
@@ -2904,6 +2939,31 @@ function syntekpro_toggle_admin_color_preset_callback() {
             border-color: #2563eb;
             border-width: 3px;
             box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+        }
+        
+        /* Admin checkmark indicator */
+        .syntekpro-admin-preset-card:has(input:checked)::after {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #2563eb;
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 15px;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+        }
+        
+        /* Admin selected label */
+        .syntekpro-admin-preset-card:has(input:checked) .admin-preset-selected-label {
+            display: flex;
         }
         
         /* Admin Window Structure */
