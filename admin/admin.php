@@ -52,6 +52,24 @@ function syntekpro_toggle_admin_menu() {
         'syntekpro-toggle-about',
         'syntekpro_toggle_about_page'
     );
+    
+    add_submenu_page(
+        'syntekpro-toggle',
+        'Toggle Plus',
+        '⭐ Toggle Plus',
+        'manage_options',
+        'syntekpro-toggle-plus',
+        'syntekpro_toggle_plus_page'
+    );
+    
+    add_submenu_page(
+        'syntekpro-toggle',
+        'Our Plugins',
+        'Our Plugins',
+        'manage_options',
+        'syntekpro-toggle-plugins',
+        'syntekpro_toggle_plugins_page'
+    );
 }
 add_action('admin_menu', 'syntekpro_toggle_admin_menu');
 
@@ -3954,6 +3972,262 @@ function syntekpro_toggle_about_page() {
                 <a href="https://twitter.com/syntekpro" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin: 0 8px; color: #667eea; text-decoration: none; font-size: 1.5em;" title="Twitter">𝕏</a>
                 <a href="https://facebook.com/syntekpro" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin: 0 8px; color: #667eea; text-decoration: none; font-size: 1.5em;" title="Facebook">f</a>
                 <a href="https://github.com/syntekpro" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin: 0 8px; color: #667eea; text-decoration: none; font-size: 1.5em;" title="GitHub">◎</a>
+            </div>
+        </div>
+    </div>
+    <?php
+    syntekpro_toggle_page_footer();
+}
+
+/**
+ * Toggle Plus Premium Features Page
+ */
+function syntekpro_toggle_plus_page() {
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+    
+    syntekpro_toggle_page_header('Toggle Plus - Premium Features');
+    ?>
+    <div class="syntekpro-content-wrapper">
+        <div class="syntekpro-main-content">
+            
+            <!-- Hero Section -->
+            <div class="syntekpro-premium-hero" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 40px; border-radius: 12px; margin-bottom: 40px; text-align: center;">
+                <h2 style="color: white; margin: 0 0 15px 0; font-size: 2.5em; font-weight: 700;">✨ Toggle Plus</h2>
+                <p style="font-size: 1.3em; margin: 0 0 25px 0; opacity: 0.95;">Unlock Premium Features & Take Your Dark Mode to the Next Level</p>
+                <a href="https://plugins.syntekpro.com/toggle-plus" target="_blank" rel="noopener noreferrer" class="button button-light" style="background: white; color: #667eea; border-color: white; font-size: 16px; padding: 12px 30px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;">
+                    🚀 Upgrade to Toggle Plus
+                </a>
+            </div>
+            
+            <!-- Feature Comparison -->
+            <h2 style="text-align: center; margin-top: 50px; margin-bottom: 30px;">🎯 Features Comparison</h2>
+            <div class="syntekpro-comparison-table" style="overflow-x: auto; margin-bottom: 40px;">
+                <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <thead>
+                        <tr style="background: #f8f9ff; border-bottom: 2px solid #e0e0e0;">
+                            <th style="padding: 20px; text-align: left; font-weight: 600; color: #333;">Feature</th>
+                            <th style="padding: 20px; text-align: center; font-weight: 600; color: #333;">Free Edition</th>
+                            <th style="padding: 20px; text-align: center; font-weight: 600; color: #667eea;">Toggle Plus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 18px 20px; color: #555;">Basic Dark Mode Toggle</td>
+                            <td style="padding: 18px 20px; text-align: center;">✅</td>
+                            <td style="padding: 18px 20px; text-align: center;✅</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0; background: #fafafa;">
+                            <td style="padding: 18px 20px; color: #555;">36 Button Themes</td>
+                            <td style="padding: 18px 20px; text-align: center;">✅ (5 Free)</td>
+                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;">✅ All 36</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 18px 20px; color: #555;">20 Color Presets</td>
+                            <td style="padding: 18px 20px; text-align: center;">✅ (1 Free)</td>
+                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;">✅ All 20</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0; background: #fafafa;">
+                            <td style="padding: 18px 20px; color: #555;">Shape & Animation Options</td>
+                            <td style="padding: 18px 20px; text-align: center;">✅</td>
+                            <td style="padding: 18px 20px; text-align: center;✅</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 18px 20px; color: #555;">Admin Dark Mode</td>
+                            <td style="padding: 18px 20px; text-align: center;">✅</td>
+                            <td style="padding: 18px 20px; text-align: center;✅</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0; background: #fafafa;">
+                            <td style="padding: 18px 20px; color: #555;">Analytics Dashboard</td>
+                            <td style="padding: 18px 20px; text-align: center;">✅ (Basic)</td>
+                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;">✅ Advanced</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 18px 20px; color: #555;">Media Filters (Images, Videos)</td>
+                            <td style="padding: 18px 20px; text-align: center;">✅</td>
+                            <td style="padding: 18px 20px; text-align: center;✅</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0; background: #fafafa;">
+                            <td style="padding: 18px 20px; color: #555;">Premium Support</td>
+                            <td style="padding: 18px 20px; text-align: center;"></td>
+                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;">✅ Priority</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 18px 20px; color: #555;">Beta Features Access</td>
+                            <td style="padding: 18px 20px; text-align: center;"></td>
+                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;">✅</td>
+                        </tr>
+                        <tr style="background: #fafafa;">
+                            <td style="padding: 18px 20px; color: #555;">Advanced Custom CSS</td>
+                            <td style="padding: 18px 20px; text-align: center;"></td>
+                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;">✅</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Why Upgrade -->
+            <div style="background: #f0f6ff; border-left: 4px solid #667eea; padding: 30px; border-radius: 8px; margin-bottom: 40px;">
+                <h3 style="color: #667eea; margin-top: 0;">💡 Why Upgrade to Toggle Plus?</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <h4 style="color: #333; margin-bottom: 8px;">🎨 Unlimited Customization</h4>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;">Access all 36 premium button themes and 20 carefully curated color schemes</p>
+                    </div>
+                    <div>
+                        <h4 style="color: #333; margin-bottom: 8px;">📊 Advanced Analytics</h4>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;">Get detailed insights into user behavior and dark mode preferences</p>
+                    </div>
+                    <div>
+                        <h4 style="color: #333; margin-bottom: 8px;">🚀 Early Access</h4>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;">Be the first to access new features and beta testing opportunities</p>
+                    </div>
+                    <div>
+                        <h4 style="color: #333; margin-bottom: 8px;">💬 Priority Support</h4>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;">Get faster response times and dedicated support from our team</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Upgrade CTA -->
+            <div style="text-align: center; padding: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; color: white;">
+                <h2 style="color: white; margin-top: 0;">Ready to Unlock Premium Features?</h2>
+                <p style="font-size: 1.1em; margin-bottom: 25px;">Join thousands of WordPress users enjoying the full power of Syntekpro Toggle</p>
+                <a href="https://plugins.syntekpro.com/toggle-plus" target="_blank" rel="noopener noreferrer" class="button button-light" style="background: white; color: #667eea; border-color: white; font-size: 16px; padding: 14px 40px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;">
+                    🚀 Upgrade Now - Get Toggle Plus
+                </a>
+                <p style="margin: 20px 0 0 0; opacity: 0.9; font-size: 0.95em;">30-day money-back guarantee • No questions asked</p>
+            </div>
+        </div>
+    </div>
+    <?php
+    syntekpro_toggle_page_footer();
+}
+
+/**
+ * Other Plugins Showcase Page
+ */
+function syntekpro_toggle_plugins_page() {
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+    
+    syntekpro_toggle_page_header('Our Plugins - By SyntekPro');
+    
+    // Plugin data
+    $plugins = array(
+        array(
+            'name' => 'SyntekPro Forms',
+            'icon' => '📝',
+            'tagline' => 'Advanced WordPress Form Builder',
+            'description' => 'Create powerful forms with conditional logic, email notifications, payment integration, and advanced routing. Perfect for lead capture, surveys, contact forms, and more.',
+            'features' => array('30+ Field Types', 'Conditional Logic', 'Payment Processing', 'Email Routing', 'Multi-page Forms'),
+            'url' => 'https://plugins.syntekpro.com/syntekpro-forms',
+            'color' => '#FF6B6B'
+        ),
+        array(
+            'name' => 'SyntekPro Animations',
+            'icon' => '✨',
+            'tagline' => 'Pure CSS & JavaScript Animations',
+            'description' => 'Add stunning animations and transitions to any WordPress element without jQuery. Smooth scroll effects, fade-ins, slide animations, and more with incredible performance.',
+            'features' => array('50+ Animations', 'Scroll Triggers', 'Entry Effects', 'Loop Animation', '60 FPS Performance'),
+            'url' => 'https://plugins.syntekpro.com/syntekpro-animations',
+            'color' => '#4ECDC4'
+        ),
+        array(
+            'name' => 'SyntekPro License Server',
+            'icon' => '🔐',
+            'tagline' => 'License Management & Product Activation',
+            'description' => 'Manage software licenses, product keys, and user activations. Perfect for selling plugins, themes, software, or digital products with built-in security and analytics.',
+            'features' => array('License Generation', 'Activation Tracking', 'API Integration', 'License Revocation', 'Sales Analytics'),
+            'url' => 'https://plugins.syntekpro.com/syntekpro-license-server',
+            'color' => '#9B59B6'
+        )
+    );
+    ?>
+    <div class="syntekpro-content-wrapper">
+        <div class="syntekpro-main-content">
+            
+            <!-- Hero Section -->
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 50px 40px; border-radius: 12px; margin-bottom: 40px; text-align: center;">
+                <h2 style="color: white; margin: 0 0 10px 0; font-size: 2.2em; font-weight: 700;">🚀 SyntekPro Plugins Suite</h2>
+                <p style="font-size: 1.1em; margin: 0; opacity: 0.95;">Powerful WordPress plugins built for professionals</p>
+            </div>
+            
+            <!-- Plugin Cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 40px;">
+                <?php foreach ($plugins as $plugin): ?>
+                <div class="syntekpro-plugin-card" style="background: white; border: 2px solid #e0e0e0; border-radius: 12px; padding: 30px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    <div style="font-size: 3em; margin-bottom: 15px; text-align: center; line-height: 1;">
+                        <?php echo $plugin['icon']; ?>
+                    </div>
+                    <h3 style="color: #333; margin: 0 0 5px 0; font-size: 1.3em; text-align: center;">
+                        <?php echo esc_html($plugin['name']); ?>
+                    </h3>
+                    <p style="color: #667eea; margin: 0 0 15px 0; font-size: 0.95em; text-align: center; font-weight: 600;">
+                        <?php echo esc_html($plugin['tagline']); ?>
+                    </p>
+                    <div style="height: 2px; background: <?php echo esc_attr($plugin['color']); ?>; margin: 15px 0; border-radius: 1px;"></div>
+                    <p style="color: #555; margin: 15px 0; line-height: 1.6; font-size: 0.95em;">
+                        <?php echo esc_html($plugin['description']); ?>
+                    </p>
+                    
+                    <!-- Features Badges -->
+                    <div style="margin: 20px 0;">
+                        <?php foreach ($plugin['features'] as $feature): ?>
+                        <span style="display: inline-block; background: #f0f6ff; color: #333; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; margin-right: 8px; margin-bottom: 8px; border-left: 3px solid <?php echo esc_attr($plugin['color']); ?>;">
+                            ✓ <?php echo esc_html($feature); ?>
+                        </span>
+                        <?php endforeach; ?>
+                    </div>
+                    
+                    <!-- CTA Button -->
+                    <a href="<?php echo esc_url($plugin['url']); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary" style="width: 100%; text-align: center; display: block; background: <?php echo esc_attr($plugin['color']); ?>; border-color: <?php echo esc_attr($plugin['color']); ?>; color: white; font-weight: 600; padding: 12px; border-radius: 6px; text-decoration: none; margin-top: 20px; cursor: pointer; transition: all 0.3s;">
+                        Learn More →
+                    </a>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            
+            <!-- Why SyntekPro -->
+            <div style="background: #f8f9ff; border-left: 4px solid #667eea; padding: 40px; border-radius: 12px; margin-bottom: 40px;">
+                <h2 style="color: #333; margin-top: 0; text-align: center;">💼 Why Choose SyntekPro?</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px; margin-top: 25px;">
+                    <div style="text-align: center;">
+                        <h3 style="color: #667eea; margin: 0 0 10px 0;">🏆 Professional</h3>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;">Built by experienced WordPress developers for enterprise-grade performance</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="color: #667eea; margin: 0 0 10px 0;">🔒 Secure</h3>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;">Security-first approach with regular updates and professional support</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="color: #667eea; margin: 0 0 10px 0;">⚡ Fast</h3>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;">Optimized for performance with minimal overhead and smart caching</p>
+                    </div>
+                    <div style="text-align: center; padding-top: 15px; border-top: 1px solid #e0e0e0; margin-top: 15px;">
+                        <h3 style="color: #667eea; margin: 0 0 10px 0;">📞 Support</h3>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;">Dedicated support team ready to help you succeed</p>
+                    </div>
+                    <div style="text-align: center; padding-top: 15px; border-top: 1px solid #e0e0e0; margin-top: 15px;">
+                        <h3 style="color: #667eea; margin: 0 0 10px 0;">🎓 Documentation</h3>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;">Comprehensive tutorials and guides for easy implementation</p>
+                    </div>
+                    <div style="text-align: center; padding-top: 15px; border-top: 1px solid #e0e0e0; margin-top: 15px;">
+                        <h3 style="color: #667eea; margin: 0 0 10px 0;">🔄 Updates</h3>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;">Regular updates with new features and improvement</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Connect CTA -->
+            <div style="text-align: center; padding: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; color: white;">
+                <h2 style="color: white; margin-top: 0;">Want to Explore More?</h2>
+                <p style="font-size: 1em; margin-bottom: 25px;">Visit all our plugins and extensions on SyntekPro.com</p>
+                <a href="https://plugins.syntekpro.com" target="_blank" rel="noopener noreferrer" class="button button-light" style="background: white; color: #667eea; border-color: white; font-size: 15px; padding: 12px 35px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;">
+                    🌐 Visit Our Store
+                </a>
             </div>
         </div>
     </div>
