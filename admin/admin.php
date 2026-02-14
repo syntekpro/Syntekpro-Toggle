@@ -3002,7 +3002,7 @@ function syntekpro_toggle_page_header($page_title = 'Toggle Settings') {
             <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-toggle-logo%20New.png'); ?>" alt="Syntekpro Toggle" class="syntekpro-header-logo">
             <div class="syntekpro-header-version">Version <?php echo esc_html(SYNTEKPRO_TOGGLE_VERSION); ?></div>
         </div>
-        <h1 style="text-align: center; margin: 30px 0;"><?php echo esc_html($page_title); ?></h1>
+        <h1 style="text-align: center; margin: 30px 0; color: #000000; font-weight: 700;"><?php echo esc_html($page_title); ?></h1>
     <?php
 }
 
