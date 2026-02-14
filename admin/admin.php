@@ -3786,9 +3786,9 @@ function syntekpro_toggle_about_page() {
         <!-- Main Content -->
         <div class="syntekpro-about-main" style="flex: 1;">
             <!-- Welcome Section -->
-            <div class="syntekpro-admin-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center;">
-                <h2 style="color: white; margin-top: 0; font-size: 2em;">🌓 Syntekpro Toggle</h2>
-                <p style="font-size: 1.1em; margin-bottom: 0;">The Ultimate Dark Mode Solution for WordPress</p>
+            <div class="syntekpro-admin-box" style="background: #ffffff; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; border: 1px solid #e0e0e0;">
+                <h2 style="color: #1a1a1a; margin-top: 0; font-size: 2em;">🌓 Syntekpro Toggle</h2>
+                <p style="font-size: 1.1em; margin-bottom: 0; color: #555;">The Ultimate Dark Mode Solution for WordPress</p>
             </div>
             
             <!-- About Description -->
