@@ -2196,6 +2196,11 @@ function syntekpro_toggle_color_scheme_mode_callback() {
 
 function syntekpro_toggle_color_preset_callback() {
     $options = syntekpro_toggle_get_options();
+    
+    // DEBUG: Show current values
+    $current_mode = isset($options['color_scheme_mode']) ? $options['color_scheme_mode'] : 'NOT SET';
+    $current_preset = isset($options['color_preset']) ? $options['color_preset'] : 'NOT SET';
+    
     $presets = array(
         'default' => array('name' => 'Default Dark', 'bg' => '#1a1a1a', 'text' => '#ffffff', 'link' => '#6ea8fe', 'secondary' => '#2d2d2d'),
         'midnight' => array('name' => 'Midnight Blue', 'bg' => '#0f1419', 'text' => '#e6edf3', 'link' => '#58a6ff', 'secondary' => '#1c2128'),
@@ -2219,6 +2224,11 @@ function syntekpro_toggle_color_preset_callback() {
         'rose' => array('name' => 'Rosé Pine', 'bg' => '#191724', 'text' => '#e0def4', 'link' => '#c4a7e7', 'secondary' => '#1f1d2e'),
     );
     ?>
+    <div style="background: #f0f6fc; border: 1px solid #0073aa; padding: 10px; margin: 10px 0; border-radius: 4px; font-size: 12px;">
+        <strong>Debug Info:</strong><br>
+        Color Scheme Mode: <code><?php echo esc_html($current_mode); ?></code> | 
+        Color Preset: <code><?php echo esc_html($current_preset); ?></code>
+    </div>
     <div id="preset-container" style="<?php echo $options['color_scheme_mode'] !== 'preset' ? 'display:none;' : ''; ?>">
         <div class="syntekpro-preset-grid">
             <?php foreach ($presets as $key => $preset): ?>
