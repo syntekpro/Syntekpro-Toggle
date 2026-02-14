@@ -660,6 +660,746 @@ html.dark-mode .syntekpro-toggle-btn.theme-morphing {
 }
 
 /* ===================================
+   Additional Button Designs
+   =================================== */
+
+/* Theme: Soft Shadow */
+.syntekpro-toggle-btn.theme-soft-shadow {
+    background: #fff;
+    color: #333;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-soft-shadow {
+    background: #27272a;
+    color: #fff;
+    border-color: #3f3f46;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.syntekpro-toggle-btn.theme-soft-shadow:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+}
+
+/* Theme: Outline */
+.syntekpro-toggle-btn.theme-outline {
+    background: transparent;
+    color: #333;
+    border: 3px solid #333;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-outline {
+    color: #fff;
+    border-color: #fff;
+}
+.syntekpro-toggle-btn.theme-outline:hover {
+    background: rgba(51, 51, 51, 0.1);
+    transform: scale(1.15);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Theme: Floating */
+.syntekpro-toggle-btn.theme-floating {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border: none;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3), 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-floating {
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5), 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+.syntekpro-toggle-btn.theme-floating:hover {
+    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4), 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-8px);
+}
+
+/* Theme: Glow */
+.syntekpro-toggle-btn.theme-glow {
+    background: #00d4ff;
+    color: #000;
+    border: none;
+    box-shadow: 0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 60px #00d4ff;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-glow {
+    background: #ff00ff;
+    box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff;
+}
+.syntekpro-toggle-btn.theme-glow:hover {
+    box-shadow: 0 0 30px #00d4ff, 0 0 60px #00d4ff, 0 0 90px #00d4ff, inset 0 0 10px rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+/* Theme: Brutalist */
+.syntekpro-toggle-btn.theme-brutalist {
+    background: #1a1a1a;
+    color: #fff;
+    border: 4px solid #fff;
+    box-shadow: none;
+    border-radius: 0;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-brutalist {
+    background: #fff;
+    color: #000;
+    border-color: #000;
+}
+.syntekpro-toggle-btn.theme-brutalist:hover {
+    transform: translate(2px, 2px);
+    background: #333;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-brutalist:hover {
+    background: #e0e0e0;
+}
+
+/* Theme: 3D */
+.syntekpro-toggle-btn.theme-3d {
+    background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+    border: 3px solid #0284c7;
+    box-shadow: 
+        0 5px 0 #0284c7,
+        0 10px 20px rgba(0, 0, 0, 0.3);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-3d {
+    background: linear-gradient(180deg, #ff6b9d 0%, #c44569 100%);
+    border-color: #8b2d47;
+    box-shadow: 
+        0 5px 0 #8b2d47,
+        0 10px 20px rgba(0, 0, 0, 0.5);
+}
+.syntekpro-toggle-btn.theme-3d:active {
+    transform: translate(0, 5px);
+    box-shadow: 0 0 0 #0284c7, 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Theme: Neon Pulse */
+.syntekpro-toggle-btn.theme-neon-pulse {
+    background: #0a0e27;
+    color: #0ff;
+    border: 2px solid #0ff;
+    box-shadow: 0 0 10px #0ff;
+    animation: neon-pulse 2s infinite;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-neon-pulse {
+    color: #f0f;
+    border-color: #f0f;
+    box-shadow: 0 0 10px #f0f;
+}
+.syntekpro-toggle-btn.theme-neon-pulse:hover {
+    animation-duration: 0.3s;
+}
+@keyframes neon-pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.5), inset 0 0 10px rgba(0, 255, 255, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), inset 0 0 20px rgba(0, 255, 255, 0.4); }
+}
+
+/* Theme: Aurora */
+.syntekpro-toggle-btn.theme-aurora {
+    background: linear-gradient(45deg, #00d4ff, #00ff87, #ff00d4, #00d4ff);
+    background-size: 300% 300%;
+    color: #fff;
+    border: none;
+    animation: aurora-shift 6s ease infinite;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-aurora {
+    background: linear-gradient(45deg, #ff006e, #ffbe0b, #06ffa5, #ff006e);
+    background-size: 300% 300%;
+    animation: aurora-shift 6s ease infinite;
+}
+.syntekpro-toggle-btn.theme-aurora:hover {
+    animation-duration: 1s;
+}
+@keyframes aurora-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Theme: Hologram */
+.syntekpro-toggle-btn.theme-hologram {
+    background: rgba(0, 255, 255, 0.1);
+    color: #0ff;
+    border: 2px solid #0ff;
+    box-shadow: 
+        0 0 10px #0ff,
+        inset 0 0 10px rgba(0, 255, 255, 0.3),
+        0 0 20px rgba(0, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-hologram {
+    background: rgba(255, 0, 255, 0.1);
+    color: #f0f;
+    border-color: #f0f;
+    box-shadow: 
+        0 0 10px #f0f,
+        inset 0 0 10px rgba(255, 0, 255, 0.3),
+        0 0 20px rgba(255, 0, 255, 0.2);
+}
+.syntekpro-toggle-btn.theme-hologram:hover {
+    background: rgba(0, 255, 255, 0.2);
+    box-shadow: 
+        0 0 20px #0ff,
+        inset 0 0 20px rgba(0, 255, 255, 0.5),
+        0 0 30px rgba(0, 255, 255, 0.3);
+}
+
+/* Theme: Vaporwave */
+.syntekpro-toggle-btn.theme-vaporwave {
+    background: linear-gradient(135deg, #ff006e, #d62839);
+    color: #00ff41;
+    border: 2px solid #00ff41;
+    box-shadow: 0 0 15px rgba(255, 0, 110, 0.5);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-vaporwave {
+    background: linear-gradient(135deg, #00d9ff, #0a00d9);
+    color: #ffff00;
+    border-color: #ffff00;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
+}
+.syntekpro-toggle-btn.theme-vaporwave:hover {
+    transform: scale(1.15) skew(-5deg);
+    box-shadow: 0 0 25px rgba(255, 0, 110, 0.8);
+}
+
+/* Theme: Aquamorphic */
+.syntekpro-toggle-btn.theme-aquamorphic {
+    background: linear-gradient(135deg, #0084ff, #00d4ff);
+    color: #fff;
+    border: none;
+    border-radius: 30%;
+    box-shadow: 0 8px 30px rgba(0, 132, 255, 0.4), inset -2px -2px 5px rgba(0, 0, 0, 0.1);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-aquamorphic {
+    background: linear-gradient(135deg, #ff1493, #ff69b4);
+    box-shadow: 0 8px 30px rgba(255, 20, 147, 0.4), inset -2px -2px 5px rgba(0, 0, 0, 0.3);
+}
+.syntekpro-toggle-btn.theme-aquamorphic:hover {
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    box-shadow: 0 12px 40px rgba(0, 132, 255, 0.6), inset -3px -3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Theme: Sunset */
+.syntekpro-toggle-btn.theme-sunset {
+    background: linear-gradient(135deg, #ff6b35, #f7931e, #fdb833);
+    color: #fff;
+    border: none;
+    box-shadow: 0 5px 20px rgba(255, 107, 53, 0.4);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-sunset {
+    background: linear-gradient(135deg, #1a1a6e, #0f3c5d, #0f5f8f);
+    box-shadow: 0 5px 20px rgba(15, 95, 143, 0.5);
+}
+.syntekpro-toggle-btn.theme-sunset:hover {
+    box-shadow: 0 8px 30px rgba(255, 107, 53, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Theme: Minimalist */
+.syntekpro-toggle-btn.theme-minimalist {
+    background: transparent;
+    color: #333;
+    border: 2px solid #333;
+    box-shadow: none;
+    width: 50px;
+    height: 50px;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-minimalist {
+    color: #fff;
+    border-color: #fff;
+}
+.syntekpro-toggle-btn.theme-minimalist:hover {
+    background: #333;
+    color: #fff;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-minimalist:hover {
+    background: #fff;
+    color: #333;
+}
+
+/* Theme: Cyber */
+.syntekpro-toggle-btn.theme-cyber {
+    background: #000;
+    color: #0f0;
+    border: 2px solid #0f0;
+    box-shadow: 0 0 5px #0f0, inset 0 0 5px rgba(0, 255, 0, 0.2);
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+}
+html.dark-mode .syntekpro-toggle-btn.theme-cyber {
+    color: #ff00ff;
+    border-color: #ff00ff;
+    box-shadow: 0 0 5px #ff00ff, inset 0 0 5px rgba(255, 0, 255, 0.2);
+}
+.syntekpro-toggle-btn.theme-cyber:hover {
+    box-shadow: 0 0 15px #0f0, inset 0 0 10px rgba(0, 255, 0, 0.3);
+    transform: scale(1.08);
+}
+
+/* Theme: Gemstone */
+.syntekpro-toggle-btn.theme-gemstone {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    color: #333;
+    border: 3px solid #ff9a56;
+    box-shadow: 0 4px 15px rgba(255, 154, 86, 0.3), inset 0 -2px 5px rgba(255, 255, 255, 0.5);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-gemstone {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-color: #ffd89b;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5), inset 0 -2px 5px rgba(255, 255, 255, 0.2);
+}
+.syntekpro-toggle-btn.theme-gemstone:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 6px 20px rgba(255, 154, 86, 0.4), inset 0 -3px 8px rgba(255, 255, 255, 0.6);
+}
+
+/* Theme: Monochrome */
+.syntekpro-toggle-btn.theme-monochrome {
+    background: #808080;
+    color: #fff;
+    border: 2px solid #404040;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-monochrome {
+    background: #b0b0b0;
+    color: #000;
+    border-color: #d0d0d0;
+}
+.syntekpro-toggle-btn.theme-monochrome:hover {
+    background: #707070;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-monochrome:hover {
+    background: #a0a0a0;
+}
+
+/* Theme: Frosted Ice */
+.syntekpro-toggle-btn.theme-frosted {
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+html.dark-mode .syntekpro-toggle-btn.theme-frosted {
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+.syntekpro-toggle-btn.theme-frosted:hover {
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+}
+
+/* ===================================
+   Button Size Variations
+   =================================== */
+
+/* Size: Extra Small */
+.syntekpro-toggle-btn.size-xs {
+    width: 40px;
+    height: 40px;
+}
+
+.syntekpro-toggle-btn.size-xs svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Size: Small */
+.syntekpro-toggle-btn.size-sm {
+    width: 45px;
+    height: 45px;
+}
+
+.syntekpro-toggle-btn.size-sm svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Size: Large */
+.syntekpro-toggle-btn.size-lg {
+    width: 60px;
+    height: 60px;
+}
+
+.syntekpro-toggle-btn.size-lg svg {
+    width: 28px;
+    height: 28px;
+}
+
+/* Size: Extra Large */
+.syntekpro-toggle-btn.size-xl {
+    width: 70px;
+    height: 70px;
+}
+
+.syntekpro-toggle-btn.size-xl svg {
+    width: 32px;
+    height: 32px;
+}
+
+/* ===================================
+   Button Shape Variations
+   =================================== */
+
+/* Shape: Pill (elongated horizontal) */
+.syntekpro-toggle-btn.shape-pill {
+    width: 120px;
+    height: 50px;
+    border-radius: 25px;
+    gap: 8px;
+}
+
+.syntekpro-toggle-btn.shape-pill span {
+    margin-left: 5px;
+}
+
+/* Shape: Square */
+.syntekpro-toggle-btn.shape-square {
+    border-radius: 8px;
+}
+
+/* Shape: Rounded Square */
+.syntekpro-toggle-btn.shape-rounded {
+    border-radius: 15px;
+}
+
+/* Shape: Stretched Horizontal */
+.syntekpro-toggle-btn.shape-stretched {
+    width: 130px;
+    height: 45px;
+    border-radius: 22px;
+}
+
+/* Shape: Stretched Vertical */
+.syntekpro-toggle-btn.shape-vertical {
+    width: 45px;
+    height: 130px;
+    flex-direction: column;
+    border-radius: 22px;
+}
+
+/* ===================================
+   Button Animation Variations
+   =================================== */
+
+/* Animation: Pulse (continuous glowing pulse) */
+.syntekpro-toggle-btn.anim-pulse {
+    animation: btn-pulse 2s ease-in-out infinite;
+}
+
+@keyframes btn-pulse {
+    0%, 100% {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(102, 126, 234, 0.5);
+    }
+    50% {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 40px rgba(102, 126, 234, 0.8);
+    }
+}
+
+html.dark-mode .syntekpro-toggle-btn.anim-pulse {
+    animation: btn-pulse-dark 2s ease-in-out infinite;
+}
+
+@keyframes btn-pulse-dark {
+    0%, 100% {
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 100, 150, 0.5);
+    }
+    50% {
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 100, 150, 0.8);
+    }
+}
+
+/* Animation: Bounce (continuous bouncing) */
+.syntekpro-toggle-btn.anim-bounce {
+    animation: btn-bounce 1s ease-in-out infinite;
+}
+
+@keyframes btn-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.syntekpro-toggle-btn.anim-bounce:active {
+    animation: none;
+}
+
+/* Animation: Float (floating up and down) */
+.syntekpro-toggle-btn.anim-float {
+    animation: btn-float 3s ease-in-out infinite;
+}
+
+@keyframes btn-float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+.syntekpro-toggle-btn.anim-float:active {
+    animation: none;
+}
+
+/* Animation: Rotate (subtle rotation) */
+.syntekpro-toggle-btn.anim-rotate {
+    animation: btn-rotate 4s linear infinite;
+}
+
+@keyframes btn-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.syntekpro-toggle-btn.anim-rotate:hover,
+.syntekpro-toggle-btn.anim-rotate:active {
+    animation: none;
+}
+
+/* Animation: Glow Breath (breathing glow) */
+.syntekpro-toggle-btn.anim-breath {
+    animation: btn-breath 2.5s ease-in-out infinite;
+}
+
+@keyframes btn-breath {
+    0%, 100% {
+        opacity: 0.8;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        opacity: 1;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* Animation: Shake (subtle shake effect) */
+.syntekpro-toggle-btn.anim-shake {
+    animation: btn-shake 0.5s ease-in-out infinite;
+}
+
+@keyframes btn-shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-3px);
+    }
+    75% {
+        transform: translateX(3px);
+    }
+}
+
+.syntekpro-toggle-btn.anim-shake:active {
+    animation: none;
+}
+
+/* Animation: Spin (fast spinning) */
+.syntekpro-toggle-btn.anim-spin {
+    animation: btn-spin 1s linear infinite;
+}
+
+@keyframes btn-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.syntekpro-toggle-btn.anim-spin:active {
+    animation: none;
+}
+
+/* Animation: Swing (pendulum swing) */
+.syntekpro-toggle-btn.anim-swing {
+    animation: btn-swing 1.5s ease-in-out infinite;
+    transform-origin: center top;
+}
+
+@keyframes btn-swing {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(2deg);
+    }
+}
+
+/* Animation: Oscillate (wave-like oscillation) */
+.syntekpro-toggle-btn.anim-oscillate {
+    animation: btn-oscillate 2s ease-in-out infinite;
+}
+
+@keyframes btn-oscillate {
+    0%, 100% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.05);
+    }
+    50% {
+        transform: scale(1);
+    }
+    75% {
+        transform: scale(1.05);
+    }
+}
+
+/* Animation: Pulse Circle (radial pulse) */
+.syntekpro-toggle-btn.anim-pulse-circle {
+    animation: btn-pulse-circle 1.5s ease-out infinite;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes btn-pulse-circle {
+    0% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+    }
+}
+
+/* ===================================
+   Background Pattern Variations
+   =================================== */
+
+/* Background: Striped Pattern */
+.syntekpro-toggle-btn.bg-striped {
+    background: repeating-linear-gradient(
+        45deg,
+        #333333,
+        #333333 10px,
+        #444444 10px,
+        #444444 20px
+    );
+}
+
+html:not(.dark-mode) .syntekpro-toggle-btn.bg-striped {
+    background: repeating-linear-gradient(
+        45deg,
+        #f0f0f0,
+        #f0f0f0 10px,
+        #e0e0e0 10px,
+        #e0e0e0 20px
+    );
+}
+
+html.dark-mode .syntekpro-toggle-btn.bg-striped {
+    background: repeating-linear-gradient(
+        45deg,
+        #444444,
+        #444444 10px,
+        #666666 10px,
+        #666666 20px
+    );
+}
+
+/* Background: Checkered Pattern */
+.syntekpro-toggle-btn.bg-checkered {
+    background-image: 
+        linear-gradient(45deg, #333333 25%, transparent 25%),
+        linear-gradient(-45deg, #333333 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #333333 75%),
+        linear-gradient(-45deg, transparent 75%, #333333 75%);
+    background-size: 12px 12px;
+    background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
+    background-color: #444444;
+}
+
+html:not(.dark-mode) .syntekpro-toggle-btn.bg-checkered {
+    background-image: 
+        linear-gradient(45deg, #e0e0e0 25%, transparent 25%),
+        linear-gradient(-45deg, #e0e0e0 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #e0e0e0 75%),
+        linear-gradient(-45deg, transparent 75%, #e0e0e0 75%);
+    background-color: #f0f0f0;
+}
+
+html.dark-mode .syntekpro-toggle-btn.bg-checkered {
+    background-image: 
+        linear-gradient(45deg, #666666 25%, transparent 25%),
+        linear-gradient(-45deg, #666666 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #666666 75%),
+        linear-gradient(-45deg, transparent 75%, #666666 75%);
+    background-color: #555555;
+}
+
+/* Background: Dotted Pattern */
+.syntekpro-toggle-btn.bg-dotted {
+    background-image: radial-gradient(circle, #555555 20%, transparent 20%);
+    background-size: 8px 8px;
+    background-color: #333333;
+}
+
+html:not(.dark-mode) .syntekpro-toggle-btn.bg-dotted {
+    background-image: radial-gradient(circle, #cccccc 20%, transparent 20%);
+    background-color: #f0f0f0;
+}
+
+html.dark-mode .syntekpro-toggle-btn.bg-dotted {
+    background-image: radial-gradient(circle, #888888 20%, transparent 20%);
+    background-color: #444444;
+}
+
+/* Background: Wavy Pattern */
+.syntekpro-toggle-btn.bg-wavy {
+    background: #333333;
+    position: relative;
+    overflow: hidden;
+}
+
+.syntekpro-toggle-btn.bg-wavy::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 25%, 
+        transparent 50%, 
+        rgba(255, 255, 255, 0.1) 75%, 
+        transparent 100%);
+    animation: wave-move 3s infinite;
+}
+
+@keyframes wave-move {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+html:not(.dark-mode) .syntekpro-toggle-btn.bg-wavy {
+    background: #f0f0f0;
+}
+
+html.dark-mode .syntekpro-toggle-btn.bg-wavy {
+    background: #444444;
+}
+
+/* ===================================
    Responsive Design
    =================================== */
 @media (max-width: 768px) {
@@ -670,8 +1410,20 @@ html.dark-mode .syntekpro-toggle-btn.theme-morphing {
         right: 20px;
     }
     
-    .syntekpro-toggle-btn.theme-pill {
-        width: 60px;
+    .syntekpro-toggle-btn.theme-pill,
+    .syntekpro-toggle-btn.shape-pill {
+        width: 100px;
+        height: 45px;
+    }
+    
+    .syntekpro-toggle-btn.shape-stretched {
+        width: 110px;
+        height: 40px;
+    }
+    
+    .syntekpro-toggle-btn.shape-vertical {
+        width: 40px;
+        height: 110px;
     }
     
     .syntekpro-toggle-btn svg {

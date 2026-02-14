@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('SYNTEKPRO_TOGGLE_VERSION', '1.5.0');
+define('SYNTEKPRO_TOGGLE_VERSION', '1.5.1');
 define('SYNTEKPRO_TOGGLE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SYNTEKPRO_TOGGLE_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -344,8 +344,26 @@ function syntekpro_toggle_button() {
     
     // Calculate icon size (80% of button size)
     $icon_size = intval($size * 0.48);
+    
+    // Get additional style options from settings
+    $options = get_option('syntekpro_toggle_options', array());
+    $button_shape = isset($options['button_shape']) ? $options['button_shape'] : 'default';
+    $button_animation = isset($options['button_animation']) ? $options['button_animation'] : 'none';
+    $button_bg_style = isset($options['button_bg_style']) ? $options['button_bg_style'] : 'solid';
+    
+    // Build button classes
+    $button_classes = 'syntekpro-toggle-btn theme-' . esc_attr($theme);
+    if ($button_shape !== 'default') {
+        $button_classes .= ' ' . esc_attr($button_shape);
+    }
+    if ($button_animation !== 'none') {
+        $button_classes .= ' ' . esc_attr($button_animation);
+    }
+    if ($button_bg_style !== 'solid') {
+        $button_classes .= ' ' . esc_attr($button_bg_style);
+    }
     ?>
-    <button id="syntekpro-dark-mode-toggle" class="syntekpro-toggle-btn theme-<?php echo esc_attr($theme); ?>" aria-label="Toggle Dark Mode" style="<?php echo esc_attr($position_style . $size_style); ?>">
+    <button id="syntekpro-dark-mode-toggle" class="<?php echo esc_attr($button_classes); ?>" aria-label="Toggle Dark Mode" style="<?php echo esc_attr($position_style . $size_style); ?>">
         <span class="syntekpro-icon-sun" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" width="<?php echo esc_attr($icon_size); ?>" height="<?php echo esc_attr($icon_size); ?>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="5"></circle>

@@ -1,0 +1,105 @@
+/* ===================================
+   Page Headings - Centered
+   =================================== */
+.syntekpro-toggle-admin h1 {
+    text-align: center;
+    margin: 30px 0 !important;
+    font-size: 2.5em !important;
+    color: #333 !important;
+}
+
+body.syntekpro-admin-dark .syntekpro-toggle-admin h1 {
+    color: #fff !important;
+}
+
+/* ===================================
+   About Page Styling
+   =================================== */
+.syntekpro-about-main {
+    animation: fadeInLeft 0.5s ease;
+}
+
+.syntekpro-about-sidebar {
+    animation: fadeInRight 0.5s ease;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.syntekpro-admin-box {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.syntekpro-admin-box:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+body.syntekpro-admin-dark .syntekpro-admin-box {
+    background: #1e1e1e;
+    border-color: #333;
+    color: #e5e5e5;
+}
+
+.syntekpro-admin-box h3 {
+    font-size: 1.2em;
+    color: #333;
+    margin: 15px 0 10px 0;
+    padding-bottom: 8px;
+}
+
+body.syntekpro-admin-dark .syntekpro-admin-box h3 {
+    color: #fff;
+}
+
+.syntekpro-admin-box h4 {
+    font-size: 1em;
+    color: #555;
+    margin: 10px 0 5px 0;
+}
+
+body.syntekpro-admin-dark .syntekpro-admin-box h4 {
+    color: #e5e5e5;
+}
+
+/* Responsive design for About page */
+@media (max-width: 1024px) {
+    .syntekpro-toggle-admin h1 {
+        font-size: 2em !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .syntekpro-about-sidebar {
+        width: 100% !important;
+        margin-top: 30px;
+    }
+    
+    .syntekpro-toggle-admin h1 {
+        font-size: 1.5em !important;
+    }
+}

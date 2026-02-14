@@ -611,6 +611,316 @@ function syntekpro_toggle_menu_icon_css() {
             75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
         }
         
+        /* Additional Admin FAB Themes */
+        
+        /* Theme: Soft Shadow */
+        .syntekpro-admin-fab.theme-soft-shadow {
+            background: #fff;
+            color: #333;
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-soft-shadow {
+            background: #27272a;
+            color: #fff;
+            border-color: #3f3f46;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .syntekpro-admin-fab.theme-soft-shadow:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+        }
+        
+        /* Theme: Outline */
+        .syntekpro-admin-fab.theme-outline {
+            background: transparent;
+            color: #333;
+            border: 3px solid #333;
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-outline {
+            color: #fff;
+            border-color: #fff;
+        }
+        .syntekpro-admin-fab.theme-outline:hover {
+            background: rgba(51, 51, 51, 0.1);
+            transform: scale(1.15);
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Theme: Floating */
+        .syntekpro-admin-fab.theme-floating {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3), 0 4px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-floating {
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5), 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .syntekpro-admin-fab.theme-floating:hover {
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4), 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: translateY(-8px);
+        }
+        
+        /* Theme: Glow */
+        .syntekpro-admin-fab.theme-glow {
+            background: #00d4ff;
+            color: #000;
+            border: none;
+            box-shadow: 0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 60px #00d4ff;
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-glow {
+            background: #ff00ff;
+            box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff;
+        }
+        .syntekpro-admin-fab.theme-glow:hover {
+            box-shadow: 0 0 30px #00d4ff, 0 0 60px #00d4ff, 0 0 90px #00d4ff;
+            transform: scale(1.1);
+        }
+        
+        /* Theme: Brutalist */
+        .syntekpro-admin-fab.theme-brutalist {
+            background: #1a1a1a;
+            color: #fff;
+            border: 4px solid #fff;
+            box-shadow: none;
+            border-radius: 0;
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-brutalist {
+            background: #fff;
+            color: #000;
+            border-color: #000;
+        }
+        .syntekpro-admin-fab.theme-brutalist:hover {
+            transform: translate(2px, 2px);
+            background: #333;
+        }
+        
+        /* Theme: 3D */
+        .syntekpro-admin-fab.theme-3d {
+            background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+            color: #fff;
+            border: 3px solid #0284c7;
+            box-shadow: 0 5px 0 #0284c7, 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-3d {
+            background: linear-gradient(180deg, #ff6b9d 0%, #c44569 100%);
+            border-color: #8b2d47;
+            box-shadow: 0 5px 0 #8b2d47, 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+        .syntekpro-admin-fab.theme-3d:active {
+            transform: translate(0, 5px);
+            box-shadow: 0 0 0 #0284c7, 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Theme: Neon Pulse */
+        .syntekpro-admin-fab.theme-neon-pulse {
+            background: #0a0e27;
+            color: #0ff;
+            border: 2px solid #0ff;
+            box-shadow: 0 0 10px #0ff;
+            animation: admin-neon-pulse 2s infinite;
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-neon-pulse {
+            color: #f0f;
+            border-color: #f0f;
+            box-shadow: 0 0 10px #f0f;
+        }
+        .syntekpro-admin-fab.theme-neon-pulse:hover {
+            animation-duration: 0.3s;
+        }
+        @keyframes admin-neon-pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.8); }
+        }
+        
+        /* Theme: Aurora */
+        .syntekpro-admin-fab.theme-aurora {
+            background: linear-gradient(45deg, #00d4ff, #00ff87, #ff00d4, #00d4ff);
+            background-size: 300% 300%;
+            color: #fff;
+            border: none;
+            animation: admin-aurora-shift 6s ease infinite;
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-aurora {
+            background: linear-gradient(45deg, #ff006e, #ffbe0b, #06ffa5, #ff006e);
+            background-size: 300% 300%;
+            animation: admin-aurora-shift 6s ease infinite;
+        }
+        .syntekpro-admin-fab.theme-aurora:hover {
+            animation-duration: 1s;
+        }
+        @keyframes admin-aurora-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Theme: Hologram */
+        .syntekpro-admin-fab.theme-hologram {
+            background: rgba(0, 255, 255, 0.1);
+            color: #0ff;
+            border: 2px solid #0ff;
+            box-shadow: 0 0 10px #0ff, inset 0 0 10px rgba(0, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-hologram {
+            background: rgba(255, 0, 255, 0.1);
+            color: #f0f;
+            border-color: #f0f;
+            box-shadow: 0 0 10px #f0f, inset 0 0 10px rgba(255, 0, 255, 0.3);
+        }
+        .syntekpro-admin-fab.theme-hologram:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 20px #0ff, inset 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        
+        /* Theme: Vaporwave */
+        .syntekpro-admin-fab.theme-vaporwave {
+            background: linear-gradient(135deg, #ff006e, #d62839);
+            color: #00ff41;
+            border: 2px solid #00ff41;
+            box-shadow: 0 0 15px rgba(255, 0, 110, 0.5);
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-vaporwave {
+            background: linear-gradient(135deg, #00d9ff, #0a00d9);
+            color: #ffff00;
+            border-color: #ffff00;
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
+        }
+        .syntekpro-admin-fab.theme-vaporwave:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 25px rgba(255, 0, 110, 0.8);
+        }
+        
+        /* Theme: Aquamorphic */
+        .syntekpro-admin-fab.theme-aquamorphic {
+            background: linear-gradient(135deg, #0084ff, #00d4ff);
+            color: #fff;
+            border: none;
+            border-radius: 30%;
+            box-shadow: 0 8px 30px rgba(0, 132, 255, 0.4);
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-aquamorphic {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            box-shadow: 0 8px 30px rgba(255, 20, 147, 0.4);
+        }
+        .syntekpro-admin-fab.theme-aquamorphic:hover {
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            box-shadow: 0 12px 40px rgba(0, 132, 255, 0.6);
+        }
+        
+        /* Theme: Sunset */
+        .syntekpro-admin-fab.theme-sunset {
+            background: linear-gradient(135deg, #ff6b35, #f7931e, #fdb833);
+            color: #fff;
+            border: none;
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.4);
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-sunset {
+            background: linear-gradient(135deg, #1a1a6e, #0f3c5d, #0f5f8f);
+            box-shadow: 0 5px 20px rgba(15, 95, 143, 0.5);
+        }
+        .syntekpro-admin-fab.theme-sunset:hover {
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.6);
+        }
+        
+        /* Theme: Minimalist */
+        .syntekpro-admin-fab.theme-minimalist {
+            background: transparent;
+            color: #333;
+            border: 2px solid #333;
+            box-shadow: none;
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-minimalist {
+            color: #fff;
+            border-color: #fff;
+        }
+        .syntekpro-admin-fab.theme-minimalist:hover {
+            background: #333;
+            color: #fff;
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-minimalist:hover {
+            background: #fff;
+            color: #333;
+        }
+        
+        /* Theme: Cyber */
+        .syntekpro-admin-fab.theme-cyber {
+            background: #000;
+            color: #0f0;
+            border: 2px solid #0f0;
+            box-shadow: 0 0 5px #0f0;
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-cyber {
+            color: #ff00ff;
+            border-color: #ff00ff;
+            box-shadow: 0 0 5px #ff00ff;
+        }
+        .syntekpro-admin-fab.theme-cyber:hover {
+            box-shadow: 0 0 15px #0f0;
+            transform: scale(1.08);
+        }
+        
+        /* Theme: Gemstone */
+        .syntekpro-admin-fab.theme-gemstone {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+            border: 3px solid #ff9a56;
+            box-shadow: 0 4px 15px rgba(255, 154, 86, 0.3);
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-gemstone {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border-color: #ffd89b;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+        }
+        .syntekpro-admin-fab.theme-gemstone:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 20px rgba(255, 154, 86, 0.4);
+        }
+        
+        /* Theme: Monochrome */
+        .syntekpro-admin-fab.theme-monochrome {
+            background: #808080;
+            color: #fff;
+            border: 2px solid #404040;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-monochrome {
+            background: #b0b0b0;
+            color: #000;
+            border-color: #d0d0d0;
+        }
+        .syntekpro-admin-fab.theme-monochrome:hover {
+            background: #707070;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Theme: Frosted Ice */
+        .syntekpro-admin-fab.theme-frosted {
+            background: rgba(255, 255, 255, 0.3);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        body.syntekpro-admin-dark .syntekpro-admin-fab.theme-frosted {
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+        .syntekpro-admin-fab.theme-frosted:hover {
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+        }
+        
         <?php endif; ?>
     </style>
     <?php
@@ -704,7 +1014,7 @@ function syntekpro_toggle_admin_ui_script() {
             if (allowDark && !document.querySelector('.syntekpro-admin-fab')) {
                 const fab = document.createElement('button');
                 fab.type = 'button';
-                fab.className = 'syntekpro-admin-fab theme-<?php echo esc_js(isset($options['toggle_theme']) ? $options['toggle_theme'] : 'default'); ?>';
+                fab.className = 'syntekpro-admin-fab theme-<?php echo esc_js(isset($options['admin_toggle_theme']) ? $options['admin_toggle_theme'] : 'default'); ?>';
                 fab.setAttribute('aria-label', 'Toggle admin dark mode');
                 fab.innerHTML = '<span class="syntekpro-icon-sun" style="display:none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span><span class="syntekpro-icon-moon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>';
                 fab.addEventListener('click', function(e) {
@@ -928,6 +1238,30 @@ function syntekpro_toggle_register_settings() {
         'toggle_theme',
         'Toggle Button Theme',
         'syntekpro_toggle_theme_callback',
+        'syntekpro-toggle-frontend-general',
+        'syntekpro_toggle_general_section'
+    );
+    
+    add_settings_field(
+        'button_shape',
+        'Button Shape',
+        'syntekpro_toggle_button_shape_callback',
+        'syntekpro-toggle-frontend-general',
+        'syntekpro_toggle_general_section'
+    );
+    
+    add_settings_field(
+        'button_animation',
+        'Button Animation',
+        'syntekpro_toggle_button_animation_callback',
+        'syntekpro-toggle-frontend-general',
+        'syntekpro_toggle_general_section'
+    );
+    
+    add_settings_field(
+        'button_bg_style',
+        'Button Background Style',
+        'syntekpro_toggle_button_bg_style_callback',
         'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
     );
@@ -1320,6 +1654,9 @@ function syntekpro_toggle_get_default_options() {
         'button_position' => 'bottom-right',
         'button_size' => '50',
         'toggle_theme' => 'default',
+        'button_shape' => 'default',
+        'button_animation' => 'none',
+        'button_bg_style' => 'solid',
         'color_scheme_mode' => 'preset',
         'color_preset' => 'default',
         'bg_color' => '#1a1a1a',
@@ -1403,6 +1740,18 @@ function syntekpro_toggle_sanitize_options($input) {
     
     if (isset($input['toggle_theme'])) {
         $sanitized['toggle_theme'] = sanitize_text_field($input['toggle_theme']);
+    }
+    
+    if (isset($input['button_shape'])) {
+        $sanitized['button_shape'] = sanitize_text_field($input['button_shape']);
+    }
+    
+    if (isset($input['button_animation'])) {
+        $sanitized['button_animation'] = sanitize_text_field($input['button_animation']);
+    }
+    
+    if (isset($input['button_bg_style'])) {
+        $sanitized['button_bg_style'] = sanitize_text_field($input['button_bg_style']);
     }
     
     if (isset($input['color_scheme_mode'])) {
@@ -1711,6 +2060,76 @@ function syntekpro_toggle_theme_callback() {
         @keyframes morph { 0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; } 50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; } }
     </style>
     <p class="description">Choose a visual style for your toggle button.</p>
+    <?php
+}
+
+function syntekpro_toggle_button_shape_callback() {
+    $options = syntekpro_toggle_get_options();
+    $shapes = array(
+        'default' => 'Circular (Default)',
+        'shape-pill' => 'Pill - Elongated',
+        'shape-square' => 'Square',
+        'shape-rounded' => 'Rounded Square',
+        'shape-stretched' => 'Stretched Horizontal',
+        'shape-vertical' => 'Stretched Vertical',
+    );
+    ?>
+    <select name="syntekpro_toggle_options[button_shape]" style="min-width: 300px; padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
+        <?php foreach ($shapes as $key => $label): ?>
+            <option value="<?php echo esc_attr($key); ?>" <?php selected($options['button_shape'], $key); ?>>
+                <?php echo esc_html($label); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+    <p class="description">Choose the button shape or size variation. Pill and Vertical shapes will display the moon/sun icon next to text.</p>
+    <?php
+}
+
+function syntekpro_toggle_button_animation_callback() {
+    $options = syntekpro_toggle_get_options();
+    $animations = array(
+        'none' => 'No Animation',
+        'anim-pulse' => 'Pulse - Glowing pulse effect',
+        'anim-bounce' => 'Bounce - Continuous bouncing',
+        'anim-float' => 'Float - Floating up and down',
+        'anim-rotate' => 'Rotate - Spinning rotation',
+        'anim-breath' => 'Breath - Breathing glow',
+        'anim-shake' => 'Shake - Subtle shake effect',
+        'anim-spin' => 'Spin - Fast spinning',
+        'anim-swing' => 'Swing - Pendulum swing',
+        'anim-oscillate' => 'Oscillate - Wave-like motion',
+        'anim-pulse-circle' => 'Pulse Circle - Radial pulse',
+    );
+    ?>
+    <select name="syntekpro_toggle_options[button_animation]" style="min-width: 300px; padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
+        <?php foreach ($animations as $key => $label): ?>
+            <option value="<?php echo esc_attr($key); ?>" <?php selected($options['button_animation'], $key); ?>>
+                <?php echo esc_html($label); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+    <p class="description">Choose a continuous animation for your button. Animations pause on click and respond to hover states.</p>
+    <?php
+}
+
+function syntekpro_toggle_button_bg_style_callback() {
+    $options = syntekpro_toggle_get_options();
+    $bg_styles = array(
+        'solid' => 'Solid Color',
+        'bg-striped' => 'Striped Pattern',
+        'bg-checkered' => 'Checkered Pattern',
+        'bg-dotted' => 'Dotted Pattern',
+        'bg-wavy' => 'Wavy Pattern',
+    );
+    ?>
+    <select name="syntekpro_toggle_options[button_bg_style]" style="min-width: 300px; padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
+        <?php foreach ($bg_styles as $key => $label): ?>
+            <option value="<?php echo esc_attr($key); ?>" <?php selected($options['button_bg_style'], $key); ?>>
+                <?php echo esc_html($label); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+    <p class="description">Choose a background pattern style for your button.</p>
     <?php
 }
 
@@ -2254,27 +2673,106 @@ function syntekpro_toggle_admin_theme_callback() {
         'default' => array('name' => 'Default', 'desc' => 'Classic circular button'),
         'minimal' => array('name' => 'Minimal', 'desc' => 'Clean and simple'),
         'neumorphic' => array('name' => 'Neumorphic', 'desc' => 'Soft UI design'),
-        'glassmorphic' => array('name' => 'Glassmorphic', 'desc' => 'Frosted glass'),
-        'neon' => array('name' => 'Neon', 'desc' => 'Glowing effect'),
+        'glassmorphic' => array('name' => 'Glassmorphic', 'desc' => 'Frosted glass effect'),
+        'neon' => array('name' => 'Neon', 'desc' => 'Glowing neon style'),
         'gradient' => array('name' => 'Gradient', 'desc' => 'Colorful gradient'),
-        'modern' => array('name' => 'Modern', 'desc' => 'Contemporary'),
-        'material' => array('name' => 'Material', 'desc' => 'Material Design'),
-        'elegant' => array('name' => 'Elegant', 'desc' => 'Refined style'),
+        'retro' => array('name' => 'Retro', 'desc' => 'Vintage 80s style'),
+        'modern' => array('name' => 'Modern', 'desc' => 'Contemporary design'),
+        'flat' => array('name' => 'Flat', 'desc' => 'Flat design style'),
+        'material' => array('name' => 'Material', 'desc' => 'Google Material Design'),
+        'ios' => array('name' => 'iOS Style', 'desc' => 'Apple iOS inspired'),
+        'cyberpunk' => array('name' => 'Cyberpunk', 'desc' => 'Futuristic tech'),
+        'elegant' => array('name' => 'Elegant', 'desc' => 'Refined and classy'),
+        'playful' => array('name' => 'Playful', 'desc' => 'Fun and bouncy'),
         'professional' => array('name' => 'Professional', 'desc' => 'Business style'),
+        'square' => array('name' => 'Square', 'desc' => 'Sharp corners'),
+        'pill' => array('name' => 'Pill', 'desc' => 'Elongated rounded'),
+        'hexagon' => array('name' => 'Hexagon', 'desc' => 'Six-sided shape'),
+        'diamond' => array('name' => 'Diamond', 'desc' => 'Rotated square'),
+        'morphing' => array('name' => 'Morphing', 'desc' => 'Animated transitions'),
+        'soft-shadow' => array('name' => 'Soft Shadow', 'desc' => 'Smoothly elevated'),
+        'outline' => array('name' => 'Outline', 'desc' => 'Clean line style'),
+        'floating' => array('name' => 'Floating', 'desc' => 'Levitated effect'),
+        'glow' => array('name' => 'Glow', 'desc' => 'Pulsing luminance'),
+        'brutalist' => array('name' => 'Brutalist', 'desc' => 'Raw and geometric'),
+        '3d' => array('name' => '3D', 'desc' => 'Layered depth'),
+        'neon-pulse' => array('name' => 'Neon Pulse', 'desc' => 'Animated glow'),
+        'aurora' => array('name' => 'Aurora', 'desc' => 'Shifting colors'),
+        'hologram' => array('name' => 'Hologram', 'desc' => 'Glass-like shimmer'),
+        'vaporwave' => array('name' => 'Vaporwave', 'desc' => 'Retro-futuristic'),
+        'aquamorphic' => array('name' => 'Aquamorphic', 'desc' => 'Organic flowing'),
+        'sunset' => array('name' => 'Sunset', 'desc' => 'Warm gradients'),
+        'minimalist' => array('name' => 'Minimalist', 'desc' => 'Stripped down'),
+        'cyber' => array('name' => 'Cyber', 'desc' => 'Terminal style'),
+        'gemstone' => array('name' => 'Gemstone', 'desc' => 'Jewel-like facets'),
+        'monochrome' => array('name' => 'Monochrome', 'desc' => 'Grayscale tones'),
+        'frosted' => array('name' => 'Frosted Ice', 'desc' => 'Frosted glass'),
     );
     ?>
-    <div class="syntekpro-admin-theme-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 10px;">
+    <div class="syntekpro-admin-theme-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-top: 10px;">
         <?php foreach ($themes as $key => $theme): ?>
-            <label class="admin-theme-option" style="cursor: pointer; border: 2px solid #ddd; border-radius: 8px; padding: 12px; transition: all 0.3s; text-align: center;">
-                <input type="radio" name="syntekpro_toggle_options[admin_toggle_theme]" value="<?php echo esc_attr($key); ?>" <?php checked($options['admin_toggle_theme'], $key); ?> style="margin-bottom: 8px;">
-                <strong style="display: block; margin-bottom: 3px; font-size: 12px;"><?php echo esc_html($theme['name']); ?></strong>
-                <span style="font-size: 10px; color: #666; display: block;"><?php echo esc_html($theme['desc']); ?></span>
+            <label class="admin-theme-option" style="cursor: pointer; border: 2px solid #ddd; border-radius: 8px; padding: 15px; transition: all 0.3s; text-align: center;">
+                <input type="radio" name="syntekpro_toggle_options[admin_toggle_theme]" value="<?php echo esc_attr($key); ?>" <?php checked($options['admin_toggle_theme'], $key); ?> style="margin-bottom: 10px;">
+                <div class="theme-preview syntekpro-theme-<?php echo esc_attr($key); ?>" style="width: 50px; height: 50px; margin: 0 auto 10px; position: relative; display: flex; align-items: center; justify-content: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </div>
+                <strong style="display: block; margin-bottom: 3px;"><?php echo esc_html($theme['name']); ?></strong>
+                <span style="font-size: 11px; color: #666; display: block;"><?php echo esc_html($theme['desc']); ?></span>
             </label>
         <?php endforeach; ?>
     </div>
     <style>
-        .admin-theme-option:hover { border-color: #2271b1; background: #f0f6fc; }
+        .admin-theme-option:hover { border-color: #2271b1; background: #f0f6fc; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         .admin-theme-option:has(input[type="radio"]:checked) { border-color: #2271b1; border-width: 3px; background: #f0f6fc; }
+        
+        /* Theme Preview Styles */
+        .syntekpro-theme-default { background: #333; color: #fff; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        .syntekpro-theme-minimal { background: #f5f5f5; color: #333; border-radius: 50%; border: 1px solid #ddd; }
+        .syntekpro-theme-neumorphic { background: #e0e5ec; color: #333; border-radius: 50%; box-shadow: 8px 8px 16px #a3b1c6, -8px -8px 16px #ffffff; }
+        .syntekpro-theme-glassmorphic { background: rgba(255,255,255,0.1); color: #333; border-radius: 50%; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); }
+        .syntekpro-theme-neon { background: #0a0e27; color: #00ffff; border-radius: 50%; box-shadow: 0 0 20px #00ffff, inset 0 0 20px rgba(0,255,255,0.2); border: 2px solid #00ffff; }
+        .syntekpro-theme-gradient { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border-radius: 50%; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); }
+        .syntekpro-theme-retro { background: linear-gradient(45deg, #ff006e, #ffbe0b); color: #fff; border-radius: 8px; box-shadow: 4px 4px 0 rgba(0,0,0,0.3); border: 3px solid #000; }
+        .syntekpro-theme-modern { background: #000; color: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .syntekpro-theme-flat { background: #3498db; color: #fff; border-radius: 4px; }
+        .syntekpro-theme-material { background: #2196F3; color: #fff; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 4px 8px rgba(0,0,0,0.2); }
+        .syntekpro-theme-ios { background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%); color: #333; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+        .syntekpro-theme-cyberpunk { background: linear-gradient(135deg, #f72585, #7209b7, #3a0ca3); color: #00ff41; border-radius: 4px; box-shadow: 0 0 20px rgba(247, 37, 133, 0.6); border: 1px solid #00ff41; }
+        .syntekpro-theme-elegant { background: linear-gradient(135deg, #2c3e50, #34495e); color: #ecf0f1; border-radius: 50%; box-shadow: 0 4px 20px rgba(0,0,0,0.3); border: 2px solid rgba(236, 240, 241, 0.1); }
+        .syntekpro-theme-playful { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: #fff; border-radius: 50%; animation: playful-bounce 2s infinite; }
+        .syntekpro-theme-professional { background: #1a1a2e; color: #eee; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); border: 1px solid #16213e; }
+        .syntekpro-theme-square { background: #444; color: #fff; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+        .syntekpro-theme-pill { background: #5e60ce; color: #fff; border-radius: 25px; width: 70px; box-shadow: 0 4px 12px rgba(94, 96, 206, 0.4); }
+        .syntekpro-theme-hexagon { background: #ff6b6b; color: #fff; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); }
+        .syntekpro-theme-diamond { background: #4ecdc4; color: #fff; transform: rotate(45deg); border-radius: 8px; box-shadow: 0 4px 12px rgba(78, 205, 196, 0.4); }
+        .syntekpro-theme-diamond svg { transform: rotate(-45deg); }
+        .syntekpro-theme-morphing { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: #fff; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; box-shadow: 0 4px 15px rgba(250, 112, 154, 0.4); animation: morph-shape 3s infinite; }
+        
+        /* New Theme Preview Styles */
+        .syntekpro-theme-soft-shadow { background: #fff; color: #333; border: 1px solid #f0f0f0; border-radius: 50%; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); }
+        .syntekpro-theme-outline { background: transparent; color: #333; border: 3px solid #333; border-radius: 50%; }
+        .syntekpro-theme-floating { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border-radius: 50%; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3), 0 4px 10px rgba(0, 0, 0, 0.2); transform: translateY(-5px); }
+        .syntekpro-theme-glow { background: #00d4ff; color: #000; border-radius: 50%; box-shadow: 0 0 20px #00d4ff, 0 0 40px #00d4ff; }
+        .syntekpro-theme-brutalist { background: #1a1a1a; color: #fff; border: 4px solid #fff; border-radius: 0; box-shadow: none; }
+        .syntekpro-theme-3d { background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%); color: #fff; border: 3px solid #0284c7; border-radius: 50%; box-shadow: 0 5px 0 #0284c7, 0 10px 20px rgba(0, 0, 0, 0.3); }
+        .syntekpro-theme-neon-pulse { background: #0a0e27; color: #0ff; border: 2px solid #0ff; border-radius: 50%; box-shadow: 0 0 10px #0ff; animation: admin-neon-pulse 2s infinite; }
+        .syntekpro-theme-aurora { background: linear-gradient(45deg, #00d4ff, #00ff87, #ff00d4, #00d4ff); background-size: 300% 300%; color: #fff; border-radius: 50%; animation: admin-aurora-shift 6s ease infinite; }
+        .syntekpro-theme-hologram { background: rgba(0, 255, 255, 0.1); color: #0ff; border: 2px solid #0ff; border-radius: 50%; box-shadow: 0 0 10px #0ff, inset 0 0 10px rgba(0, 255, 255, 0.3); backdrop-filter: blur(8px); }
+        .syntekpro-theme-vaporwave { background: linear-gradient(135deg, #ff006e, #d62839); color: #00ff41; border: 2px solid #00ff41; border-radius: 50%; box-shadow: 0 0 15px rgba(255, 0, 110, 0.5); }
+        .syntekpro-theme-aquamorphic { background: linear-gradient(135deg, #0084ff, #00d4ff); color: #fff; border-radius: 30%; box-shadow: 0 8px 30px rgba(0, 132, 255, 0.4); }
+        .syntekpro-theme-sunset { background: linear-gradient(135deg, #ff6b35, #f7931e, #fdb833); color: #fff; border-radius: 50%; box-shadow: 0 5px 20px rgba(255, 107, 53, 0.4); }
+        .syntekpro-theme-minimalist { background: transparent; color: #333; border: 2px solid #333; border-radius: 50%; box-shadow: none; }
+        .syntekpro-theme-cyber { background: #000; color: #0f0; border: 2px solid #0f0; border-radius: 50%; box-shadow: 0 0 5px #0f0; }
+        .syntekpro-theme-gemstone { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; border: 3px solid #ff9a56; border-radius: 50%; box-shadow: 0 4px 15px rgba(255, 154, 86, 0.3); }
+        .syntekpro-theme-monochrome { background: #808080; color: #fff; border: 2px solid #404040; border-radius: 50%; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
+        .syntekpro-theme-frosted { background: rgba(255, 255, 255, 0.3); color: #fff; border: 2px solid rgba(255, 255, 255, 0.5); border-radius: 50%; backdrop-filter: blur(12px); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); }
+        
+        @keyframes playful-bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05) translateY(-3px); } }
+        @keyframes morph-shape { 0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; } 50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; } }
+        @keyframes admin-neon-pulse { 0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); } 50% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.8); } }
+        @keyframes admin-aurora-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     </style>
     <p class="description">Choose theme for the admin floating toggle button.</p>
     <?php
@@ -2320,6 +2818,11 @@ function syntekpro_toggle_admin_color_preset_callback() {
         'material' => array('name' => 'Material Dark', 'bg' => '#263238', 'text' => '#eeffff', 'accent' => '#82aaff', 'surface' => '#37474f'),
         'one' => array('name' => 'One Dark Pro', 'bg' => '#282c34', 'text' => '#abb2bf', 'accent' => '#61afef', 'surface' => '#21252b'),
         'ayu' => array('name' => 'Ayu Mirage', 'bg' => '#1f2430', 'text' => '#cbccc6', 'accent' => '#73d0ff', 'surface' => '#232834'),
+        'solarized' => array('name' => 'Solarized Dark', 'bg' => '#002b36', 'text' => '#839496', 'accent' => '#268bd2', 'surface' => '#073642'),
+        'ocean' => array('name' => 'Deep Ocean', 'bg' => '#001f3f', 'text' => '#e8f4f8', 'accent' => '#7fdbff', 'surface' => '#002a52'),
+        'forest' => array('name' => 'Dark Forest', 'bg' => '#0d1b0d', 'text' => '#e8f5e9', 'accent' => '#81c784', 'surface' => '#1b2f1b'),
+        'purple' => array('name' => 'Purple Haze', 'bg' => '#1a0d2e', 'text' => '#f3e5f5', 'accent' => '#ce93d8', 'surface' => '#2e1a3e'),
+        'slate' => array('name' => 'Modern Slate', 'bg' => '#1e1e1e', 'text' => '#d4d4d4', 'accent' => '#569cd6', 'surface' => '#2d2d2d'),
     );
     ?>
     <div id="admin-preset-container" style="<?php echo $admin_mode !== 'preset' ? 'display:none;' : ''; ?>">
@@ -2499,7 +3002,7 @@ function syntekpro_toggle_page_header($page_title = 'Toggle Settings') {
             <img src="<?php echo esc_url(SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/syntekpro-toggle-logo%20New.png'); ?>" alt="Syntekpro Toggle" class="syntekpro-header-logo">
             <div class="syntekpro-header-version">Version <?php echo esc_html(SYNTEKPRO_TOGGLE_VERSION); ?></div>
         </div>
-        <h1><?php echo esc_html($page_title); ?></h1>
+        <h1 style="text-align: center; margin: 30px 0;"><?php echo esc_html($page_title); ?></h1>
     <?php
 }
 
@@ -2925,6 +3428,7 @@ function syntekpro_toggle_admin_ui_page() {
                     <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php do_settings_sections('syntekpro-toggle-admin-ui'); ?>
                     </div>
+                    <?php submit_button('Save Admin UI Settings'); ?>
                 </form>
             </div>
             
@@ -3236,6 +3740,14 @@ function syntekpro_toggle_admin_enqueue_scripts($hook) {
         SYNTEKPRO_TOGGLE_VERSION
     );
     
+    // Admin About & Additional Styles
+    wp_enqueue_style(
+        'syntekpro-toggle-admin-about',
+        SYNTEKPRO_TOGGLE_PLUGIN_URL . 'admin/css/admin-about.css',
+        array(),
+        SYNTEKPRO_TOGGLE_VERSION
+    );
+    
     // Admin JS
     wp_enqueue_script(
         'syntekpro-toggle-admin',
@@ -3270,92 +3782,108 @@ function syntekpro_toggle_about_page() {
     
     syntekpro_toggle_page_header('About Syntekpro Toggle');
     ?>
-    <div class="syntekpro-content-wrapper">
-        <div class="syntekpro-main-content">
-            <div class="syntekpro-admin-box">
-                <h2>🌓 About Syntekpro Toggle</h2>
-                <p><strong>Syntekpro Toggle</strong> is a lightweight and powerful dark mode plugin for WordPress. It provides an elegant solution for implementing dark/light mode toggling on your website with extensive customization options.</p>
-                
-                <h3>✨ Key Features</h3>
-                <ul>
-                    <li><strong>Auto Mode:</strong> Automatically respects users' OS dark mode preferences</li>
-                    <li><strong>Manual Control:</strong> Let users toggle between dark and light modes</li>
-                    <li><strong>Admin Dark Mode:</strong> Apply dark mode to the WordPress admin dashboard</li>
-                    <li><strong>Customizable Colors:</strong> Full control over dark mode color schemes</li>
-                    <li><strong>Block Theme Compatible:</strong> Works seamlessly with all WordPress block themes</li>
-                    <li><strong>Transition Control:</strong> Adjust animation speed for smooth color transitions</li>
-                    <li><strong>Custom CSS:</strong> Add your own CSS for advanced customizations</li>
-                    <li><strong>FOUC Prevention:</strong> Prevents flash of unstyled content on page load</li>
-                </ul>
-                
-                <h3>📦 Version Information</h3>
-                <p><strong>Current Version:</strong> <?php echo esc_html(SYNTEKPRO_TOGGLE_VERSION); ?></p>
-                <p><strong>Requires:</strong> WordPress 5.0+ | PHP 7.2+</p>
+    <div class="syntekpro-content-wrapper" style="display: flex; gap: 30px; margin-top: 20px;">
+        <!-- Main Content -->
+        <div class="syntekpro-about-main" style="flex: 1;">
+            <!-- Welcome Section -->
+            <div class="syntekpro-admin-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center;">
+                <h2 style="color: white; margin-top: 0; font-size: 2em;">🌓 Syntekpro Toggle</h2>
+                <p style="font-size: 1.1em; margin-bottom: 0;">The Ultimate Dark Mode Solution for WordPress</p>
             </div>
             
+            <!-- About Description -->
             <div class="syntekpro-admin-box">
-                <h2>🏢 About Syntekpro</h2>
-                <p><strong>Syntekpro</strong> is dedicated to creating high-quality WordPress plugins and solutions that enhance website functionality and user experience.</p>
-                <p>We focus on clean code, performance optimization, and user-friendly interfaces to help you build better websites.</p>
-                
-                <h3>🌐 Links</h3>
-                <p>
-                    <a href="https://syntekpro.com" target="_blank" rel="noopener noreferrer" class="button button-primary">
-                        <span class="dashicons dashicons-admin-home"></span> Visit Syntekpro.com
-                    </a>
-                    <a href="https://plugins.syntekpro.com/toggle" target="_blank" rel="noopener noreferrer" class="button button-secondary">
-                        <span class="dashicons dashicons-admin-plugins"></span> Plugin Page
-                    </a>
+                <h3 style="font-size: 1.3em; color: #1a1a1a; margin-top: 0; font-weight: 700;">Welcome to Syntekpro Toggle</h3>
+                <p style="font-size: 1em; line-height: 1.8; color: #555;">
+                    <strong>Syntekpro Toggle</strong> is a powerful, lightweight dark mode plugin for WordPress that puts the user experience first. 
+                    Whether your visitors prefer dark mode for comfort or accessibility, our plugin seamlessly handles the transition with 
+                    smooth animations, customizable colors, and intelligent theme detection.
                 </p>
             </div>
             
+            <!-- Key Features -->
             <div class="syntekpro-admin-box">
-                <h2>💬 Help & Support</h2>
-                <p>Need assistance? We're here to help!</p>
-                
-                <h3>📚 Documentation</h3>
-                <p>Visit our comprehensive documentation for guides, tutorials, and best practices.</p>
-                <p><a href="https://docs.syntekpro.com/toggle" target="_blank" rel="noopener noreferrer" class="button button-secondary">View Documentation</a></p>
-                
-                <h3>🎫 Support</h3>
-                <p>Have a question or need technical support? Contact our support team.</p>
-                <p><a href="mailto:support@syntekpro.com" class="button button-secondary">
-                    <span class="dashicons dashicons-email"></span> Email Support
-                </a></p>
-                
-                <h3>🐛 Report Issues</h3>
-                <p>Found a bug? Let us know so we can fix it!</p>
-                <p><a href="https://github.com/syntekpro/toggle/issues" target="_blank" rel="noopener noreferrer" class="button button-secondary">
-                    <span class="dashicons dashicons-editor-code"></span> Report on GitHub
-                </a></p>
-                
-                <h3>⭐ Rate Us</h3>
-                <p>If you love Syntekpro Toggle, please consider leaving a 5-star review!</p>
-                <p><a href="https://wordpress.org/support/plugin/syntekpro-toggle/reviews/#new-post" target="_blank" rel="noopener noreferrer" class="button button-secondary">
-                    <span class="dashicons dashicons-star-filled"></span> Write a Review
-                </a></p>
+                <h3 style="font-size: 1.2em; color: #1a1a1a; margin-top: 0; padding-bottom: 10px; border-bottom: 2px solid #667eea; font-weight: 700;">✨ Key Features</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                    <div style="padding: 15px; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 4px;">
+                        <h4 style="margin: 0 0 8px 0; color: #667eea;">🎨 Full Customization</h4>
+                        <p style="margin: 0; font-size: 0.95em; color: #555;">Complete control over dark mode colors, themes, and animations</p>
+                    </div>
+                    <div style="padding: 15px; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 4px;">
+                        <h4 style="margin: 0 0 8px 0; color: #667eea;">🔄 Smart Auto Mode</h4>
+                        <p style="margin: 0; font-size: 0.95em; color: #555;">Automatically respects users' OS dark mode preferences</p>
+                    </div>
+                    <div style="padding: 15px; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 4px;">
+                        <h4 style="margin: 0 0 8px 0; color: #667eea;">🎯 Block Theme Compatible</h4>
+                        <p style="margin: 0; font-size: 0.95em; color: #555;">Works seamlessly with all modern WordPress block themes</p>
+                    </div>
+                    <div style="padding: 15px; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 4px;">
+                        <h4 style="margin: 0 0 8px 0; color: #667eea;">⚡ Admin Dark Mode</h4>
+                        <p style="margin: 0; font-size: 0.95em; color: #555;">Beautiful dark mode for the WordPress admin dashboard</p>
+                    </div>
+                    <div style="padding: 15px; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 4px;">
+                        <h4 style="margin: 0 0 8px 0; color: #667eea;">📊 Analytics Tracking</h4>
+                        <p style="margin: 0; font-size: 0.95em; color: #555;">Track user preferences and toggle behavior with built-in analytics</p>
+                    </div>
+                    <div style="padding: 15px; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 4px;">
+                        <h4 style="margin: 0 0 8px 0; color: #667eea;">⚙️ Advanced Options</h4>
+                        <p style="margin: 0; font-size: 0.95em; color: #555;">Media filters, custom CSS, transition controls, and more</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Version Info -->
+            <div class="syntekpro-admin-box" style="background: #f0f6ff; border: 1px solid #cce5ff;">
+                <h3 style="font-size: 1.1em; color: #333; margin-top: 0;">📦 Plugin Information</h3>
+                <p style="margin: 5px 0;"><strong>Current Version:</strong> <?php echo esc_html(SYNTEKPRO_TOGGLE_VERSION); ?></p>
+                <p style="margin: 5px 0;"><strong>Requires:</strong> WordPress 5.0+ | PHP 7.2+</p>
+                <p style="margin: 5px 0;"><strong>License:</strong> GPL v2 or later</p>
             </div>
         </div>
         
-        <div class="syntekpro-sidebar">
-            <div class="syntekpro-admin-box">
-                <h3>🚀 Quick Links</h3>
-                <ul class="syntekpro-stats-list">
-                    <li><a href="?page=syntekpro-toggle">Frontend Settings</a></li>
-                    <li><a href="?page=syntekpro-toggle-admin-ui">Admin UI Settings</a></li>
-                    <li><a href="?page=syntekpro-toggle-settings">Advanced Settings</a></li>
-                    <li><a href="?page=syntekpro-toggle-options">Current Options</a></li>
-                </ul>
+        <!-- Sidebar -->
+        <div class="syntekpro-about-sidebar" style="width: 300px; flex-shrink: 0;">
+            <!-- Quick Actions -->
+            <div class="syntekpro-admin-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-bottom: 20px;">
+                <h3 style="color: white; margin-top: 0; margin-bottom: 15px;">⚙️ Quick Links</h3>
+                <a href="?page=syntekpro-toggle" class="button button-light" style="width: 100%; margin-bottom: 8px; display: block; text-align: center; background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); color: white; text-decoration: none;">
+                    <- Frontend Settings
+                </a>
+                <a href="?page=syntekpro-toggle-admin-ui" class="button button-light" style="width: 100%; display: block; text-align: center; background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); color: white; text-decoration: none;">
+                    <- Admin UI Settings
+                </a>
             </div>
             
-            <div class="syntekpro-admin-box">
-                <h3>📢 Stay Connected</h3>
-                <p>Follow Syntekpro for updates and news:</p>
-                <ul class="syntekpro-stats-list">
-                    <li><a href="https://twitter.com/syntekpro" target="_blank" rel="noopener noreferrer">Twitter</a></li>
-                    <li><a href="https://facebook.com/syntekpro" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-                    <li><a href="https://github.com/syntekpro" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                </ul>
+            <!-- Support Box -->
+            <div class="syntekpro-admin-box" style="border: 2px solid #667eea;">
+                <h3 style="color: #667eea; margin-top: 0; text-align: center;">💬 Need Help?</h3>
+                <p style="text-align: center; font-size: 0.95em; margin-bottom: 15px;">We're here to support you!</p>
+                <a href="https://docs.syntekpro.com/toggle" target="_blank" rel="noopener noreferrer" class="button button-secondary" style="width: 100%; text-align: center; margin-bottom: 8px; display: block;">
+                    📚 View Docs
+                </a>
+                <a href="mailto:support@syntekpro.com" class="button button-secondary" style="width: 100%; text-align: center; margin-bottom: 8px; display: block;">
+                    📧 Email Support
+                </a>
+                <a href="https://github.com/syntekpro/toggle/issues" target="_blank" rel="noopener noreferrer" class="button button-secondary" style="width: 100%; text-align: center; display: block;">
+                    🐛 Report Issue
+                </a>
+            </div>
+            
+            <!-- Rate Box -->
+            <div class="syntekpro-admin-box" style="background: #fff9e6; border: 2px solid #ffc107;">
+                <h3 style="color: #ff9800; margin-top: 0; text-align: center;">⭐ Love This Plugin?</h3>
+                <p style="text-align: center; font-size: 0.95em; margin-bottom: 15px;">Help us grow with a 5-star review!</p>
+                <a href="https://wordpress.org/support/plugin/syntekpro-toggle/reviews/#new-post" target="_blank" rel="noopener noreferrer" class="button button-primary" style="width: 100%; text-align: center; display: block; background: #ff9800; border-color: #ff9800;">
+                    ⭐ Write a Review
+                </a>
+            </div>
+            
+            <!-- Social Links -->
+            <div class="syntekpro-admin-box" style="text-align: center;">
+                <h3 style="color: #333; margin-top: 0; margin-bottom: 15px;">🌐 Follow Us</h3>
+                <a href="https://twitter.com/syntekpro" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin: 0 8px; color: #667eea; text-decoration: none; font-size: 1.5em;" title="Twitter">𝕏</a>
+                <a href="https://facebook.com/syntekpro" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin: 0 8px; color: #667eea; text-decoration: none; font-size: 1.5em;" title="Facebook">f</a>
+                <a href="https://github.com/syntekpro" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin: 0 8px; color: #667eea; text-decoration: none; font-size: 1.5em;" title="GitHub">◎</a>
             </div>
         </div>
     </div>

@@ -20,6 +20,16 @@
             });
         }
         
+        // Handle Frontend Color Presets
+        $(document).on('change', 'input[name="syntekpro_toggle_options[color_preset]"]', function() {
+            applyFrontendPreset();
+        });
+        
+        // Handle Admin Color Presets
+        $(document).on('change', 'input[name="syntekpro_toggle_options[admin_color_preset]"]', function() {
+            applyAdminPreset();
+        });
+        
         // Live preview of settings (optional enhancement)
         function updatePreview() {
             // Get current values
@@ -38,6 +48,99 @@
             if ($indicator.length) {
                 $indicator.css('background-color', color);
             }
+        }
+        
+        // Frontend Color Presets Data
+        var frontendPresets = {
+            'default': { bg: '#1a1a1a', text: '#ffffff', link: '#6ea8fe', secondary: '#2d2d2d' },
+            'midnight': { bg: '#0f1419', text: '#e6edf3', link: '#58a6ff', secondary: '#1c2128' },
+            'carbon': { bg: '#0d0d0d', text: '#f0f0f0', link: '#4a9eff', secondary: '#1a1a1a' },
+            'slate': { bg: '#1e1e1e', text: '#d4d4d4', link: '#569cd6', secondary: '#2d2d2d' },
+            'ocean': { bg: '#001f3f', text: '#e8f4f8', link: '#7fdbff', secondary: '#002a52' },
+            'forest': { bg: '#0d1b0d', text: '#e8f5e9', link: '#81c784', secondary: '#1b2f1b' },
+            'purple': { bg: '#1a0d2e', text: '#f3e5f5', link: '#ce93d8', secondary: '#2e1a3e' },
+            'dracula': { bg: '#282a36', text: '#f8f8f2', link: '#8be9fd', secondary: '#44475a' },
+            'nord': { bg: '#2e3440', text: '#eceff4', link: '#88c0d0', secondary: '#3b4252' },
+            'monokai': { bg: '#272822', text: '#f8f8f2', link: '#66d9ef', secondary: '#3e3d32' },
+            'solarized': { bg: '#002b36', text: '#839496', link: '#268bd2', secondary: '#073642' },
+            'gruvbox': { bg: '#282828', text: '#ebdbb2', link: '#83a598', secondary: '#3c3836' },
+            'material': { bg: '#263238', text: '#eeffff', link: '#82aaff', secondary: '#37474f' },
+            'one': { bg: '#282c34', text: '#abb2bf', link: '#61afef', secondary: '#21252b' },
+            'tokyo': { bg: '#1a1b26', text: '#c0caf5', link: '#7aa2f7', secondary: '#24283b' },
+            'ayu': { bg: '#0f1419', text: '#e6e1cf', link: '#59c2ff', secondary: '#191e2a' },
+            'cobalt': { bg: '#193549', text: '#ffffff', link: '#80ffbb', secondary: '#234e6d' },
+            'espresso': { bg: '#2a211c', text: '#bdae9d', link: '#6c99bb', secondary: '#392e28' },
+            'synthwave': { bg: '#262335', text: '#f92aad', link: '#72f1b8', secondary: '#382e3c' },
+            'rose': { bg: '#191724', text: '#e0def4', link: '#c4a7e7', secondary: '#1f1d2e' }
+        };
+        
+        // Admin Color Presets Data
+        var adminPresets = {
+            'default': { bg: '#0f1115', text: '#e7e9ee', accent: '#2563eb', surface: '#191e2a' },
+            'nord': { bg: '#2e3440', text: '#eceff4', accent: '#88c0d0', surface: '#3b4252' },
+            'dracula': { bg: '#282a36', text: '#f8f8f2', accent: '#bd93f9', surface: '#44475a' },
+            'carbon': { bg: '#161616', text: '#f4f4f4', accent: '#0f62fe', surface: '#262626' },
+            'tokyo': { bg: '#1a1b26', text: '#c0caf5', accent: '#7aa2f7', surface: '#24283b' },
+            'monokai': { bg: '#272822', text: '#f8f8f2', accent: '#66d9ef', surface: '#3e3d32' },
+            'gruvbox': { bg: '#282828', text: '#ebdbb2', accent: '#83a598', surface: '#3c3836' },
+            'material': { bg: '#263238', text: '#eeffff', accent: '#82aaff', surface: '#37474f' },
+            'one': { bg: '#282c34', text: '#abb2bf', accent: '#61afef', surface: '#21252b' },
+            'ayu': { bg: '#1f2430', text: '#cbccc6', accent: '#73d0ff', surface: '#232834' },
+            'solarized': { bg: '#002b36', text: '#839496', accent: '#268bd2', surface: '#073642' },
+            'ocean': { bg: '#001f3f', text: '#e8f4f8', accent: '#7fdbff', surface: '#002a52' },
+            'forest': { bg: '#0d1b0d', text: '#e8f5e9', accent: '#81c784', surface: '#1b2f1b' },
+            'purple': { bg: '#1a0d2e', text: '#f3e5f5', accent: '#ce93d8', surface: '#2e1a3e' },
+            'slate': { bg: '#1e1e1e', text: '#d4d4d4', accent: '#569cd6', surface: '#2d2d2d' }
+        };
+        
+        // Apply Frontend Preset
+        function applyFrontendPreset() {
+            var preset = $('input[name="syntekpro_toggle_options[color_preset]"]:checked').val();
+            if (!preset || !frontendPresets[preset]) return;
+            
+            var colors = frontendPresets[preset];
+            
+            // Update color picker values
+            $('input[name="syntekpro_toggle_options[bg_color]"]').val(colors.bg).iris('color', colors.bg).trigger('change');
+            $('input[name="syntekpro_toggle_options[text_color]"]').val(colors.text).iris('color', colors.text).trigger('change');
+            $('input[name="syntekpro_toggle_options[link_color]"]').val(colors.link).iris('color', colors.link).trigger('change');
+            $('input[name="syntekpro_toggle_options[secondary_bg_color]"]').val(colors.secondary).iris('color', colors.secondary).trigger('change');
+            
+            updatePreview();
+        }
+        
+        // Apply Admin Preset
+        function applyAdminPreset() {
+            var preset = $('input[name="syntekpro_toggle_options[admin_color_preset]"]:checked').val();
+            if (!preset || !adminPresets[preset]) return;
+            
+            var colors = adminPresets[preset];
+            
+            // Update color picker values
+            $('input[name="syntekpro_toggle_options[admin_bg_color]"]').val(colors.bg).iris('color', colors.bg).trigger('change');
+            $('input[name="syntekpro_toggle_options[admin_text_color]"]').val(colors.text).iris('color', colors.text).trigger('change');
+            $('input[name="syntekpro_toggle_options[admin_accent_color]"]').val(colors.accent).iris('color', colors.accent).trigger('change');
+            $('input[name="syntekpro_toggle_options[admin_surface_color]"]').val(colors.surface).iris('color', colors.surface).trigger('change');
+            
+            // Also set border and link colors based on the preset
+            var borderColor = colors.surface;
+            var linkColor = colors.accent;
+            var linkHoverColor = colors.accent;
+            
+            $('input[name="syntekpro_toggle_options[admin_border_color]"]').val(borderColor).iris('color', borderColor).trigger('change');
+            $('input[name="syntekpro_toggle_options[admin_link_color]"]').val(linkColor).iris('color', linkColor).trigger('change');
+            $('input[name="syntekpro_toggle_options[admin_link_hover_color]"]').val(linkHoverColor).iris('color', linkHoverColor).trigger('change');
+            
+            updatePreview();
+        }
+        
+        // Auto-apply presets on page load if one is selected
+        if ($('input[name="syntekpro_toggle_options[color_scheme_mode]"]:checked').val() === 'preset') {
+            applyFrontendPreset();
+        }
+        
+        if ($('input[name="syntekpro_toggle_options[admin_color_scheme_mode]"]:checked').val() === 'preset') {
+            applyAdminPreset();
         }
         
         // Add visual indicators for color choices
