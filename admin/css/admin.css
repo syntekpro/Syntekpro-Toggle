@@ -94,6 +94,10 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
     transition: transform 0.3s ease;
 }
 
+.syntekpro-header-logo-small {
+    height: 50px;
+}
+
 .syntekpro-header-logo:hover {
     transform: scale(1.05);
 }
@@ -154,6 +158,77 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
 .syntekpro-sidebar {
     width: 300px;
     flex-shrink: 0;
+}
+
+/* Sidebar Navigation (Mode Settings / Options) */
+.syntekpro-sidebar-nav {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    height: fit-content;
+    position: sticky;
+    top: 32px;
+}
+
+.syntekpro-nav-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.syntekpro-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    background: #fff;
+}
+
+.syntekpro-nav-item:hover {
+    background: #eef2ff;
+    color: #4958b6;
+}
+
+.syntekpro-nav-item.active {
+    background: #e8e8f5;
+    color: #4958b6;
+    border-left-color: #667eea;
+}
+
+.syntekpro-nav-item .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+/* Tabbed panels (Mode Settings / Options) */
+.syntekpro-section-panel {
+    display: none;
+}
+
+.syntekpro-section-panel.active {
+    display: block;
+    animation: syntekpro-panel-fade 0.25s ease;
+}
+
+@keyframes syntekpro-panel-fade {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .syntekpro-toggle-admin .form-table {
@@ -298,15 +373,23 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
 .syntekpro-option-card:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
-    border-color: #2271b1;1200px) {
-    .syntekpro-content-wrapper {
+    border-color: #2271b1;
+}
+
+@media screen and (max-width: 1200px) {
+    .syntekpro-content-wrapper,
+    .syntekpro-mode-layout,
+    .syntekpro-options-layout {
         flex-direction: column;
     }
-    
-    .syntekpro-sidebar {
-        width: 100%;
+
+    .syntekpro-sidebar,
+    .syntekpro-mode-sidebar,
+    .syntekpro-options-sidebar {
+        width: 100% !important;
+        position: static;
     }
-    
+
     .syntekpro-options-grid {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
@@ -318,40 +401,56 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
         text-align: center;
         gap: 15px;
     }
-    
+
     .syntekpro-header-logo {
         height: 40px;
     }
-    
+
     .syntekpro-options-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .syntekpro-toggle-admin select {
         min-width: 100%;
     }
-    
+
     .syntekpro-toggle-admin input[type="number"] {
         width: 100px;
     }
-    
+
     .syntekpro-toggle-admin .form-table {
         padding: 15px;
     }
-    
+
     .syntekpro-toggle-admin h2 {
         margin: 0 -15px 15px -15px;
     }
-    
+
     .syntekpro-footer-content {
         flex-direction: column;
         gap: 5px;
     }
-    
+
     .syntekpro-options-actions .button {
         display: block;
         width: 100%;
-        margin: 5px 0
+        margin: 5px 0;
+    }
+
+    .syntekpro-mode-layout .syntekpro-nav-item,
+    .syntekpro-options-layout .syntekpro-nav-item {
+        font-size: 13px;
+        padding: 11px 12px;
+    }
+
+    .syntekpro-mode-layout .syntekpro-section-panel h2,
+    .syntekpro-options-layout .syntekpro-section-panel h2 {
+        font-size: 19px;
+    }
+
+    .syntekpro-options-layout #section-options-analytics > div[style*="grid-template-columns"] {
+        grid-template-columns: repeat(2, minmax(110px, 1fr)) !important;
+    }
 }
 
 .syntekpro-option-value {
@@ -442,12 +541,52 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
 /* Submit Button */
 .syntekpro-toggle-admin .submit {
     padding-top: 0;
+    text-align: center;
 }
 
 .syntekpro-toggle-admin .submit .button-primary {
     padding: 10px 30px;
     height: auto;
     font-size: 14px;
+}
+
+.syntekpro-toggle-admin .button-primary {
+    background: #667eea;
+    border-color: #667eea;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+.syntekpro-toggle-admin .button-primary:hover {
+    background: #5568d3;
+    border-color: #5568d3;
+}
+
+.syntekpro-toggle-admin .button-secondary {
+    background: #eef2ff;
+    border-color: #c7d2fe;
+    color: #4958b6;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+.syntekpro-toggle-admin .button-secondary:hover {
+    background: #e0e7ff;
+    border-color: #a5b4fc;
+}
+
+.syntekpro-toggle-admin .button,
+.syntekpro-toggle-admin .button-primary,
+.syntekpro-toggle-admin .button-secondary,
+.syntekpro-toggle-admin .button-light {
+    display: table;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.syntekpro-toggle-admin .syntekpro-widget-actions {
+    justify-content: center;
 }
 
 /* Custom CSS Textarea */
