@@ -5,6 +5,20 @@ All notable changes to Syntekpro-Toggle will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-02-16
+
+### ✨ Added
+- **Analytics Sidebar Navigation** - Added side menu tab navigation on Analytics page with icons and section-based layout.
+- **Toggle+ License Management** - Added license key input, save/remove actions, and status display on Toggle+ page.
+
+### 🔧 Changed
+- **Unified Admin Navigation Logic** - Centralized tab switching logic for Mode Settings, Options, and Analytics pages in `admin/js/admin.js`.
+- **Admin Asset Cache Busting** - Admin CSS/JS now use file modification time for versioning to ensure latest assets are loaded.
+- **Premium Unlock Behavior** - Saved Toggle+ license key now unlocks premium-gated themes and presets.
+
+### 🐛 Fixed
+- **Tab Switching Regression** - Fixed issue where tab navigation remained stuck on first tab across Mode Settings, Options, and Analytics.
+
 ## [1.3.0] - 2026-02-10
 
 ### 🏗️ Architecture Improvements

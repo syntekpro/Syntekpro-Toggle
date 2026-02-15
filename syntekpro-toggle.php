@@ -3,7 +3,7 @@
  * Plugin Name: Syntekpro-Toggle
  * Plugin URI: https://plugins.syntekpro.com/toggle
  * Description: A lightweight Dark/Light mode toggle that respects OS preferences and remembers user choices.
- * Version: 1.5.1
+ * Version: 1.6.0
  * Requires at least: 5.0
  * Requires PHP: 7.2
  * Author: Syntekpro
@@ -14,7 +14,7 @@
  * Domain Path: /languages
  * 
  * @package Syntekpro_Toggle
- * @version 1.5.1
+ * @version 1.6.0
  * @author Syntekpro <development@syntekpro.com>
  */
 
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('SYNTEKPRO_TOGGLE_VERSION', '1.5.1');
+define('SYNTEKPRO_TOGGLE_VERSION', '1.6.0');
 define('SYNTEKPRO_TOGGLE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SYNTEKPRO_TOGGLE_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -63,17 +63,283 @@ function syntekpro_toggle_get_frontend_options() {
         'slide_brightness' => '100',
         'slide_invert' => '0',
         'custom_css' => '',
-        'transition_speed' => '0.3'
+        'transition_speed' => '0.3',
+        'display_mode' => 'all',
+        'display_post_types' => array(),
+        'display_pages' => '',
+        'display_categories' => '',
+        'display_tags' => '',
+        'exclude_special_pages' => '0',
+        'user_visibility' => 'all',
+        'user_roles' => array(),
+        'schedule_enabled' => '0',
+        'schedule_days' => array('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'),
+        'schedule_start' => '19:00',
+        'schedule_end' => '07:00',
+        'auto_mode_source' => 'os',
+        'auto_time_start' => '19:00',
+        'auto_time_end' => '07:00',
+        'auto_apply_on_load' => '1',
+        'auto_listen_os' => '1',
+        'storage_mode' => 'local',
+        'storage_days' => '365',
+        'storage_version' => '1',
+        'enable_animations' => '1',
+        'toggle_animation_speed' => '0.3',
+        'respect_reduced_motion' => '1',
+        'force_high_contrast' => '0',
+        'focus_ring_style' => 'default',
+        'enable_shortcode' => '1',
+        'enable_widget' => '1',
+        'excluded_themes' => '',
+        'exclude_selectors' => '',
+        'analytics_debounce_ms' => '500',
+        'analytics_batch' => '0',
+        'analytics_batch_interval' => '5000',
+        'analytics_batch_max' => '10',
+        'analytics_pageview_once_session' => '1',
+        'debug_mode' => '0'
     );
     
     $options = get_option('syntekpro_toggle_options', array());
     return wp_parse_args($options, $defaults);
 }
 
+function syntekpro_toggle_parse_id_list($value) {
+    if (empty($value)) {
+        return array();
+    }
+
+    $parts = array_map('trim', explode(',', $value));
+    $ids = array();
+    foreach ($parts as $part) {
+        $id = absint($part);
+        if ($id > 0) {
+            $ids[] = $id;
+        }
+    }
+
+    return array_values(array_unique($ids));
+}
+
+function syntekpro_toggle_is_special_page() {
+    if (!empty($GLOBALS['pagenow']) && in_array($GLOBALS['pagenow'], array('wp-login.php', 'wp-register.php'), true)) {
+        return true;
+    }
+
+    if (function_exists('is_checkout') && is_checkout()) {
+        return true;
+    }
+
+    if (function_exists('is_cart') && is_cart()) {
+        return true;
+    }
+
+    if (function_exists('is_account_page') && is_account_page()) {
+        return true;
+    }
+
+    if (is_page(array('checkout', 'cart', 'my-account', 'login', 'register'))) {
+        return true;
+    }
+
+    return false;
+}
+
+function syntekpro_toggle_is_within_time_range($start, $end, $timestamp) {
+    $start_parts = explode(':', $start);
+    $end_parts = explode(':', $end);
+
+    if (count($start_parts) < 2 || count($end_parts) < 2) {
+        return true;
+    }
+
+    $start_minutes = absint($start_parts[0]) * 60 + absint($start_parts[1]);
+    $end_minutes = absint($end_parts[0]) * 60 + absint($end_parts[1]);
+    $now_minutes = absint(date('G', $timestamp)) * 60 + absint(date('i', $timestamp));
+
+    if ($start_minutes <= $end_minutes) {
+        return $now_minutes >= $start_minutes && $now_minutes <= $end_minutes;
+    }
+
+    return $now_minutes >= $start_minutes || $now_minutes <= $end_minutes;
+}
+
+function syntekpro_toggle_is_within_schedule($options) {
+    if (!isset($options['schedule_enabled']) || $options['schedule_enabled'] !== '1') {
+        return true;
+    }
+
+    $timestamp = current_time('timestamp');
+    $day_map = array(
+        'Mon' => 'mon',
+        'Tue' => 'tue',
+        'Wed' => 'wed',
+        'Thu' => 'thu',
+        'Fri' => 'fri',
+        'Sat' => 'sat',
+        'Sun' => 'sun'
+    );
+    $day_key = isset($day_map[date('D', $timestamp)]) ? $day_map[date('D', $timestamp)] : '';
+    $days = isset($options['schedule_days']) && is_array($options['schedule_days']) ? $options['schedule_days'] : array();
+
+    if ($day_key && !in_array($day_key, $days, true)) {
+        return false;
+    }
+
+    return syntekpro_toggle_is_within_time_range($options['schedule_start'], $options['schedule_end'], $timestamp);
+}
+
+function syntekpro_toggle_is_user_allowed($options) {
+    $visibility = isset($options['user_visibility']) ? $options['user_visibility'] : 'all';
+
+    if ($visibility === 'all') {
+        return true;
+    }
+
+    if ($visibility === 'logged_in') {
+        return is_user_logged_in();
+    }
+
+    if ($visibility === 'guests') {
+        return !is_user_logged_in();
+    }
+
+    if ($visibility === 'roles') {
+        if (!is_user_logged_in()) {
+            return false;
+        }
+
+        $user = wp_get_current_user();
+        $allowed_roles = isset($options['user_roles']) && is_array($options['user_roles']) ? $options['user_roles'] : array();
+        foreach ($user->roles as $role) {
+            if (in_array($role, $allowed_roles, true)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    return true;
+}
+
+function syntekpro_toggle_is_allowed_by_display_rules($options) {
+    $mode = isset($options['display_mode']) ? $options['display_mode'] : 'all';
+    if ($mode === 'all') {
+        return true;
+    }
+
+    $post_types = isset($options['display_post_types']) && is_array($options['display_post_types']) ? $options['display_post_types'] : array();
+    $page_ids = syntekpro_toggle_parse_id_list($options['display_pages']);
+    $category_ids = syntekpro_toggle_parse_id_list($options['display_categories']);
+    $tag_ids = syntekpro_toggle_parse_id_list($options['display_tags']);
+
+    $is_match = false;
+
+    if (!empty($post_types) && is_singular($post_types)) {
+        $is_match = true;
+    }
+
+    if (!empty($page_ids) && is_page($page_ids)) {
+        $is_match = true;
+    }
+
+    if (!empty($category_ids)) {
+        if (is_category($category_ids)) {
+            $is_match = true;
+        } elseif (is_single() && has_category($category_ids)) {
+            $is_match = true;
+        }
+    }
+
+    if (!empty($tag_ids)) {
+        if (is_tag($tag_ids)) {
+            $is_match = true;
+        } elseif (is_single() && has_tag($tag_ids)) {
+            $is_match = true;
+        }
+    }
+
+    if ($mode === 'include') {
+        return $is_match;
+    }
+
+    if ($mode === 'exclude') {
+        return !$is_match;
+    }
+
+    return true;
+}
+
+function syntekpro_toggle_is_theme_excluded($options) {
+    if (empty($options['excluded_themes'])) {
+        return false;
+    }
+
+    $themes = array_map('trim', explode(',', $options['excluded_themes']));
+    $themes = array_filter($themes);
+    if (empty($themes)) {
+        return false;
+    }
+
+    $theme = wp_get_theme();
+    $current = array($theme->get_stylesheet(), $theme->get_template());
+
+    foreach ($current as $slug) {
+        if (in_array($slug, $themes, true)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function syntekpro_toggle_get_storage_key($options) {
+    $version = isset($options['storage_version']) ? absint($options['storage_version']) : 1;
+    return 'syntekpro-dark-mode-v' . max(1, $version);
+}
+
+function syntekpro_toggle_should_render_on_page($options) {
+    if (syntekpro_toggle_is_theme_excluded($options)) {
+        return false;
+    }
+
+    if (isset($options['exclude_special_pages']) && $options['exclude_special_pages'] === '1' && syntekpro_toggle_is_special_page()) {
+        return false;
+    }
+
+    if (!syntekpro_toggle_is_user_allowed($options)) {
+        return false;
+    }
+
+    if (!syntekpro_toggle_is_within_schedule($options)) {
+        return false;
+    }
+
+    if (!syntekpro_toggle_is_allowed_by_display_rules($options)) {
+        return false;
+    }
+
+    return true;
+}
+
+function syntekpro_toggle_should_render_toggle($options) {
+    if (isset($options['enable_toggle']) && $options['enable_toggle'] !== '1') {
+        return false;
+    }
+
+    return syntekpro_toggle_should_render_on_page($options);
+}
+
 /**
  * Enqueue scripts and styles
  */
 function syntekpro_toggle_enqueue_assets() {
+    $options = syntekpro_toggle_get_frontend_options();
+    if (syntekpro_toggle_is_theme_excluded($options)) {
+        return;
+    }
+
     // Enqueue CSS
     wp_enqueue_style(
         'syntekpro-toggle-style',
@@ -93,8 +359,6 @@ function syntekpro_toggle_enqueue_assets() {
     );
     
     // Get options for media settings
-    $options = syntekpro_toggle_get_frontend_options();
-    
     // Prepare media settings
     $media_settings = array(
         'enableImageFilter' => isset($options['enable_image_filter']) && $options['enable_image_filter'] === '1',
@@ -118,6 +382,25 @@ function syntekpro_toggle_enqueue_assets() {
     wp_localize_script('syntekpro-toggle-script', 'syntekproToggleSettings', array(
         'defaultMode' => isset($options['default_mode']) ? $options['default_mode'] : 'auto',
         'enableToggle' => isset($options['enable_toggle']) ? $options['enable_toggle'] === '1' : true,
+        'storageMode' => isset($options['storage_mode']) ? $options['storage_mode'] : 'local',
+        'storageDays' => isset($options['storage_days']) ? intval($options['storage_days']) : 365,
+        'storageKey' => syntekpro_toggle_get_storage_key($options),
+        'autoModeSource' => isset($options['auto_mode_source']) ? $options['auto_mode_source'] : 'os',
+        'autoTimeStart' => isset($options['auto_time_start']) ? $options['auto_time_start'] : '19:00',
+        'autoTimeEnd' => isset($options['auto_time_end']) ? $options['auto_time_end'] : '07:00',
+        'autoApplyOnLoad' => isset($options['auto_apply_on_load']) ? $options['auto_apply_on_load'] === '1' : true,
+        'autoListenOs' => isset($options['auto_listen_os']) ? $options['auto_listen_os'] === '1' : true,
+        'enableAnimations' => isset($options['enable_animations']) ? $options['enable_animations'] === '1' : true,
+        'toggleAnimationSpeed' => isset($options['toggle_animation_speed']) ? floatval($options['toggle_animation_speed']) : 0.3,
+        'respectReducedMotion' => isset($options['respect_reduced_motion']) ? $options['respect_reduced_motion'] === '1' : true,
+        'forceHighContrast' => isset($options['force_high_contrast']) ? $options['force_high_contrast'] === '1' : false,
+        'focusRingStyle' => isset($options['focus_ring_style']) ? $options['focus_ring_style'] : 'default',
+        'analyticsDebounceMs' => isset($options['analytics_debounce_ms']) ? intval($options['analytics_debounce_ms']) : 500,
+        'analyticsBatch' => isset($options['analytics_batch']) ? $options['analytics_batch'] === '1' : false,
+        'analyticsBatchInterval' => isset($options['analytics_batch_interval']) ? intval($options['analytics_batch_interval']) : 5000,
+        'analyticsBatchMax' => isset($options['analytics_batch_max']) ? intval($options['analytics_batch_max']) : 10,
+        'analyticsPageviewOnceSession' => isset($options['analytics_pageview_once_session']) ? $options['analytics_pageview_once_session'] === '1' : true,
+        'debugMode' => isset($options['debug_mode']) ? $options['debug_mode'] === '1' : false,
         'mediaSettings' => $media_settings
     ));
 }
@@ -129,6 +412,9 @@ add_action('wp_enqueue_scripts', 'syntekpro_toggle_enqueue_assets');
  */
 function syntekpro_toggle_inline_script() {
     $options = syntekpro_toggle_get_frontend_options();
+    if (syntekpro_toggle_is_theme_excluded($options)) {
+        return;
+    }
     $default_mode = isset($options['default_mode']) ? $options['default_mode'] : 'auto';
     
     // Media settings for inline application
@@ -146,9 +432,78 @@ function syntekpro_toggle_inline_script() {
     <script>
         // Check localStorage or admin settings BEFORE page renders
         (function() {
-            const savedMode = localStorage.getItem('syntekpro-dark-mode');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const defaultMode = '<?php echo esc_js($default_mode); ?>';
+            const storageMode = '<?php echo esc_js($options['storage_mode']); ?>';
+            const storageKey = '<?php echo esc_js(syntekpro_toggle_get_storage_key($options)); ?>';
+            const autoModeSource = '<?php echo esc_js($options['auto_mode_source']); ?>';
+            const autoApplyOnLoad = <?php echo esc_js($options['auto_apply_on_load'] === '1' ? 'true' : 'false'); ?>;
+            const autoTimeStart = '<?php echo esc_js($options['auto_time_start']); ?>';
+            const autoTimeEnd = '<?php echo esc_js($options['auto_time_end']); ?>';
+            const enableAnimations = <?php echo esc_js($options['enable_animations'] === '1' ? 'true' : 'false'); ?>;
+            const respectReducedMotion = <?php echo esc_js($options['respect_reduced_motion'] === '1' ? 'true' : 'false'); ?>;
+            const forceHighContrast = <?php echo esc_js($options['force_high_contrast'] === '1' ? 'true' : 'false'); ?>;
+            const focusRingStyle = '<?php echo esc_js($options['focus_ring_style']); ?>';
+            const root = document.documentElement;
+
+            if (!enableAnimations) {
+                root.classList.add('syntekpro-animations-disabled');
+            }
+
+            if (respectReducedMotion && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                root.classList.add('syntekpro-reduced-motion');
+            }
+
+            if (forceHighContrast) {
+                root.classList.add('syntekpro-high-contrast');
+            }
+
+            if (focusRingStyle) {
+                root.classList.add('syntekpro-focus-' + focusRingStyle);
+            }
+
+            function getCookie(name) {
+                const value = '; ' + document.cookie;
+                const parts = value.split('; ' + name + '=');
+                if (parts.length === 2) {
+                    return parts.pop().split(';').shift();
+                }
+                return null;
+            }
+
+            function getStoredMode() {
+                let value = null;
+                if (storageMode === 'local' || storageMode === 'both') {
+                    try {
+                        value = localStorage.getItem(storageKey);
+                    } catch (e) {
+                        value = null;
+                    }
+                }
+                if ((value === null || value === '') && (storageMode === 'cookie' || storageMode === 'both')) {
+                    value = getCookie(storageKey);
+                }
+                return value;
+            }
+
+            function isWithinTimeRange(start, end) {
+                if (!start || !end || start.indexOf(':') === -1 || end.indexOf(':') === -1) {
+                    return false;
+                }
+                const now = new Date();
+                const startParts = start.split(':');
+                const endParts = end.split(':');
+                const startMinutes = parseInt(startParts[0], 10) * 60 + parseInt(startParts[1], 10);
+                const endMinutes = parseInt(endParts[0], 10) * 60 + parseInt(endParts[1], 10);
+                const nowMinutes = now.getHours() * 60 + now.getMinutes();
+
+                if (startMinutes <= endMinutes) {
+                    return nowMinutes >= startMinutes && nowMinutes <= endMinutes;
+                }
+                return nowMinutes >= startMinutes || nowMinutes <= endMinutes;
+            }
+
+            const savedMode = getStoredMode();
             
             let shouldEnableDark = false;
             
@@ -164,7 +519,13 @@ function syntekpro_toggle_inline_script() {
                         shouldEnableDark = false;
                         break;
                     case 'auto':
-                        shouldEnableDark = prefersDark;
+                        if (!autoApplyOnLoad) {
+                            shouldEnableDark = false;
+                        } else if (autoModeSource === 'time') {
+                            shouldEnableDark = isWithinTimeRange(autoTimeStart, autoTimeEnd);
+                        } else {
+                            shouldEnableDark = prefersDark;
+                        }
                         break;
                     case 'manual':
                         shouldEnableDark = false;
@@ -216,6 +577,9 @@ add_action('wp_head', 'syntekpro_toggle_inline_script', 1);
  */
 function syntekpro_toggle_custom_css() {
     $options = syntekpro_toggle_get_frontend_options();
+    if (syntekpro_toggle_is_theme_excluded($options)) {
+        return;
+    }
     
     // Default preset definitions
     $presets = array(
@@ -266,6 +630,10 @@ function syntekpro_toggle_custom_css() {
         }
     }
     
+    $enable_animations = isset($options['enable_animations']) && $options['enable_animations'] === '1';
+    $transition_speed = $enable_animations ? $options['transition_speed'] : '0';
+    $toggle_animation_speed = $enable_animations ? $options['toggle_animation_speed'] : '0';
+
     // Build filter string for color adjustments
     $filters = array();
     if ($options['brightness'] != 100) {
@@ -273,6 +641,9 @@ function syntekpro_toggle_custom_css() {
     }
     if ($options['contrast'] != 100) {
         $filters[] = 'contrast(' . ($options['contrast'] / 100) . ')';
+    }
+    if (!empty($options['force_high_contrast']) && $options['force_high_contrast'] === '1') {
+        $filters[] = 'contrast(1.15)';
     }
     if ($options['sepia'] > 0) {
         $filters[] = 'sepia(' . ($options['sepia'] / 100) . ')';
@@ -285,7 +656,9 @@ function syntekpro_toggle_custom_css() {
     ?>
     <style id="syntekpro-toggle-custom-css">
         :root {
-            --syntekpro-transition-speed: <?php echo esc_attr($options['transition_speed']); ?>s;
+            --syntekpro-transition-speed: <?php echo esc_attr($transition_speed); ?>s;
+            --syntekpro-transition-duration: <?php echo esc_attr($transition_speed); ?>s;
+            --syntekpro-toggle-animation-duration: <?php echo esc_attr($toggle_animation_speed); ?>s;
         }
         
         html.dark-mode,
@@ -315,6 +688,20 @@ function syntekpro_toggle_custom_css() {
             <?php echo wp_strip_all_tags($options['custom_css']); ?>
         }
         <?php endif; ?>
+
+        <?php if (!empty($options['exclude_selectors'])) : ?>
+            <?php
+            $lines = preg_split('/\r\n|\r|\n/', $options['exclude_selectors']);
+            foreach ($lines as $line) {
+                $selector = trim($line);
+                if ($selector === '') {
+                    continue;
+                }
+                $selector = sanitize_text_field($selector);
+                echo 'html.dark-mode ' . $selector . ' { filter: none !important; }';
+            }
+            ?>
+        <?php endif; ?>
     </style>
     <?php
 }
@@ -323,45 +710,29 @@ add_action('wp_head', 'syntekpro_toggle_custom_css', 100);
 /**
  * Add toggle button to frontend
  */
-function syntekpro_toggle_button() {
-    $options = syntekpro_toggle_get_frontend_options();
-    
-    // Don't show button if disabled in settings
-    if (isset($options['enable_toggle']) && $options['enable_toggle'] !== '1') {
-        return;
-    }
-    
-    // Get theme, position, and size
+function syntekpro_toggle_render_button($options, $args = array()) {
     $theme = isset($options['toggle_theme']) ? $options['toggle_theme'] : 'default';
     $position = isset($options['button_position']) ? $options['button_position'] : 'bottom-right';
     $size = isset($options['button_size']) ? intval($options['button_size']) : 50;
-    
-    // Parse position
+
     $position_parts = explode('-', $position);
-    $vertical = $position_parts[0]; // top or bottom
-    $horizontal = $position_parts[1]; // left or right
-    
-    // Generate position styles
+    $vertical = $position_parts[0];
+    $horizontal = $position_parts[1];
+
     $position_style = $vertical . ': 30px; ' . $horizontal . ': 30px;';
-    
-    // Generate size styles (adjust pill width proportionally)
     $size_style = 'width: ' . $size . 'px; height: ' . $size . 'px;';
     if ($theme === 'pill') {
         $pill_width = intval($size * 1.4);
         $size_style = 'width: ' . $pill_width . 'px; height: ' . $size . 'px;';
     }
-    
-    // Calculate icon size (80% of button size)
+
     $icon_size = intval($size * 0.48);
-    
-    // Get additional style options from settings
-    $options = get_option('syntekpro_toggle_options', array());
     $button_shape = isset($options['button_shape']) ? $options['button_shape'] : 'default';
     $button_animation = isset($options['button_animation']) ? $options['button_animation'] : 'none';
     $button_bg_style = isset($options['button_bg_style']) ? $options['button_bg_style'] : 'solid';
-    
-    // Build button classes
-    $button_classes = 'syntekpro-toggle-btn theme-' . esc_attr($theme);
+    $inline = !empty($args['inline']);
+
+    $button_classes = 'syntekpro-toggle-btn syntekpro-dark-mode-toggle theme-' . esc_attr($theme);
     if ($button_shape !== 'default') {
         $button_classes .= ' ' . esc_attr($button_shape);
     }
@@ -371,8 +742,14 @@ function syntekpro_toggle_button() {
     if ($button_bg_style !== 'solid') {
         $button_classes .= ' ' . esc_attr($button_bg_style);
     }
+    if ($inline) {
+        $button_classes .= ' syntekpro-toggle-inline';
+    }
+
+    $id_attr = isset($args['id']) ? ' id="' . esc_attr($args['id']) . '"' : '';
+    $style_attr = $inline ? $size_style : $position_style . $size_style;
     ?>
-    <button id="syntekpro-dark-mode-toggle" class="<?php echo esc_attr($button_classes); ?>" aria-label="Toggle Dark Mode" style="<?php echo esc_attr($position_style . $size_style); ?>">
+    <button<?php echo $id_attr; ?> class="<?php echo esc_attr($button_classes); ?>" aria-label="Toggle Dark Mode" style="<?php echo esc_attr($style_attr); ?>">
         <span class="syntekpro-icon-sun" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" width="<?php echo esc_attr($icon_size); ?>" height="<?php echo esc_attr($icon_size); ?>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="5"></circle>
@@ -394,7 +771,68 @@ function syntekpro_toggle_button() {
     </button>
     <?php
 }
+
+function syntekpro_toggle_button() {
+    $options = syntekpro_toggle_get_frontend_options();
+
+    if (!syntekpro_toggle_should_render_toggle($options)) {
+        return;
+    }
+
+    syntekpro_toggle_render_button($options, array('id' => 'syntekpro-dark-mode-toggle'));
+}
 add_action('wp_footer', 'syntekpro_toggle_button');
+
+function syntekpro_toggle_shortcode($atts) {
+    $options = syntekpro_toggle_get_frontend_options();
+
+    if (isset($options['enable_shortcode']) && $options['enable_shortcode'] !== '1') {
+        return '';
+    }
+
+    if (!syntekpro_toggle_should_render_on_page($options)) {
+        return '';
+    }
+
+    ob_start();
+    syntekpro_toggle_render_button($options, array('inline' => true));
+    return ob_get_clean();
+}
+add_shortcode('syntekpro_toggle', 'syntekpro_toggle_shortcode');
+
+class Syntekpro_Toggle_Widget extends WP_Widget {
+    public function __construct() {
+        parent::__construct(
+            'syntekpro_toggle_widget',
+            'Syntekpro Toggle',
+            array('description' => 'Display the dark mode toggle button.')
+        );
+    }
+
+    public function widget($args, $instance) {
+        $options = syntekpro_toggle_get_frontend_options();
+        if (isset($options['enable_widget']) && $options['enable_widget'] !== '1') {
+            return;
+        }
+
+        if (!syntekpro_toggle_should_render_on_page($options)) {
+            return;
+        }
+
+        echo $args['before_widget'];
+        syntekpro_toggle_render_button($options, array('inline' => true));
+        echo $args['after_widget'];
+    }
+}
+
+function syntekpro_toggle_register_widget() {
+    $options = syntekpro_toggle_get_frontend_options();
+    if (isset($options['enable_widget']) && $options['enable_widget'] !== '1') {
+        return;
+    }
+    register_widget('Syntekpro_Toggle_Widget');
+}
+add_action('widgets_init', 'syntekpro_toggle_register_widget');
 
 /**
  * AJAX Handler for Analytics Tracking
@@ -403,6 +841,31 @@ function syntekpro_toggle_ajax_track_analytics() {
     // Verify nonce
     if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'syntekpro_analytics_nonce')) {
         wp_send_json_error('Invalid nonce');
+        return;
+    }
+
+    if (isset($_POST['events'])) {
+        $events = json_decode(stripslashes($_POST['events']), true);
+        if (!is_array($events)) {
+            wp_send_json_error('Invalid events payload');
+            return;
+        }
+
+        if (!function_exists('syntekpro_toggle_track_event')) {
+            wp_send_json_error('Tracking function not available');
+            return;
+        }
+
+        foreach ($events as $event) {
+            if (!is_array($event) || empty($event['type'])) {
+                continue;
+            }
+            $event_type = sanitize_text_field($event['type']);
+            $event_data = isset($event['data']) && is_array($event['data']) ? $event['data'] : array();
+            syntekpro_toggle_track_event($event_type, $event_data);
+        }
+
+        wp_send_json_success('Events tracked');
         return;
     }
     

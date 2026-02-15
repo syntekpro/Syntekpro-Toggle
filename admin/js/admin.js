@@ -6,6 +6,61 @@
     'use strict';
     
     $(document).ready(function() {
+        (function initPageTabsEarly() {
+            var $modeLayout = $('.syntekpro-mode-layout');
+            if ($modeLayout.length) {
+                $modeLayout.off('click.syntekproTabs', '.syntekpro-nav-item');
+                $modeLayout.on('click.syntekproTabs', '.syntekpro-nav-item', function(e) {
+                    e.preventDefault();
+                    var section = $(this).data('section');
+                    $modeLayout.find('.syntekpro-nav-item').removeClass('active');
+                    $modeLayout.find('.syntekpro-section-panel').removeClass('active');
+                    $(this).addClass('active');
+                    $modeLayout.find('#section-' + section).addClass('active');
+                });
+            }
+
+            var $optionsLayout = $('.syntekpro-options-layout');
+            if ($optionsLayout.length) {
+                $optionsLayout.off('click.syntekproTabs', '.syntekpro-nav-item');
+                $optionsLayout.on('click.syntekproTabs', '.syntekpro-nav-item', function(e) {
+                    e.preventDefault();
+                    var section = $(this).data('section');
+                    $optionsLayout.find('.syntekpro-nav-item').removeClass('active');
+                    $(this).addClass('active');
+                    $optionsLayout.find('.syntekpro-section-panel').removeClass('active');
+                    $optionsLayout.find('.syntekpro-section-panel[data-section="' + section + '"]')
+                        .addClass('active')
+                        .removeClass('is-collapsed');
+                });
+
+                $optionsLayout.off('click.syntekproTabs', '.syntekpro-section-panel h2');
+                $optionsLayout.on('click.syntekproTabs', '.syntekpro-section-panel h2', function() {
+                    $(this).closest('.syntekpro-section-panel').toggleClass('is-collapsed');
+                });
+            }
+
+            var $analyticsLayout = $('.syntekpro-analytics-layout');
+            if ($analyticsLayout.length) {
+                $analyticsLayout.off('click.syntekproTabs', '.syntekpro-analytics-nav-item');
+                $analyticsLayout.on('click.syntekproTabs', '.syntekpro-analytics-nav-item', function(e) {
+                    e.preventDefault();
+                    var section = $(this).data('section');
+                    $analyticsLayout.find('.syntekpro-analytics-nav-item').removeClass('active');
+                    $(this).addClass('active');
+                    $analyticsLayout.find('.syntekpro-section-panel').removeClass('active');
+                    $analyticsLayout.find('.syntekpro-section-panel[data-section="' + section + '"]')
+                        .addClass('active')
+                        .removeClass('is-collapsed');
+                });
+
+                $analyticsLayout.off('click.syntekproTabs', '.syntekpro-section-panel h2');
+                $analyticsLayout.on('click.syntekproTabs', '.syntekpro-section-panel h2', function() {
+                    $(this).closest('.syntekpro-section-panel').toggleClass('is-collapsed');
+                });
+            }
+        })();
+
         // Initialize WordPress Color Picker
         if ($.fn.wpColorPicker) {
             $('.syntekpro-color-picker').wpColorPicker({
@@ -309,68 +364,20 @@
         // Add smooth scroll to sections
         $('a[href^="#"]').on('click', function(e) {
             var target = $(this).attr('href');
-            if ($(target).length) {
+
+            if (!target || target === '#') {
+                return;
+            }
+
+            var $target = $(target);
+            if ($target.length) {
                 e.preventDefault();
                 $('html, body').animate({
-                    scrollTop: $(target).offset().top - 50
+                    scrollTop: $target.offset().top - 50
                 }, 500);
             }
         });
 
-        // Collapsible settings sections (h2/h3) in admin forms and .wrap areas
-        // DISABLED: Using admin.php collapsible system instead to avoid duplication
-        // (function initCollapsibleSections() {
-            var $container = $('.syntekpro-toggle-admin');
-            if (!$container.length) return;
-
-            var $headings = $container.find('.wrap h2:not(.nav-tab-wrapper), .wrap h3, form h2, form h3');
-            if (!$headings.length) return;
-
-            $headings.each(function(index) {
-                    var $heading = $(this);
-                    if ($heading.hasClass('syntekpro-section-heading')) return;
-
-                    // Collect section content until the next heading at same level
-                    var $content = $heading.nextUntil('h2, h3');
-                    if (!$content.length) return;
-
-                    var $wrap = $('<div class="syntekpro-section-content"></div>');
-                    $content.wrapAll($wrap);
-
-                    var initiallyOpen = index === 0; // open first by default
-                    var $toggle = $('<button type="button" class="button-link syntekpro-section-toggle" aria-expanded="' + initiallyOpen + '"><span class="dashicons ' + (initiallyOpen ? 'dashicons-arrow-down' : 'dashicons-arrow-right') + '"></span></button>');
-                    $heading.addClass('syntekpro-section-heading').append($toggle);
-
-                    if (!initiallyOpen) {
-                        $wrap.hide();
-                    }
-
-                    var toggleContent = function(forceState) {
-                        var isOpen = $wrap.is(':visible');
-                        var nextState = typeof forceState === 'boolean' ? forceState : !isOpen;
-                        if (nextState) {
-                            $wrap.slideDown(150);
-                        } else {
-                            $wrap.slideUp(150);
-                        }
-                        $toggle.attr('aria-expanded', nextState);
-                        $toggle.find('.dashicons')
-                            .toggleClass('dashicons-arrow-down', nextState)
-                            .toggleClass('dashicons-arrow-right', !nextState);
-                    };
-
-                    $toggle.on('click', function(e) {
-                        e.preventDefault();
-                        toggleContent();
-                    });
-
-                    $heading.on('click', function(e) {
-                        if ($(e.target).closest('.syntekpro-section-toggle').length) return;
-                        toggleContent();
-                    });
-                });
-        })();
-        // } DISABLED - Using admin.php collapsible system instead */
     });
     
 })(jQuery);

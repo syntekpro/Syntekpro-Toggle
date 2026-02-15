@@ -37,6 +37,15 @@ function syntekpro_toggle_admin_menu() {
 
     add_submenu_page(
         'syntekpro-toggle',
+        'Analytics',
+        'Analytics',
+        'manage_options',
+        'syntekpro-toggle-analytics',
+        'syntekpro_toggle_analytics_page'
+    );
+
+    add_submenu_page(
+        'syntekpro-toggle',
         'Options',
         'Options',
         'manage_options',
@@ -1596,6 +1605,374 @@ function syntekpro_toggle_register_settings() {
         'syntekpro_toggle_admin_color_section'
     );
     
+    // Options Page - Display Rules Section
+    add_settings_section(
+        'syntekpro_toggle_display_section',
+        'Display Rules',
+        'syntekpro_toggle_display_section_callback',
+        'syntekpro-toggle-frontend-advanced'
+    );
+
+    add_settings_field(
+        'display_mode',
+        'Display Mode',
+        'syntekpro_toggle_display_mode_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_display_section'
+    );
+
+    add_settings_field(
+        'display_post_types',
+        'Post Types',
+        'syntekpro_toggle_display_post_types_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_display_section'
+    );
+
+    add_settings_field(
+        'display_pages',
+        'Page IDs',
+        'syntekpro_toggle_display_pages_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_display_section'
+    );
+
+    add_settings_field(
+        'display_categories',
+        'Category IDs',
+        'syntekpro_toggle_display_categories_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_display_section'
+    );
+
+    add_settings_field(
+        'display_tags',
+        'Tag IDs',
+        'syntekpro_toggle_display_tags_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_display_section'
+    );
+
+    add_settings_field(
+        'exclude_special_pages',
+        'Exclude Special Pages',
+        'syntekpro_toggle_exclude_special_pages_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_display_section'
+    );
+
+    // Options Page - User Targeting Section
+    add_settings_section(
+        'syntekpro_toggle_user_targeting_section',
+        'User Targeting',
+        'syntekpro_toggle_user_targeting_section_callback',
+        'syntekpro-toggle-frontend-advanced'
+    );
+
+    add_settings_field(
+        'user_visibility',
+        'Visibility',
+        'syntekpro_toggle_user_visibility_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_user_targeting_section'
+    );
+
+    add_settings_field(
+        'user_roles',
+        'Allowed Roles',
+        'syntekpro_toggle_user_roles_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_user_targeting_section'
+    );
+
+    // Options Page - Schedule Section
+    add_settings_section(
+        'syntekpro_toggle_schedule_section',
+        'Schedule',
+        'syntekpro_toggle_schedule_section_callback',
+        'syntekpro-toggle-frontend-advanced'
+    );
+
+    add_settings_field(
+        'schedule_enabled',
+        'Enable Schedule',
+        'syntekpro_toggle_schedule_enabled_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_schedule_section'
+    );
+
+    add_settings_field(
+        'schedule_days',
+        'Days',
+        'syntekpro_toggle_schedule_days_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_schedule_section'
+    );
+
+    add_settings_field(
+        'schedule_start',
+        'Start Time',
+        'syntekpro_toggle_schedule_start_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_schedule_section'
+    );
+
+    add_settings_field(
+        'schedule_end',
+        'End Time',
+        'syntekpro_toggle_schedule_end_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_schedule_section'
+    );
+
+    // Options Page - Behavior Section
+    add_settings_section(
+        'syntekpro_toggle_behavior_section',
+        'Behavior',
+        'syntekpro_toggle_behavior_section_callback',
+        'syntekpro-toggle-frontend-advanced'
+    );
+
+    add_settings_field(
+        'auto_mode_source',
+        'Auto Mode Source',
+        'syntekpro_toggle_auto_mode_source_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_behavior_section'
+    );
+
+    add_settings_field(
+        'auto_time_start',
+        'Auto Start Time',
+        'syntekpro_toggle_auto_time_start_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_behavior_section'
+    );
+
+    add_settings_field(
+        'auto_time_end',
+        'Auto End Time',
+        'syntekpro_toggle_auto_time_end_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_behavior_section'
+    );
+
+    add_settings_field(
+        'auto_apply_on_load',
+        'Apply Auto On Load',
+        'syntekpro_toggle_auto_apply_on_load_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_behavior_section'
+    );
+
+    add_settings_field(
+        'auto_listen_os',
+        'Listen To OS Changes',
+        'syntekpro_toggle_auto_listen_os_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_behavior_section'
+    );
+
+    // Options Page - Storage & Privacy Section
+    add_settings_section(
+        'syntekpro_toggle_storage_section',
+        'Storage & Privacy',
+        'syntekpro_toggle_storage_section_callback',
+        'syntekpro-toggle-frontend-advanced'
+    );
+
+    add_settings_field(
+        'storage_mode',
+        'Storage Mode',
+        'syntekpro_toggle_storage_mode_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_storage_section'
+    );
+
+    add_settings_field(
+        'storage_days',
+        'Cookie Lifetime (Days)',
+        'syntekpro_toggle_storage_days_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_storage_section'
+    );
+
+    add_settings_field(
+        'reset_storage',
+        'Reset Stored Preferences',
+        'syntekpro_toggle_reset_storage_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_storage_section'
+    );
+
+    // Options Page - Animations Section
+    add_settings_section(
+        'syntekpro_toggle_animation_section',
+        'Animations',
+        'syntekpro_toggle_animation_section_callback',
+        'syntekpro-toggle-frontend-advanced'
+    );
+
+    add_settings_field(
+        'enable_animations',
+        'Enable Animations',
+        'syntekpro_toggle_enable_animations_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_animation_section'
+    );
+
+    add_settings_field(
+        'toggle_animation_speed',
+        'Toggle Animation Speed',
+        'syntekpro_toggle_toggle_animation_speed_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_animation_section'
+    );
+
+    // Options Page - Accessibility Section
+    add_settings_section(
+        'syntekpro_toggle_accessibility_section',
+        'Accessibility',
+        'syntekpro_toggle_accessibility_section_callback',
+        'syntekpro-toggle-frontend-advanced'
+    );
+
+    add_settings_field(
+        'respect_reduced_motion',
+        'Respect Reduced Motion',
+        'syntekpro_toggle_respect_reduced_motion_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_accessibility_section'
+    );
+
+    add_settings_field(
+        'force_high_contrast',
+        'Force High Contrast',
+        'syntekpro_toggle_force_high_contrast_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_accessibility_section'
+    );
+
+    add_settings_field(
+        'focus_ring_style',
+        'Focus Ring Style',
+        'syntekpro_toggle_focus_ring_style_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_accessibility_section'
+    );
+
+    // Options Page - Integrations Section
+    add_settings_section(
+        'syntekpro_toggle_integrations_section',
+        'Integrations',
+        'syntekpro_toggle_integrations_section_callback',
+        'syntekpro-toggle-frontend-advanced'
+    );
+
+    add_settings_field(
+        'enable_shortcode',
+        'Shortcode Output',
+        'syntekpro_toggle_enable_shortcode_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_integrations_section'
+    );
+
+    add_settings_field(
+        'enable_widget',
+        'Widget Output',
+        'syntekpro_toggle_enable_widget_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_integrations_section'
+    );
+
+    // Options Page - Theme Overrides Section
+    add_settings_section(
+        'syntekpro_toggle_theme_override_section',
+        'Theme Overrides',
+        'syntekpro_toggle_theme_override_section_callback',
+        'syntekpro-toggle-frontend-advanced'
+    );
+
+    add_settings_field(
+        'excluded_themes',
+        'Disable On Themes',
+        'syntekpro_toggle_excluded_themes_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_theme_override_section'
+    );
+
+    add_settings_field(
+        'exclude_selectors',
+        'Exclude Selectors',
+        'syntekpro_toggle_exclude_selectors_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_theme_override_section'
+    );
+
+    // Options Page - Performance Section
+    add_settings_section(
+        'syntekpro_toggle_performance_section',
+        'Performance',
+        'syntekpro_toggle_performance_section_callback',
+        'syntekpro-toggle-frontend-advanced'
+    );
+
+    add_settings_field(
+        'analytics_debounce_ms',
+        'Analytics Debounce (ms)',
+        'syntekpro_toggle_analytics_debounce_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_performance_section'
+    );
+
+    add_settings_field(
+        'analytics_batch',
+        'Batch Analytics',
+        'syntekpro_toggle_analytics_batch_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_performance_section'
+    );
+
+    add_settings_field(
+        'analytics_batch_interval',
+        'Batch Interval (ms)',
+        'syntekpro_toggle_analytics_batch_interval_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_performance_section'
+    );
+
+    add_settings_field(
+        'analytics_batch_max',
+        'Batch Size',
+        'syntekpro_toggle_analytics_batch_max_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_performance_section'
+    );
+
+    add_settings_field(
+        'analytics_pageview_once_session',
+        'Page View Once Per Session',
+        'syntekpro_toggle_analytics_pageview_once_session_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_performance_section'
+    );
+
+    // Options Page - Debug Section
+    add_settings_section(
+        'syntekpro_toggle_debug_section',
+        'Debug',
+        'syntekpro_toggle_debug_section_callback',
+        'syntekpro-toggle-frontend-advanced'
+    );
+
+    add_settings_field(
+        'debug_mode',
+        'Debug Mode',
+        'syntekpro_toggle_debug_mode_callback',
+        'syntekpro-toggle-frontend-advanced',
+        'syntekpro_toggle_debug_section'
+    );
+
     // Advanced Settings Section - Now MERGED INTO FRONTEND PAGE
     add_settings_section(
         'syntekpro_toggle_advanced_section',
@@ -1696,6 +2073,42 @@ function syntekpro_toggle_get_default_options() {
         'slide_invert' => '0',
         'custom_css' => '',
         'transition_speed' => '0.3',
+        'display_mode' => 'all',
+        'display_post_types' => array(),
+        'display_pages' => '',
+        'display_categories' => '',
+        'display_tags' => '',
+        'exclude_special_pages' => '0',
+        'user_visibility' => 'all',
+        'user_roles' => array(),
+        'schedule_enabled' => '0',
+        'schedule_days' => array('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'),
+        'schedule_start' => '19:00',
+        'schedule_end' => '07:00',
+        'auto_mode_source' => 'os',
+        'auto_time_start' => '19:00',
+        'auto_time_end' => '07:00',
+        'auto_apply_on_load' => '1',
+        'auto_listen_os' => '1',
+        'storage_mode' => 'local',
+        'storage_days' => '365',
+        'storage_version' => '1',
+        'reset_storage' => '0',
+        'enable_animations' => '1',
+        'toggle_animation_speed' => '0.3',
+        'respect_reduced_motion' => '1',
+        'force_high_contrast' => '0',
+        'focus_ring_style' => 'default',
+        'enable_shortcode' => '1',
+        'enable_widget' => '1',
+        'excluded_themes' => '',
+        'exclude_selectors' => '',
+        'analytics_debounce_ms' => '500',
+        'analytics_batch' => '0',
+        'analytics_batch_interval' => '5000',
+        'analytics_batch_max' => '10',
+        'analytics_pageview_once_session' => '1',
+        'debug_mode' => '0',
         'enable_admin_bar_icon' => '1',
         'enable_dashboard_widget' => '1',
         'enable_admin_dark_mode' => '1',
@@ -1712,7 +2125,8 @@ function syntekpro_toggle_get_default_options() {
         'enable_analytics' => '1',
         'analytics_track_toggles' => '1',
         'analytics_track_pageviews' => '1',
-        'analytics_track_modes' => '1'
+        'analytics_track_modes' => '1',
+        'toggle_plus_license_key' => ''
     );
 }
 
@@ -1856,6 +2270,167 @@ function syntekpro_toggle_sanitize_options($input) {
     if (isset($input['transition_speed'])) {
         $sanitized['transition_speed'] = floatval($input['transition_speed']);
     }
+
+    if (isset($input['display_mode'])) {
+        $allowed_display_modes = array('all', 'include', 'exclude');
+        $display_mode = sanitize_text_field($input['display_mode']);
+        $sanitized['display_mode'] = in_array($display_mode, $allowed_display_modes, true) ? $display_mode : 'all';
+    }
+
+    if (isset($input['display_post_types']) && is_array($input['display_post_types'])) {
+        $allowed_post_types = array_keys(get_post_types(array('public' => true), 'names'));
+        $post_types = array_map('sanitize_text_field', $input['display_post_types']);
+        $sanitized['display_post_types'] = array_values(array_intersect($post_types, $allowed_post_types));
+    }
+
+    if (isset($input['display_pages'])) {
+        $sanitized['display_pages'] = sanitize_text_field($input['display_pages']);
+    }
+
+    if (isset($input['display_categories'])) {
+        $sanitized['display_categories'] = sanitize_text_field($input['display_categories']);
+    }
+
+    if (isset($input['display_tags'])) {
+        $sanitized['display_tags'] = sanitize_text_field($input['display_tags']);
+    }
+
+    if (array_key_exists('exclude_special_pages', $input)) {
+        $sanitized['exclude_special_pages'] = isset($input['exclude_special_pages']) ? '1' : '0';
+    }
+
+    if (isset($input['user_visibility'])) {
+        $allowed_visibility = array('all', 'logged_in', 'guests', 'roles');
+        $visibility = sanitize_text_field($input['user_visibility']);
+        $sanitized['user_visibility'] = in_array($visibility, $allowed_visibility, true) ? $visibility : 'all';
+    }
+
+    if (isset($input['user_roles']) && is_array($input['user_roles'])) {
+        $allowed_roles = array_keys(get_editable_roles());
+        $roles = array_map('sanitize_text_field', $input['user_roles']);
+        $sanitized['user_roles'] = array_values(array_intersect($roles, $allowed_roles));
+    }
+
+    if (array_key_exists('schedule_enabled', $input)) {
+        $sanitized['schedule_enabled'] = isset($input['schedule_enabled']) ? '1' : '0';
+    }
+
+    if (isset($input['schedule_days']) && is_array($input['schedule_days'])) {
+        $allowed_days = array('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun');
+        $days = array_map('sanitize_text_field', $input['schedule_days']);
+        $sanitized['schedule_days'] = array_values(array_intersect($days, $allowed_days));
+    }
+
+    if (isset($input['schedule_start'])) {
+        $sanitized['schedule_start'] = sanitize_text_field($input['schedule_start']);
+    }
+
+    if (isset($input['schedule_end'])) {
+        $sanitized['schedule_end'] = sanitize_text_field($input['schedule_end']);
+    }
+
+    if (isset($input['auto_mode_source'])) {
+        $allowed_sources = array('os', 'time');
+        $source = sanitize_text_field($input['auto_mode_source']);
+        $sanitized['auto_mode_source'] = in_array($source, $allowed_sources, true) ? $source : 'os';
+    }
+
+    if (isset($input['auto_time_start'])) {
+        $sanitized['auto_time_start'] = sanitize_text_field($input['auto_time_start']);
+    }
+
+    if (isset($input['auto_time_end'])) {
+        $sanitized['auto_time_end'] = sanitize_text_field($input['auto_time_end']);
+    }
+
+    if (array_key_exists('auto_apply_on_load', $input)) {
+        $sanitized['auto_apply_on_load'] = isset($input['auto_apply_on_load']) ? '1' : '0';
+    }
+
+    if (array_key_exists('auto_listen_os', $input)) {
+        $sanitized['auto_listen_os'] = isset($input['auto_listen_os']) ? '1' : '0';
+    }
+
+    if (isset($input['storage_mode'])) {
+        $allowed_storage = array('local', 'cookie', 'both');
+        $storage_mode = sanitize_text_field($input['storage_mode']);
+        $sanitized['storage_mode'] = in_array($storage_mode, $allowed_storage, true) ? $storage_mode : 'local';
+    }
+
+    if (isset($input['storage_days'])) {
+        $sanitized['storage_days'] = max(1, min(3650, absint($input['storage_days'])));
+    }
+
+    if (isset($input['storage_version'])) {
+        $sanitized['storage_version'] = max(1, absint($input['storage_version']));
+    }
+
+    if (array_key_exists('reset_storage', $input) && isset($input['reset_storage'])) {
+        $sanitized['storage_version'] = max(1, absint($sanitized['storage_version'])) + 1;
+        $sanitized['reset_storage'] = '0';
+    }
+
+    if (array_key_exists('enable_animations', $input)) {
+        $sanitized['enable_animations'] = isset($input['enable_animations']) ? '1' : '0';
+    }
+
+    if (isset($input['toggle_animation_speed'])) {
+        $sanitized['toggle_animation_speed'] = floatval($input['toggle_animation_speed']);
+    }
+
+    if (array_key_exists('respect_reduced_motion', $input)) {
+        $sanitized['respect_reduced_motion'] = isset($input['respect_reduced_motion']) ? '1' : '0';
+    }
+
+    if (array_key_exists('force_high_contrast', $input)) {
+        $sanitized['force_high_contrast'] = isset($input['force_high_contrast']) ? '1' : '0';
+    }
+
+    if (isset($input['focus_ring_style'])) {
+        $allowed_focus = array('default', 'strong', 'minimal');
+        $focus_style = sanitize_text_field($input['focus_ring_style']);
+        $sanitized['focus_ring_style'] = in_array($focus_style, $allowed_focus, true) ? $focus_style : 'default';
+    }
+
+    if (array_key_exists('enable_shortcode', $input)) {
+        $sanitized['enable_shortcode'] = isset($input['enable_shortcode']) ? '1' : '0';
+    }
+
+    if (array_key_exists('enable_widget', $input)) {
+        $sanitized['enable_widget'] = isset($input['enable_widget']) ? '1' : '0';
+    }
+
+    if (isset($input['excluded_themes'])) {
+        $sanitized['excluded_themes'] = sanitize_text_field($input['excluded_themes']);
+    }
+
+    if (isset($input['exclude_selectors'])) {
+        $sanitized['exclude_selectors'] = sanitize_textarea_field($input['exclude_selectors']);
+    }
+
+    if (isset($input['analytics_debounce_ms'])) {
+        $sanitized['analytics_debounce_ms'] = max(0, min(10000, absint($input['analytics_debounce_ms'])));
+    }
+
+    if (array_key_exists('analytics_batch', $input)) {
+        $sanitized['analytics_batch'] = isset($input['analytics_batch']) ? '1' : '0';
+    }
+
+    if (isset($input['analytics_batch_interval'])) {
+        $sanitized['analytics_batch_interval'] = max(500, min(60000, absint($input['analytics_batch_interval'])));
+    }
+
+    if (isset($input['analytics_batch_max'])) {
+        $sanitized['analytics_batch_max'] = max(1, min(100, absint($input['analytics_batch_max'])));
+    }
+
+    if (array_key_exists('analytics_pageview_once_session', $input)) {
+        $sanitized['analytics_pageview_once_session'] = isset($input['analytics_pageview_once_session']) ? '1' : '0';
+    }
+
+    if (array_key_exists('debug_mode', $input)) {
+        $sanitized['debug_mode'] = isset($input['debug_mode']) ? '1' : '0';
+    }
     
     if (array_key_exists('enable_admin_bar_icon', $input)) {
         $sanitized['enable_admin_bar_icon'] = isset($input['enable_admin_bar_icon']) ? '1' : '0';
@@ -1959,6 +2534,419 @@ function syntekpro_toggle_advanced_section_callback() {
     echo '<p>Advanced customization options for power users.</p>';
 }
 
+function syntekpro_toggle_display_section_callback() {
+    echo '<p>Control where the toggle is shown across your site.</p>';
+}
+
+function syntekpro_toggle_user_targeting_section_callback() {
+    echo '<p>Limit the toggle to specific visitors or user roles.</p>';
+}
+
+function syntekpro_toggle_schedule_section_callback() {
+    echo '<p>Show the toggle only during selected hours and days.</p>';
+}
+
+function syntekpro_toggle_behavior_section_callback() {
+    echo '<p>Configure how auto mode chooses dark or light.</p>';
+}
+
+function syntekpro_toggle_storage_section_callback() {
+    echo '<p>Choose how user preferences are stored and reset.</p>';
+}
+
+function syntekpro_toggle_animation_section_callback() {
+    echo '<p>Control animation behavior and speeds.</p>';
+}
+
+function syntekpro_toggle_accessibility_section_callback() {
+    echo '<p>Accessibility options for motion and contrast.</p>';
+}
+
+function syntekpro_toggle_integrations_section_callback() {
+    echo '<p>Enable shortcode or widget output.</p>';
+}
+
+function syntekpro_toggle_theme_override_section_callback() {
+    echo '<p>Disable features for specific themes or selectors.</p>';
+}
+
+function syntekpro_toggle_performance_section_callback() {
+    echo '<p>Tune tracking performance and page view behavior.</p>';
+}
+
+function syntekpro_toggle_debug_section_callback() {
+    echo '<p>Enable logging to help troubleshoot issues.</p>';
+}
+
+function syntekpro_toggle_render_settings_section($page, $section_id) {
+    global $wp_settings_sections;
+
+    if (empty($wp_settings_sections[$page][$section_id])) {
+        return;
+    }
+
+    $section = $wp_settings_sections[$page][$section_id];
+
+    if (!empty($section['callback']) && is_callable($section['callback'])) {
+        call_user_func($section['callback'], $section);
+    }
+
+    echo '<table class="form-table" role="presentation">';
+    do_settings_fields($page, $section_id);
+    echo '</table>';
+}
+
+function syntekpro_toggle_display_mode_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <select name="syntekpro_toggle_options[display_mode]" id="display_mode">
+        <option value="all" <?php selected($options['display_mode'], 'all'); ?>>Show everywhere</option>
+        <option value="include" <?php selected($options['display_mode'], 'include'); ?>>Show only on selected</option>
+        <option value="exclude" <?php selected($options['display_mode'], 'exclude'); ?>>Hide on selected</option>
+    </select>
+    <p class="description">Use the lists below to include or exclude specific content.</p>
+    <?php
+}
+
+function syntekpro_toggle_display_post_types_callback() {
+    $options = syntekpro_toggle_get_options();
+    $post_types = get_post_types(array('public' => true), 'objects');
+    $selected = isset($options['display_post_types']) && is_array($options['display_post_types']) ? $options['display_post_types'] : array();
+    ?>
+    <div>
+        <?php foreach ($post_types as $post_type): ?>
+            <label style="display:block; margin-bottom:4px;">
+                <input type="checkbox" name="syntekpro_toggle_options[display_post_types][]" value="<?php echo esc_attr($post_type->name); ?>" <?php checked(in_array($post_type->name, $selected, true)); ?>>
+                <?php echo esc_html($post_type->labels->singular_name); ?>
+            </label>
+        <?php endforeach; ?>
+    </div>
+    <p class="description">Used when display mode is set to include or exclude.</p>
+    <?php
+}
+
+function syntekpro_toggle_display_pages_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="text" name="syntekpro_toggle_options[display_pages]" value="<?php echo esc_attr($options['display_pages']); ?>" placeholder="12, 34, 56" class="regular-text">
+    <p class="description">Comma-separated page IDs.</p>
+    <?php
+}
+
+function syntekpro_toggle_display_categories_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="text" name="syntekpro_toggle_options[display_categories]" value="<?php echo esc_attr($options['display_categories']); ?>" placeholder="3, 9" class="regular-text">
+    <p class="description">Comma-separated category IDs.</p>
+    <?php
+}
+
+function syntekpro_toggle_display_tags_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="text" name="syntekpro_toggle_options[display_tags]" value="<?php echo esc_attr($options['display_tags']); ?>" placeholder="5, 8" class="regular-text">
+    <p class="description">Comma-separated tag IDs.</p>
+    <?php
+}
+
+function syntekpro_toggle_exclude_special_pages_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[exclude_special_pages]" value="1" <?php checked($options['exclude_special_pages'], '1'); ?>>
+        Hide on login, register, checkout, cart, and account pages
+    </label>
+    <?php
+}
+
+function syntekpro_toggle_user_visibility_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <select name="syntekpro_toggle_options[user_visibility]" id="user_visibility">
+        <option value="all" <?php selected($options['user_visibility'], 'all'); ?>>All visitors</option>
+        <option value="logged_in" <?php selected($options['user_visibility'], 'logged_in'); ?>>Logged-in users only</option>
+        <option value="guests" <?php selected($options['user_visibility'], 'guests'); ?>>Guests only</option>
+        <option value="roles" <?php selected($options['user_visibility'], 'roles'); ?>>Specific roles</option>
+    </select>
+    <?php
+}
+
+function syntekpro_toggle_user_roles_callback() {
+    $options = syntekpro_toggle_get_options();
+    $roles = get_editable_roles();
+    $selected = isset($options['user_roles']) && is_array($options['user_roles']) ? $options['user_roles'] : array();
+    ?>
+    <div>
+        <?php foreach ($roles as $role_key => $role): ?>
+            <label style="display:block; margin-bottom:4px;">
+                <input type="checkbox" name="syntekpro_toggle_options[user_roles][]" value="<?php echo esc_attr($role_key); ?>" <?php checked(in_array($role_key, $selected, true)); ?>>
+                <?php echo esc_html($role['name']); ?>
+            </label>
+        <?php endforeach; ?>
+    </div>
+    <p class="description">Used when visibility is set to specific roles.</p>
+    <?php
+}
+
+function syntekpro_toggle_schedule_enabled_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[schedule_enabled]" value="1" <?php checked($options['schedule_enabled'], '1'); ?>>
+        Enable schedule
+    </label>
+    <?php
+}
+
+function syntekpro_toggle_schedule_days_callback() {
+    $options = syntekpro_toggle_get_options();
+    $days = array(
+        'mon' => 'Mon',
+        'tue' => 'Tue',
+        'wed' => 'Wed',
+        'thu' => 'Thu',
+        'fri' => 'Fri',
+        'sat' => 'Sat',
+        'sun' => 'Sun'
+    );
+    $selected = isset($options['schedule_days']) && is_array($options['schedule_days']) ? $options['schedule_days'] : array();
+    ?>
+    <div>
+        <?php foreach ($days as $key => $label): ?>
+            <label style="display:inline-block; margin-right:10px;">
+                <input type="checkbox" name="syntekpro_toggle_options[schedule_days][]" value="<?php echo esc_attr($key); ?>" <?php checked(in_array($key, $selected, true)); ?>>
+                <?php echo esc_html($label); ?>
+            </label>
+        <?php endforeach; ?>
+    </div>
+    <?php
+}
+
+function syntekpro_toggle_schedule_start_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="time" name="syntekpro_toggle_options[schedule_start]" value="<?php echo esc_attr($options['schedule_start']); ?>">
+    <?php
+}
+
+function syntekpro_toggle_schedule_end_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="time" name="syntekpro_toggle_options[schedule_end]" value="<?php echo esc_attr($options['schedule_end']); ?>">
+    <?php
+}
+
+function syntekpro_toggle_auto_mode_source_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <select name="syntekpro_toggle_options[auto_mode_source]">
+        <option value="os" <?php selected($options['auto_mode_source'], 'os'); ?>>Follow OS</option>
+        <option value="time" <?php selected($options['auto_mode_source'], 'time'); ?>>Use time range</option>
+    </select>
+    <?php
+}
+
+function syntekpro_toggle_auto_time_start_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="time" name="syntekpro_toggle_options[auto_time_start]" value="<?php echo esc_attr($options['auto_time_start']); ?>">
+    <?php
+}
+
+function syntekpro_toggle_auto_time_end_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="time" name="syntekpro_toggle_options[auto_time_end]" value="<?php echo esc_attr($options['auto_time_end']); ?>">
+    <?php
+}
+
+function syntekpro_toggle_auto_apply_on_load_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[auto_apply_on_load]" value="1" <?php checked($options['auto_apply_on_load'], '1'); ?>>
+        Apply auto mode on page load
+    </label>
+    <?php
+}
+
+function syntekpro_toggle_auto_listen_os_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[auto_listen_os]" value="1" <?php checked($options['auto_listen_os'], '1'); ?>>
+        Listen for OS theme changes
+    </label>
+    <?php
+}
+
+function syntekpro_toggle_storage_mode_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <select name="syntekpro_toggle_options[storage_mode]">
+        <option value="local" <?php selected($options['storage_mode'], 'local'); ?>>Local storage</option>
+        <option value="cookie" <?php selected($options['storage_mode'], 'cookie'); ?>>Cookie only</option>
+        <option value="both" <?php selected($options['storage_mode'], 'both'); ?>>Local storage + cookie</option>
+    </select>
+    <?php
+}
+
+function syntekpro_toggle_storage_days_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="number" name="syntekpro_toggle_options[storage_days]" value="<?php echo esc_attr($options['storage_days']); ?>" min="1" max="3650">
+    <p class="description">Used when cookie storage is enabled.</p>
+    <?php
+}
+
+function syntekpro_toggle_reset_storage_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <button type="submit" name="syntekpro_toggle_options[reset_storage]" value="1" class="button button-secondary">
+        Reset stored preferences
+    </button>
+    <p class="description">Current storage version: <?php echo esc_html($options['storage_version']); ?>.</p>
+    <?php
+}
+
+function syntekpro_toggle_enable_animations_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[enable_animations]" value="1" <?php checked($options['enable_animations'], '1'); ?>>
+        Enable animations and transitions
+    </label>
+    <?php
+}
+
+function syntekpro_toggle_toggle_animation_speed_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="number" name="syntekpro_toggle_options[toggle_animation_speed]" value="<?php echo esc_attr($options['toggle_animation_speed']); ?>" min="0" max="5" step="0.05">
+    <span>seconds</span>
+    <?php
+}
+
+function syntekpro_toggle_respect_reduced_motion_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[respect_reduced_motion]" value="1" <?php checked($options['respect_reduced_motion'], '1'); ?>>
+        Reduce motion when user prefers reduced motion
+    </label>
+    <?php
+}
+
+function syntekpro_toggle_force_high_contrast_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[force_high_contrast]" value="1" <?php checked($options['force_high_contrast'], '1'); ?>>
+        Force high contrast mode
+    </label>
+    <?php
+}
+
+function syntekpro_toggle_focus_ring_style_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <select name="syntekpro_toggle_options[focus_ring_style]">
+        <option value="default" <?php selected($options['focus_ring_style'], 'default'); ?>>Default</option>
+        <option value="strong" <?php selected($options['focus_ring_style'], 'strong'); ?>>Strong</option>
+        <option value="minimal" <?php selected($options['focus_ring_style'], 'minimal'); ?>>Minimal</option>
+    </select>
+    <?php
+}
+
+function syntekpro_toggle_enable_shortcode_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[enable_shortcode]" value="1" <?php checked($options['enable_shortcode'], '1'); ?>>
+        Enable shortcode output
+    </label>
+    <p class="description">Shortcode: <code>[syntekpro_toggle]</code></p>
+    <?php
+}
+
+function syntekpro_toggle_enable_widget_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[enable_widget]" value="1" <?php checked($options['enable_widget'], '1'); ?>>
+        Enable widget output
+    </label>
+    <?php
+}
+
+function syntekpro_toggle_excluded_themes_callback() {
+    $options = syntekpro_toggle_get_options();
+    $theme = wp_get_theme();
+    ?>
+    <input type="text" name="syntekpro_toggle_options[excluded_themes]" value="<?php echo esc_attr($options['excluded_themes']); ?>" placeholder="theme-slug, child-theme" class="regular-text">
+    <p class="description">Current theme: <?php echo esc_html($theme->get_stylesheet()); ?>.</p>
+    <?php
+}
+
+function syntekpro_toggle_exclude_selectors_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <textarea name="syntekpro_toggle_options[exclude_selectors]" rows="4" class="large-text" placeholder=".no-dark-mode\n#hero img"><?php echo esc_textarea($options['exclude_selectors']); ?></textarea>
+    <p class="description">One selector per line to skip filters in dark mode.</p>
+    <?php
+}
+
+function syntekpro_toggle_analytics_debounce_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="number" name="syntekpro_toggle_options[analytics_debounce_ms]" value="<?php echo esc_attr($options['analytics_debounce_ms']); ?>" min="0" max="10000" step="50">
+    <?php
+}
+
+function syntekpro_toggle_analytics_batch_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[analytics_batch]" value="1" <?php checked($options['analytics_batch'], '1'); ?>>
+        Send analytics in batches
+    </label>
+    <?php
+}
+
+function syntekpro_toggle_analytics_batch_interval_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="number" name="syntekpro_toggle_options[analytics_batch_interval]" value="<?php echo esc_attr($options['analytics_batch_interval']); ?>" min="500" max="60000" step="250">
+    <?php
+}
+
+function syntekpro_toggle_analytics_batch_max_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <input type="number" name="syntekpro_toggle_options[analytics_batch_max]" value="<?php echo esc_attr($options['analytics_batch_max']); ?>" min="1" max="100">
+    <?php
+}
+
+function syntekpro_toggle_analytics_pageview_once_session_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[analytics_pageview_once_session]" value="1" <?php checked($options['analytics_pageview_once_session'], '1'); ?>>
+        Count a page view once per session
+    </label>
+    <?php
+}
+
+function syntekpro_toggle_debug_mode_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[debug_mode]" value="1" <?php checked($options['debug_mode'], '1'); ?>>
+        Enable debug logging
+    </label>
+    <?php
+}
+
 /**
  * Field callbacks
  */
@@ -2011,7 +2999,17 @@ function syntekpro_toggle_button_size_callback() {
 /**
  * Check if a feature is premium (requires Toggle+)
  */
+function syntekpro_toggle_has_toggle_plus_license() {
+    $options = syntekpro_toggle_get_options();
+    $license_key = isset($options['toggle_plus_license_key']) ? trim((string) $options['toggle_plus_license_key']) : '';
+    return $license_key !== '';
+}
+
 function syntekpro_toggle_is_premium_feature($feature_type, $feature_id) {
+    if (syntekpro_toggle_has_toggle_plus_license()) {
+        return false;
+    }
+
     // Features 1-5 are free (indices 0-4)
     if ($feature_type === 'theme') {
         $free_themes = array(
@@ -3380,6 +4378,7 @@ function syntekpro_toggle_admin_enqueue_scripts($hook) {
     $allowed_hooks = array(
         'toplevel_page_syntekpro-toggle',               // Frontend page (now includes Dashboard & Advanced)
         'toggle_page_syntekpro-toggle-options',         // Options page
+        'toggle_page_syntekpro-toggle-analytics',       // Analytics page
         'toggle_page_syntekpro-toggle-plus',            // Toggle+ page
         'toggle_page_syntekpro-toggle-about',           // About page
         'toggle_page_syntekpro-toggle-plugins'          // Other Plugins page
@@ -3392,13 +4391,25 @@ function syntekpro_toggle_admin_enqueue_scripts($hook) {
     // WordPress color picker
     wp_enqueue_style('wp-color-picker');
     wp_enqueue_script('wp-color-picker');
+
+    $admin_css_version = file_exists(SYNTEKPRO_TOGGLE_PLUGIN_DIR . 'admin/css/admin.css')
+        ? (string) filemtime(SYNTEKPRO_TOGGLE_PLUGIN_DIR . 'admin/css/admin.css')
+        : SYNTEKPRO_TOGGLE_VERSION;
+
+    $admin_about_css_version = file_exists(SYNTEKPRO_TOGGLE_PLUGIN_DIR . 'admin/css/admin-about.css')
+        ? (string) filemtime(SYNTEKPRO_TOGGLE_PLUGIN_DIR . 'admin/css/admin-about.css')
+        : SYNTEKPRO_TOGGLE_VERSION;
+
+    $admin_js_version = file_exists(SYNTEKPRO_TOGGLE_PLUGIN_DIR . 'admin/js/admin.js')
+        ? (string) filemtime(SYNTEKPRO_TOGGLE_PLUGIN_DIR . 'admin/js/admin.js')
+        : SYNTEKPRO_TOGGLE_VERSION;
     
     // Admin CSS
     wp_enqueue_style(
         'syntekpro-toggle-admin',
         SYNTEKPRO_TOGGLE_PLUGIN_URL . 'admin/css/admin.css',
         array(),
-        SYNTEKPRO_TOGGLE_VERSION
+        $admin_css_version
     );
     
     // Admin About & Additional Styles
@@ -3406,7 +4417,7 @@ function syntekpro_toggle_admin_enqueue_scripts($hook) {
         'syntekpro-toggle-admin-about',
         SYNTEKPRO_TOGGLE_PLUGIN_URL . 'admin/css/admin-about.css',
         array(),
-        SYNTEKPRO_TOGGLE_VERSION
+        $admin_about_css_version
     );
     
     // Admin JS
@@ -3414,7 +4425,7 @@ function syntekpro_toggle_admin_enqueue_scripts($hook) {
         'syntekpro-toggle-admin',
         SYNTEKPRO_TOGGLE_PLUGIN_URL . 'admin/js/admin.js',
         array('jquery', 'wp-color-picker'),
-        SYNTEKPRO_TOGGLE_VERSION,
+        $admin_js_version,
         true
     );
 }
@@ -3543,49 +4554,6 @@ function syntekpro_toggle_settings_combined_page() {
         </div>
     </div>
 
-    <style>
-    .syntekpro-mode-layout .syntekpro-sidebar-nav,
-    .syntekpro-options-layout .syntekpro-sidebar-nav {
-        padding: 12px;
-        border-radius: 10px;
-    }
-    .syntekpro-mode-layout .syntekpro-nav-item,
-    .syntekpro-options-layout .syntekpro-nav-item {
-        padding: 12px 14px;
-        font-size: 14px;
-        margin-bottom: 4px;
-    }
-    .syntekpro-mode-layout .syntekpro-section-panel h2,
-    .syntekpro-options-layout .syntekpro-section-panel h2 {
-        margin: 0 0 14px 0;
-        font-size: 22px;
-        line-height: 1.3;
-        color: #1d2327;
-        border-bottom: 1px solid #e5e5e5;
-        padding-bottom: 10px;
-    }
-    .syntekpro-mode-layout .syntekpro-section-panel .submit,
-    .syntekpro-options-layout .syntekpro-section-panel .submit {
-        margin-top: 16px;
-    }
-    .syntekpro-mode-layout .syntekpro-section-panel > form > div,
-    .syntekpro-options-layout .syntekpro-section-panel > form > div {
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    }
-    </style>
-
-    <script>
-    jQuery(document).ready(function($) {
-        $('.syntekpro-nav-item').on('click', function(e) {
-            e.preventDefault();
-            const section = $(this).data('section');
-            $('.syntekpro-nav-item').removeClass('active');
-            $('.syntekpro-section-panel').removeClass('active');
-            $(this).addClass('active');
-            $('#section-' + section).addClass('active');
-        });
-    });
-    </script>
     <?php
     syntekpro_toggle_page_footer();
 }
@@ -3602,8 +4570,6 @@ function syntekpro_toggle_options_page() {
         add_settings_error('syntekpro_toggle_messages', 'syntekpro_toggle_message', '✓ Options saved successfully.', 'updated');
     }
 
-    $analytics = syntekpro_toggle_get_analytics();
-
     settings_errors('syntekpro_toggle_messages');
 
     syntekpro_toggle_page_header('Options');
@@ -3611,70 +4577,114 @@ function syntekpro_toggle_options_page() {
     <div class="syntekpro-content-wrapper syntekpro-options-layout" style="display: flex; gap: 24px; margin-top: 20px;">
         <div class="syntekpro-sidebar-nav syntekpro-options-sidebar" style="width: 260px; flex-shrink: 0;">
             <div class="syntekpro-nav-section" style="gap: 6px;">
-                <a href="#" class="syntekpro-nav-item active" data-section="options-analytics"><span class="dashicons dashicons-chart-bar"></span> Analytics</a>
-                <a href="#" class="syntekpro-nav-item" data-section="options-advanced"><span class="dashicons dashicons-admin-tools"></span> Advanced</a>
+                <a href="#" class="syntekpro-nav-item active" data-section="options-display"><span class="dashicons dashicons-visibility"></span> Display Rules</a>
+                <a href="#" class="syntekpro-nav-item" data-section="options-targeting"><span class="dashicons dashicons-admin-users"></span> User Targeting</a>
+                <a href="#" class="syntekpro-nav-item" data-section="options-schedule"><span class="dashicons dashicons-clock"></span> Schedule</a>
+                <a href="#" class="syntekpro-nav-item" data-section="options-behavior"><span class="dashicons dashicons-admin-generic"></span> Behavior</a>
+                <a href="#" class="syntekpro-nav-item" data-section="options-storage"><span class="dashicons dashicons-database"></span> Storage & Privacy</a>
+                <a href="#" class="syntekpro-nav-item" data-section="options-animations"><span class="dashicons dashicons-controls-play"></span> Animations</a>
+                <a href="#" class="syntekpro-nav-item" data-section="options-accessibility"><span class="dashicons dashicons-universal-access"></span> Accessibility</a>
+                <a href="#" class="syntekpro-nav-item" data-section="options-integrations"><span class="dashicons dashicons-networking"></span> Integrations</a>
+                <a href="#" class="syntekpro-nav-item" data-section="options-overrides"><span class="dashicons dashicons-admin-appearance"></span> Theme Overrides</a>
+                <a href="#" class="syntekpro-nav-item" data-section="options-performance"><span class="dashicons dashicons-performance"></span> Performance</a>
+                <a href="#" class="syntekpro-nav-item" data-section="options-debug"><span class="dashicons dashicons-admin-tools"></span> Debug</a>
+                <a href="#" class="syntekpro-nav-item" data-section="options-advanced"><span class="dashicons dashicons-admin-settings"></span> Advanced</a>
             </div>
         </div>
 
         <div class="syntekpro-main-content syntekpro-options-main" style="flex: 1;">
-            <div class="syntekpro-section-panel active" id="section-options-analytics">
-                <h2>Analytics Options</h2>
-                <form action="options.php" method="post">
-                    <?php settings_fields('syntekpro_toggle_settings'); ?>
-                    <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-                        <?php do_settings_sections('syntekpro-toggle-analytics-settings'); ?>
-                    </div>
-                    <?php submit_button('Save Analytics Options'); ?>
-                </form>
+            <form action="options.php" method="post">
+                <?php settings_fields('syntekpro_toggle_settings'); ?>
 
-                <div style="background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px;">
-                    <h3 style="margin-top: 0;">Quick Analytics Snapshot</h3>
-                    <div style="display: grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); gap: 12px;">
-                        <div style="padding: 12px; border: 1px solid #e8e8e8; border-radius: 6px; text-align: center;">
-                            <strong style="display:block; font-size: 20px;"><?php echo number_format($analytics['total_toggles']); ?></strong>
-                            <span style="color:#666; font-size:12px;">Toggle Clicks</span>
-                        </div>
-                        <div style="padding: 12px; border: 1px solid #e8e8e8; border-radius: 6px; text-align: center;">
-                            <strong style="display:block; font-size: 20px;"><?php echo number_format($analytics['page_views']); ?></strong>
-                            <span style="color:#666; font-size:12px;">Page Views</span>
-                        </div>
-                        <div style="padding: 12px; border: 1px solid #e8e8e8; border-radius: 6px; text-align: center;">
-                            <strong style="display:block; font-size: 20px;"><?php echo number_format($analytics['dark_mode_count']); ?></strong>
-                            <span style="color:#666; font-size:12px;">Dark Mode</span>
-                        </div>
-                        <div style="padding: 12px; border: 1px solid #e8e8e8; border-radius: 6px; text-align: center;">
-                            <strong style="display:block; font-size: 20px;"><?php echo number_format($analytics['light_mode_count']); ?></strong>
-                            <span style="color:#666; font-size:12px;">Light Mode</span>
-                        </div>
+                <div class="syntekpro-section-panel active" id="section-options-display" data-section="options-display">
+                    <h2>Display Rules</h2>
+                    <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_display_section'); ?>
                     </div>
                 </div>
-            </div>
 
-            <div class="syntekpro-section-panel" id="section-options-advanced">
-                <h2>Advanced Options</h2>
-                <form action="options.php" method="post">
-                    <?php settings_fields('syntekpro_toggle_settings'); ?>
-                    <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
-                        <?php do_settings_sections('syntekpro-toggle-frontend-advanced'); ?>
+                <div class="syntekpro-section-panel" id="section-options-targeting" data-section="options-targeting">
+                    <h2>User Targeting</h2>
+                    <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_user_targeting_section'); ?>
                     </div>
-                    <?php submit_button('Save Advanced Options'); ?>
-                </form>
-            </div>
+                </div>
+
+                <div class="syntekpro-section-panel" id="section-options-schedule" data-section="options-schedule">
+                    <h2>Schedule</h2>
+                    <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_schedule_section'); ?>
+                    </div>
+                </div>
+
+                <div class="syntekpro-section-panel" id="section-options-behavior" data-section="options-behavior">
+                    <h2>Behavior</h2>
+                    <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_behavior_section'); ?>
+                    </div>
+                </div>
+
+                <div class="syntekpro-section-panel" id="section-options-storage" data-section="options-storage">
+                    <h2>Storage &amp; Privacy</h2>
+                    <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_storage_section'); ?>
+                    </div>
+                </div>
+
+                <div class="syntekpro-section-panel" id="section-options-animations" data-section="options-animations">
+                    <h2>Animations</h2>
+                    <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_animation_section'); ?>
+                    </div>
+                </div>
+
+                <div class="syntekpro-section-panel" id="section-options-accessibility" data-section="options-accessibility">
+                    <h2>Accessibility</h2>
+                    <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_accessibility_section'); ?>
+                    </div>
+                </div>
+
+                <div class="syntekpro-section-panel" id="section-options-integrations" data-section="options-integrations">
+                    <h2>Integrations</h2>
+                    <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_integrations_section'); ?>
+                    </div>
+                </div>
+
+                <div class="syntekpro-section-panel" id="section-options-overrides" data-section="options-overrides">
+                    <h2>Theme Overrides</h2>
+                    <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_theme_override_section'); ?>
+                    </div>
+                </div>
+
+                <div class="syntekpro-section-panel" id="section-options-performance" data-section="options-performance">
+                    <h2>Performance</h2>
+                    <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_performance_section'); ?>
+                    </div>
+                </div>
+
+                <div class="syntekpro-section-panel" id="section-options-debug" data-section="options-debug">
+                    <h2>Debug</h2>
+                    <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_debug_section'); ?>
+                    </div>
+                </div>
+
+                <div class="syntekpro-section-panel" id="section-options-advanced" data-section="options-advanced">
+                    <h2>Advanced Options</h2>
+                    <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
+                        <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_advanced_section'); ?>
+                    </div>
+                </div>
+
+                <?php submit_button('Save Options'); ?>
+            </form>
         </div>
     </div>
 
-    <script>
-    jQuery(document).ready(function($) {
-        $('.syntekpro-nav-item').on('click', function(e) {
-            e.preventDefault();
-            const section = $(this).data('section');
-            $('.syntekpro-nav-item').removeClass('active');
-            $('.syntekpro-section-panel').removeClass('active');
-            $(this).addClass('active');
-            $('#section-' + section).addClass('active');
-        });
-    });
-    </script>
     <?php
     syntekpro_toggle_page_footer();
 }
@@ -3807,11 +4817,77 @@ function syntekpro_toggle_plus_page() {
     if (!current_user_can('manage_options')) {
         return;
     }
+
+    $options = syntekpro_toggle_get_options();
+
+    if (isset($_POST['syntekpro_toggle_save_license']) && check_admin_referer('syntekpro_toggle_plus_license_action', 'syntekpro_toggle_plus_license_nonce')) {
+        $license_key = isset($_POST['syntekpro_toggle_plus_license_key']) ? sanitize_text_field(wp_unslash($_POST['syntekpro_toggle_plus_license_key'])) : '';
+        $license_key = trim($license_key);
+
+        $options['toggle_plus_license_key'] = $license_key;
+        update_option('syntekpro_toggle_options', $options);
+
+        add_settings_error(
+            'syntekpro_toggle_messages',
+            'syntekpro_toggle_plus_license_saved',
+            $license_key !== '' ? 'Toggle+ license key saved.' : 'License key cleared.',
+            'updated'
+        );
+    }
+
+    if (isset($_POST['syntekpro_toggle_remove_license']) && check_admin_referer('syntekpro_toggle_plus_license_action', 'syntekpro_toggle_plus_license_nonce')) {
+        $options['toggle_plus_license_key'] = '';
+        update_option('syntekpro_toggle_options', $options);
+
+        add_settings_error(
+            'syntekpro_toggle_messages',
+            'syntekpro_toggle_plus_license_removed',
+            'Toggle+ license key removed.',
+            'updated'
+        );
+    }
+
+    $license_key = isset($options['toggle_plus_license_key']) ? trim((string) $options['toggle_plus_license_key']) : '';
+    $has_license = $license_key !== '';
+    $masked_license = $has_license
+        ? str_repeat('*', max(0, strlen($license_key) - 4)) . substr($license_key, -4)
+        : '';
     
     syntekpro_toggle_page_header('Toggle+ - Premium Features');
+    settings_errors('syntekpro_toggle_messages');
     ?>
     <div class="syntekpro-content-wrapper" style="display:block; max-width: 1100px; margin: 0 auto;">
         <div class="syntekpro-main-content">
+
+            <div class="syntekpro-admin-box" style="background: #ffffff; border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; margin-bottom: 30px;">
+                <h2 style="margin: 0 0 12px 0; color: #333;">🔑 Toggle+ License</h2>
+                <p style="margin: 0 0 16px 0; color: #555;">Add your Toggle+ license key to keep premium features linked to this site.</p>
+
+                <form method="post" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+                    <?php wp_nonce_field('syntekpro_toggle_plus_license_action', 'syntekpro_toggle_plus_license_nonce'); ?>
+                    <input
+                        type="text"
+                        name="syntekpro_toggle_plus_license_key"
+                        value="<?php echo esc_attr($license_key); ?>"
+                        placeholder="Enter your Toggle+ license key"
+                        class="regular-text"
+                        style="min-width: 320px;"
+                    />
+                    <button type="submit" name="syntekpro_toggle_save_license" class="button button-primary">Save License</button>
+                    <?php if ($has_license): ?>
+                        <button type="submit" name="syntekpro_toggle_remove_license" class="button button-secondary" onclick="return confirm('Remove saved Toggle+ license key?');">Remove License</button>
+                    <?php endif; ?>
+                </form>
+
+                <p style="margin: 12px 0 0 0; color: #666; font-size: 13px;">
+                    <strong>Status:</strong>
+                    <?php if ($has_license): ?>
+                        <span style="color: #46b450;">Active — Premium unlocked (<?php echo esc_html($masked_license); ?>)</span>
+                    <?php else: ?>
+                        <span style="color: #d63638;">Not set</span>
+                    <?php endif; ?>
+                </p>
+            </div>
             
             <!-- Hero Section -->
             <div class="syntekpro-premium-hero" style="background: #ffffff; border: 2px solid #e0e0e0; color: #333; padding: 40px 30px; border-radius: 12px; margin-bottom: 30px; text-align: center;">
@@ -4084,329 +5160,199 @@ function syntekpro_toggle_analytics_page() {
     
     syntekpro_toggle_page_header('Analytics Dashboard');
     ?>
-    <div class="syntekpro-content-wrapper">
-        <div class="syntekpro-main-content">
-            
-            <!-- Analytics Settings Form -->
-            <div class="syntekpro-admin-box" style="margin-bottom: 20px;">
-                <h2>📊 Analytics Settings</h2>
-                <form action="options.php" method="post">
-                    <?php
-                    settings_fields('syntekpro_toggle_settings');
-                    do_settings_sections('syntekpro-toggle-analytics-settings');
-                    submit_button('Save Analytics Settings');
-                    ?>
-                </form>
-            </div>
-            
-            <!-- Analytics Overview Cards -->
-            <h2>📈 Usage Statistics</h2>
-            <div class="syntekpro-analytics-grid">
-                <div class="syntekpro-analytics-card">
-                    <div class="analytics-icon">
-                        <span class="dashicons dashicons-chart-line"></span>
-                    </div>
-                    <div class="analytics-data">
-                        <h3><?php echo number_format($analytics['total_toggles']); ?></h3>
-                        <p>Total Toggle Clicks</p>
-                    </div>
-                </div>
-                
-                <div class="syntekpro-analytics-card">
-                    <div class="analytics-icon">
-                        <span class="dashicons dashicons-visibility"></span>
-                    </div>
-                    <div class="analytics-data">
-                        <h3><?php echo number_format($analytics['page_views']); ?></h3>
-                        <p>Total Page Views</p>
-                    </div>
-                </div>
-                
-                <div class="syntekpro-analytics-card">
-                    <div class="analytics-icon">
-                        <span class="dashicons dashicons-clock"></span>
-                    </div>
-                    <div class="analytics-data">
-                        <h3><?php echo esc_html($analytics['most_active_time']); ?></h3>
-                        <p>Most Active Time</p>
-                    </div>
-                </div>
-                
-                <div class="syntekpro-analytics-card">
-                    <div class="analytics-icon">
-                        <span class="dashicons dashicons-calendar-alt"></span>
-                    </div>
-                    <div class="analytics-data">
-                        <h3><?php echo esc_html($analytics['tracking_since']); ?></h3>
-                        <p>Tracking Since</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Mode Preference Statistics -->
-            <div class="syntekpro-admin-box" style="margin-top: 20px;">
-                <h2>🌓 Mode Preferences</h2>
-                <div class="syntekpro-mode-stats">
-                    <div class="mode-stat-item">
-                        <div class="mode-stat-bar">
-                            <div class="mode-stat-label">
-                                <span class="dashicons dashicons-admin-appearance"></span>
-                                <strong>Dark Mode</strong>
-                            </div>
-                            <div class="mode-stat-value"><?php echo number_format($analytics['dark_mode_count']); ?> uses</div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: <?php echo $analytics['dark_mode_percentage']; ?>%; background: #667eea;"></div>
-                        </div>
-                        <div class="mode-stat-percentage"><?php echo number_format($analytics['dark_mode_percentage'], 1); ?>%</div>
-                    </div>
-                    
-                    <div class="mode-stat-item">
-                        <div class="mode-stat-bar">
-                            <div class="mode-stat-label">
-                                <span class="dashicons dashicons-lightbulb"></span>
-                                <strong>Light Mode</strong>
-                            </div>
-                            <div class="mode-stat-value"><?php echo number_format($analytics['light_mode_count']); ?> uses</div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: <?php echo $analytics['light_mode_percentage']; ?>%; background: #f59e0b;"></div>
-                        </div>
-                        <div class="mode-stat-percentage"><?php echo number_format($analytics['light_mode_percentage'], 1); ?>%</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Toggle Theme Statistics -->
-            <div class="syntekpro-admin-box" style="margin-top: 20px;">
-                <h2>🎨 Popular Themes</h2>
-                <div class="syntekpro-theme-stats">
-                    <?php if (!empty($analytics['theme_usage']) && is_array($analytics['theme_usage'])): ?>
-                        <?php foreach (array_slice($analytics['theme_usage'], 0, 5) as $theme => $count): ?>
-                            <div class="theme-stat-row">
-                                <span class="theme-name"><?php echo esc_html(ucwords(str_replace('-', ' ', $theme))); ?></span>
-                                <span class="theme-count"><?php echo number_format($count); ?> views</span>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p>No theme usage data available yet.</p>
-                    <?php endif; ?>
-                </div>
-            </div>
-            
-            <!-- Activity Timeline -->
-            <div class="syntekpro-admin-box" style="margin-top: 20px;">
-                <h2>⏱️ Recent Activity</h2>
-                <div class="syntekpro-activity-timeline">
-                    <?php if (!empty($analytics['recent_activity']) && is_array($analytics['recent_activity'])): ?>
-                        <?php foreach (array_slice($analytics['recent_activity'], 0, 10) as $activity): ?>
-                            <div class="activity-item">
-                                <span class="activity-icon dashicons <?php echo esc_attr($activity['icon']); ?>"></span>
-                                <span class="activity-text"><?php echo esc_html($activity['text']); ?></span>
-                                <span class="activity-time"><?php echo esc_html($activity['time']); ?></span>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p>No recent activity recorded.</p>
-                    <?php endif; ?>
-                </div>
-            </div>
-            
-            <!-- Reset Analytics -->
-            <div class="syntekpro-admin-box" style="margin-top: 20px; border-left: 4px solid #dc3232;">
-                <h2>🗑️ Reset Analytics</h2>
-                <p>Clear all analytics data and start fresh. This action cannot be undone.</p>
-                <form method="post">
-                    <?php wp_nonce_field('syntekpro_analytics_reset', 'analytics_nonce'); ?>
-                    <button type="submit" name="reset_analytics" class="button button-secondary" onclick="return confirm('Are you sure you want to reset all analytics data? This cannot be undone.');">
-                        <span class="dashicons dashicons-trash"></span> Reset All Analytics Data
-                    </button>
-                </form>
+    <div class="syntekpro-content-wrapper syntekpro-analytics-layout" style="display: flex; gap: 24px; margin-top: 20px;">
+        <div class="syntekpro-sidebar-nav syntekpro-analytics-sidebar" style="width: 260px; flex-shrink: 0;">
+            <div class="syntekpro-nav-section" style="gap: 6px;">
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item active" data-section="analytics-settings"><span class="dashicons dashicons-chart-bar"></span> Analytics Settings</a>
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-overview"><span class="dashicons dashicons-chart-line"></span> Usage Statistics</a>
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-modes"><span class="dashicons dashicons-visibility"></span> Mode Preferences</a>
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-themes"><span class="dashicons dashicons-art"></span> Popular Themes</a>
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-activity"><span class="dashicons dashicons-clock"></span> Recent Activity</a>
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-reset"><span class="dashicons dashicons-trash"></span> Reset Analytics</a>
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-info"><span class="dashicons dashicons-lock"></span> Info &amp; Privacy</a>
             </div>
         </div>
-        
-        <div class="syntekpro-sidebar">
-            <div class="syntekpro-admin-box">
-                <h3>📊 Analytics Info</h3>
-                <p>Track how users interact with your dark mode toggle.</p>
-                <ul class="syntekpro-stats-list">
-                    <li><strong>Status:</strong> <?php echo $options['enable_analytics'] === '1' ? '<span style="color:#46b450;">Active</span>' : '<span style="color:#dc3232;">Inactive</span>'; ?></li>
-                    <li><strong>Total Events:</strong> <?php echo number_format($analytics['total_events']); ?></li>
-                    <li><strong>Tracking Started:</strong> <?php echo esc_html($analytics['tracking_since']); ?></li>
-                </ul>
+
+        <div class="syntekpro-main-content syntekpro-analytics-main" style="flex: 1;">
+            <div class="syntekpro-section-panel active" id="section-analytics-settings" data-section="analytics-settings">
+                <h2><span class="dashicons dashicons-chart-bar"></span> Analytics Settings</h2>
+                <div class="syntekpro-section-body syntekpro-admin-box">
+                    <form action="options.php" method="post">
+                        <?php
+                        settings_fields('syntekpro_toggle_settings');
+                        do_settings_sections('syntekpro-toggle-analytics-settings');
+                        submit_button('Save Analytics Settings');
+                        ?>
+                    </form>
+                </div>
             </div>
-            
-            <div class="syntekpro-admin-box">
-                <h3>📈 What We Track</h3>
-                <ul class="syntekpro-stats-list">
-                    <li>Toggle button clicks</li>
-                    <li>Mode switches (Dark/Light)</li>
-                    <li>Theme usage</li>
-                    <li>Page load events</li>
-                    <li>User preference changes</li>
-                </ul>
+
+            <div class="syntekpro-section-panel" id="section-analytics-overview" data-section="analytics-overview">
+                <h2><span class="dashicons dashicons-chart-line"></span> Usage Statistics</h2>
+                <div class="syntekpro-section-body">
+                    <div class="syntekpro-analytics-grid">
+                        <div class="syntekpro-analytics-card">
+                            <div class="analytics-icon">
+                                <span class="dashicons dashicons-chart-line"></span>
+                            </div>
+                            <div class="analytics-data">
+                                <h3><?php echo number_format($analytics['total_toggles']); ?></h3>
+                                <p>Total Toggle Clicks</p>
+                            </div>
+                        </div>
+
+                        <div class="syntekpro-analytics-card">
+                            <div class="analytics-icon">
+                                <span class="dashicons dashicons-visibility"></span>
+                            </div>
+                            <div class="analytics-data">
+                                <h3><?php echo number_format($analytics['page_views']); ?></h3>
+                                <p>Total Page Views</p>
+                            </div>
+                        </div>
+
+                        <div class="syntekpro-analytics-card">
+                            <div class="analytics-icon">
+                                <span class="dashicons dashicons-clock"></span>
+                            </div>
+                            <div class="analytics-data">
+                                <h3><?php echo esc_html($analytics['most_active_time']); ?></h3>
+                                <p>Most Active Time</p>
+                            </div>
+                        </div>
+
+                        <div class="syntekpro-analytics-card">
+                            <div class="analytics-icon">
+                                <span class="dashicons dashicons-calendar-alt"></span>
+                            </div>
+                            <div class="analytics-data">
+                                <h3><?php echo esc_html($analytics['tracking_since']); ?></h3>
+                                <p>Tracking Since</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="syntekpro-admin-box">
-                <h3>🔒 Privacy Notice</h3>
-                <p>All analytics data is stored locally on your server. No data is sent to external services.</p>
-                <p>We track usage patterns to help you understand how visitors use dark mode on your site.</p>
+
+            <div class="syntekpro-section-panel" id="section-analytics-modes" data-section="analytics-modes">
+                <h2><span class="dashicons dashicons-visibility"></span> Mode Preferences</h2>
+                <div class="syntekpro-section-body syntekpro-admin-box">
+                    <div class="syntekpro-mode-stats">
+                        <div class="mode-stat-item">
+                            <div class="mode-stat-bar">
+                                <div class="mode-stat-label">
+                                    <span class="dashicons dashicons-admin-appearance"></span>
+                                    <strong>Dark Mode</strong>
+                                </div>
+                                <div class="mode-stat-value"><?php echo number_format($analytics['dark_mode_count']); ?> uses</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: <?php echo $analytics['dark_mode_percentage']; ?>%; background: #667eea;"></div>
+                            </div>
+                            <div class="mode-stat-percentage"><?php echo number_format($analytics['dark_mode_percentage'], 1); ?>%</div>
+                        </div>
+
+                        <div class="mode-stat-item">
+                            <div class="mode-stat-bar">
+                                <div class="mode-stat-label">
+                                    <span class="dashicons dashicons-lightbulb"></span>
+                                    <strong>Light Mode</strong>
+                                </div>
+                                <div class="mode-stat-value"><?php echo number_format($analytics['light_mode_count']); ?> uses</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: <?php echo $analytics['light_mode_percentage']; ?>%; background: #f59e0b;"></div>
+                            </div>
+                            <div class="mode-stat-percentage"><?php echo number_format($analytics['light_mode_percentage'], 1); ?>%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="syntekpro-section-panel" id="section-analytics-themes" data-section="analytics-themes">
+                <h2><span class="dashicons dashicons-art"></span> Popular Themes</h2>
+                <div class="syntekpro-section-body syntekpro-admin-box">
+                    <div class="syntekpro-theme-stats">
+                        <?php if (!empty($analytics['theme_usage']) && is_array($analytics['theme_usage'])): ?>
+                            <?php foreach (array_slice($analytics['theme_usage'], 0, 5) as $theme => $count): ?>
+                                <div class="theme-stat-row">
+                                    <span class="theme-name"><?php echo esc_html(ucwords(str_replace('-', ' ', $theme))); ?></span>
+                                    <span class="theme-count"><?php echo number_format($count); ?> views</span>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No theme usage data available yet.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="syntekpro-section-panel" id="section-analytics-activity" data-section="analytics-activity">
+                <h2><span class="dashicons dashicons-clock"></span> Recent Activity</h2>
+                <div class="syntekpro-section-body syntekpro-admin-box">
+                    <div class="syntekpro-activity-timeline">
+                        <?php if (!empty($analytics['recent_activity']) && is_array($analytics['recent_activity'])): ?>
+                            <?php foreach (array_slice($analytics['recent_activity'], 0, 10) as $activity): ?>
+                                <div class="activity-item">
+                                    <span class="activity-icon dashicons <?php echo esc_attr($activity['icon']); ?>"></span>
+                                    <span class="activity-text"><?php echo esc_html($activity['text']); ?></span>
+                                    <span class="activity-time"><?php echo esc_html($activity['time']); ?></span>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No recent activity recorded.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="syntekpro-section-panel" id="section-analytics-reset" data-section="analytics-reset">
+                <h2><span class="dashicons dashicons-trash"></span> Reset Analytics</h2>
+                <div class="syntekpro-section-body syntekpro-admin-box" style="border-left: 4px solid #dc3232;">
+                    <p>Clear all analytics data and start fresh. This action cannot be undone.</p>
+                    <form method="post">
+                        <?php wp_nonce_field('syntekpro_analytics_reset', 'analytics_nonce'); ?>
+                        <button type="submit" name="reset_analytics" class="button button-secondary" onclick="return confirm('Are you sure you want to reset all analytics data? This cannot be undone.');">
+                            <span class="dashicons dashicons-trash"></span> Reset All Analytics Data
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="syntekpro-section-panel" id="section-analytics-info" data-section="analytics-info">
+                <h2><span class="dashicons dashicons-lock"></span> Info &amp; Privacy</h2>
+                <div class="syntekpro-section-body">
+                    <div class="syntekpro-admin-box">
+                        <h3>Analytics Info</h3>
+                        <p>Track how users interact with your dark mode toggle.</p>
+                        <ul class="syntekpro-stats-list">
+                            <li><strong>Status:</strong> <?php echo (isset($options['enable_analytics']) && $options['enable_analytics'] === '1') ? '<span style="color:#46b450;">Active</span>' : '<span style="color:#dc3232;">Inactive</span>'; ?></li>
+                            <li><strong>Total Events:</strong> <?php echo number_format($analytics['total_events']); ?></li>
+                            <li><strong>Tracking Started:</strong> <?php echo esc_html($analytics['tracking_since']); ?></li>
+                        </ul>
+                    </div>
+
+                    <div class="syntekpro-admin-box">
+                        <h3>What We Track</h3>
+                        <ul class="syntekpro-stats-list">
+                            <li>Toggle button clicks</li>
+                            <li>Mode switches (Dark/Light)</li>
+                            <li>Theme usage</li>
+                            <li>Page load events</li>
+                            <li>User preference changes</li>
+                        </ul>
+                    </div>
+
+                    <div class="syntekpro-admin-box">
+                        <h3>Privacy Notice</h3>
+                        <p>All analytics data is stored locally on your server. No data is sent to external services.</p>
+                        <p>We track usage patterns to help you understand how visitors use dark mode on your site.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    
-    <style>
-        .syntekpro-analytics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .syntekpro-analytics-card {
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            color: #333;
-            padding: 20px;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-        
-        .syntekpro-analytics-card:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-color: #667eea;
-        }
-        
-        .analytics-icon {
-            font-size: 40px;
-            line-height: 1;
-            color: #667eea;
-        }
-        
-        .analytics-icon .dashicons {
-            width: 40px;
-            height: 40px;
-            font-size: 40px;
-        }
-        
-        .analytics-data h3 {
-            margin: 5px 0 0 0;
-            font-size: 28px;
-            font-weight: 700;
-            color: #333;
-        }
-        
-        .analytics-data p {
-            margin: 0;
-            font-size: 13px;
-            color: #666;
-        }
-        
-        .syntekpro-mode-stats {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .mode-stat-item {
-            padding: 15px;
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-        }
-        
-        .mode-stat-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .mode-stat-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            color: #333;
-        }
-        
-        .progress-bar {
-            height: 16px;
-            background: #e8e8e8;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 8px;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            transition: width 0.5s ease;
-        }
-        
-        .mode-stat-percentage {
-            text-align: right;
-            font-weight: 600;
-            color: #666;
-        }
-        
-        .syntekpro-theme-stats {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .theme-stat-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px;
-            background: #f9f9f9;
-            border-radius: 6px;
-            border-left: 3px solid #667eea;
-        }
-        
-        .theme-name {
-            font-weight: 600;
-        }
-        
-        .theme-count {
-            color: #666;
-        }
-        
-        .syntekpro-activity-timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .activity-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px;
-            background: #f9f9f9;
-            border-radius: 6px;
-        }
-        
-        .activity-icon {
-            color: #667eea;
-            font-size: 20px;
-        }
-        
-        .activity-text {
-            flex: 1;
-        }
-        
-        .activity-time {
-            color: #666;
-            font-size: 12px;
-        }
-    </style>
+
     <?php
     syntekpro_toggle_page_footer();
 }
@@ -4449,6 +5395,10 @@ function syntekpro_toggle_track_event($event_type, $event_data = array()) {
     if (!isset($options['enable_analytics']) || $options['enable_analytics'] !== '1') {
         return;
     }
+
+    $track_toggles = isset($options['analytics_track_toggles']) && $options['analytics_track_toggles'] === '1';
+    $track_pageviews = isset($options['analytics_track_pageviews']) && $options['analytics_track_pageviews'] === '1';
+    $track_modes = isset($options['analytics_track_modes']) && $options['analytics_track_modes'] === '1';
     
     $analytics = get_option('syntekpro_toggle_analytics', array());
     
@@ -4470,12 +5420,18 @@ function syntekpro_toggle_track_event($event_type, $event_data = array()) {
     // Track specific events
     switch ($event_type) {
         case 'toggle_click':
+            if (!$track_toggles) {
+                return;
+            }
             $analytics['total_toggles']++;
             $analytics['total_events']++;
             syntekpro_toggle_add_activity($analytics, 'Toggle button clicked', 'dashicons-update');
             break;
             
         case 'mode_change':
+            if (!$track_modes) {
+                return;
+            }
             $mode = isset($event_data['mode']) ? $event_data['mode'] : 'unknown';
             if ($mode === 'dark') {
                 $analytics['dark_mode_count']++;
@@ -4488,6 +5444,9 @@ function syntekpro_toggle_track_event($event_type, $event_data = array()) {
             break;
             
         case 'page_view':
+            if (!$track_pageviews) {
+                return;
+            }
             $analytics['page_views']++;
             $analytics['total_events']++;
             break;
@@ -4507,6 +5466,10 @@ function syntekpro_toggle_track_event($event_type, $event_data = array()) {
     }
     
     update_option('syntekpro_toggle_analytics', $analytics);
+
+    if (isset($options['debug_mode']) && $options['debug_mode'] === '1') {
+        error_log('[Syntekpro Toggle] Tracked event: ' . $event_type);
+    }
 }
 
 /**
