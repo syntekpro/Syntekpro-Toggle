@@ -16,8 +16,8 @@ if (!defined('ABSPATH')) {
 function syntekpro_toggle_admin_menu() {
     // Add top-level menu page
     add_menu_page(
-        'Mode Settings - Dark Mode',
-        'Toggle',
+        __('Mode Settings - Dark Mode', 'syntekpro-toggle'),
+        __('Toggle', 'syntekpro-toggle'),
         'manage_options',
         'syntekpro-toggle',
         'syntekpro_toggle_settings_combined_page',
@@ -28,8 +28,8 @@ function syntekpro_toggle_admin_menu() {
     // Add submenu pages
     add_submenu_page(
         'syntekpro-toggle',
-        'Mode Settings',
-        'Mode Settings',
+        __('Mode Settings', 'syntekpro-toggle'),
+        __('Mode Settings', 'syntekpro-toggle'),
         'manage_options',
         'syntekpro-toggle',
         'syntekpro_toggle_settings_combined_page'
@@ -37,8 +37,8 @@ function syntekpro_toggle_admin_menu() {
 
     add_submenu_page(
         'syntekpro-toggle',
-        'Analytics',
-        'Analytics',
+        __('Analytics', 'syntekpro-toggle'),
+        __('Analytics', 'syntekpro-toggle'),
         'manage_options',
         'syntekpro-toggle-analytics',
         'syntekpro_toggle_analytics_page'
@@ -46,8 +46,8 @@ function syntekpro_toggle_admin_menu() {
 
     add_submenu_page(
         'syntekpro-toggle',
-        'Options',
-        'Options',
+        __('Options', 'syntekpro-toggle'),
+        __('Options', 'syntekpro-toggle'),
         'manage_options',
         'syntekpro-toggle-options',
         'syntekpro_toggle_options_page'
@@ -55,8 +55,8 @@ function syntekpro_toggle_admin_menu() {
 
     add_submenu_page(
         'syntekpro-toggle',
-        'Toggle+',
-        'Toggle+',
+        __('Toggle+', 'syntekpro-toggle'),
+        __('Toggle+', 'syntekpro-toggle'),
         'manage_options',
         'syntekpro-toggle-plus',
         'syntekpro_toggle_plus_page'
@@ -64,8 +64,8 @@ function syntekpro_toggle_admin_menu() {
     
     add_submenu_page(
         'syntekpro-toggle',
-        'About',
-        'About',
+        __('About', 'syntekpro-toggle'),
+        __('About', 'syntekpro-toggle'),
         'manage_options',
         'syntekpro-toggle-about',
         'syntekpro_toggle_about_page'
@@ -73,8 +73,8 @@ function syntekpro_toggle_admin_menu() {
     
     add_submenu_page(
         'syntekpro-toggle',
-        'Other Plugins',
-        'Other Plugins',
+        __('Other Plugins', 'syntekpro-toggle'),
+        __('Other Plugins', 'syntekpro-toggle'),
         'manage_options',
         'syntekpro-toggle-plugins',
         'syntekpro_toggle_plugins_page'
@@ -83,12 +83,63 @@ function syntekpro_toggle_admin_menu() {
 add_action('admin_menu', 'syntekpro_toggle_admin_menu');
 
 /**
+ * Get current plugin admin page slug safely.
+ *
+ * @return string
+ */
+function syntekpro_toggle_get_current_admin_page_slug() {
+    if (!isset($_GET['page'])) {
+        return '';
+    }
+
+    $page = wp_unslash($_GET['page']);
+    if (!is_scalar($page)) {
+        return '';
+    }
+
+    return sanitize_key((string) $page);
+}
+
+/**
+ * Determine whether a settings-updated flag is present.
+ *
+ * @return bool
+ */
+function syntekpro_toggle_has_settings_updated_flag() {
+    if (!isset($_GET['settings-updated'])) {
+        return false;
+    }
+
+    $updated = wp_unslash($_GET['settings-updated']);
+    if (!is_scalar($updated)) {
+        return false;
+    }
+
+    return sanitize_text_field((string) $updated) !== '';
+}
+
+/**
+ * Determine whether a POST action key is present.
+ *
+ * @param string $action_key POST key.
+ * @return bool
+ */
+function syntekpro_toggle_has_post_action($action_key) {
+    if (!is_string($action_key) || $action_key === '') {
+        return false;
+    }
+
+    return isset($_POST[$action_key]);
+}
+
+/**
  * Replace WordPress default footer text with custom message
  */
 function syntekpro_toggle_admin_footer_text($footer_text) {
     // Only replace on Syntekpro Toggle pages
-    if (isset($_GET['page']) && strpos($_GET['page'], 'syntekpro-toggle') === 0) {
-        return 'Thanks For Using <a href="https://plugins.syntekpro.com/toggle" target="_blank" rel="noopener noreferrer">SyntekPro Toggle</a>';
+    $current_page = syntekpro_toggle_get_current_admin_page_slug();
+    if ($current_page && strpos($current_page, 'syntekpro-toggle') === 0) {
+        return esc_html__('Thanks For Using', 'syntekpro-toggle') . ' <a href="https://plugins.syntekpro.com/toggle" target="_blank" rel="noopener noreferrer">SyntekPro Toggle</a>';
     }
     return $footer_text;
 }
@@ -99,8 +150,9 @@ add_filter('admin_footer_text', 'syntekpro_toggle_admin_footer_text');
  */
 function syntekpro_toggle_admin_footer_version($version_text) {
     // Only replace on Syntekpro Toggle pages
-    if (isset($_GET['page']) && strpos($_GET['page'], 'syntekpro-toggle') === 0) {
-        return '<a href="https://plugins.syntekpro.com/toggle" target="_blank" rel="noopener noreferrer">Version ' . esc_html(SYNTEKPRO_TOGGLE_VERSION) . '</a>';
+    $current_page = syntekpro_toggle_get_current_admin_page_slug();
+    if ($current_page && strpos($current_page, 'syntekpro-toggle') === 0) {
+        return '<a href="https://plugins.syntekpro.com/toggle" target="_blank" rel="noopener noreferrer">' . esc_html__('Version', 'syntekpro-toggle') . ' ' . esc_html(SYNTEKPRO_TOGGLE_VERSION) . '</a>';
     }
     return $version_text;
 }
@@ -1076,7 +1128,8 @@ add_action('admin_footer', 'syntekpro_toggle_admin_ui_script');
  */
 function syntekpro_toggle_collapsible_sections_script() {
     // Only load on Syntekpro Toggle pages
-    if (!isset($_GET['page']) || strpos($_GET['page'], 'syntekpro-toggle') !== 0) {
+    $current_page = syntekpro_toggle_get_current_admin_page_slug();
+    if (!$current_page || strpos($current_page, 'syntekpro-toggle') !== 0) {
         return;
     }
     ?>
@@ -1224,14 +1277,14 @@ function syntekpro_toggle_register_settings() {
     // Frontend Page - General Settings Section
     add_settings_section(
         'syntekpro_toggle_general_section',
-        'General Settings',
+        __('General Settings', 'syntekpro-toggle'),
         'syntekpro_toggle_general_section_callback',
         'syntekpro-toggle-frontend-general'
     );
     
     add_settings_field(
         'default_mode',
-        'Default Mode',
+        __('Default Mode', 'syntekpro-toggle'),
         'syntekpro_toggle_default_mode_callback',
         'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
@@ -1239,7 +1292,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'enable_toggle',
-        'Toggle Button',
+        __('Toggle Button', 'syntekpro-toggle'),
         'syntekpro_toggle_enable_toggle_callback',
         'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
@@ -1247,7 +1300,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'button_position',
-        'Button Position',
+        __('Button Position', 'syntekpro-toggle'),
         'syntekpro_toggle_button_position_callback',
         'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
@@ -1255,7 +1308,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'button_size',
-        'Button Size',
+        __('Button Size', 'syntekpro-toggle'),
         'syntekpro_toggle_button_size_callback',
         'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
@@ -1263,7 +1316,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'toggle_theme',
-        'Toggle Button Theme',
+        __('Toggle Button Theme', 'syntekpro-toggle'),
         'syntekpro_toggle_theme_callback',
         'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
@@ -1271,7 +1324,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'button_shape',
-        'Button Shape',
+        __('Button Shape', 'syntekpro-toggle'),
         'syntekpro_toggle_button_shape_callback',
         'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
@@ -1279,7 +1332,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'button_animation',
-        'Button Animation',
+        __('Button Animation', 'syntekpro-toggle'),
         'syntekpro_toggle_button_animation_callback',
         'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
@@ -1287,7 +1340,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'button_bg_style',
-        'Button Background Style',
+        __('Button Background Style', 'syntekpro-toggle'),
         'syntekpro_toggle_button_bg_style_callback',
         'syntekpro-toggle-frontend-general',
         'syntekpro_toggle_general_section'
@@ -1296,14 +1349,14 @@ function syntekpro_toggle_register_settings() {
     // Frontend Page - Color Scheme Section
     add_settings_section(
         'syntekpro_toggle_color_scheme_section',
-        '🎨 Dark Mode Color Scheme',
+        __('🎨 Dark Mode Color Scheme', 'syntekpro-toggle'),
         'syntekpro_toggle_color_scheme_section_callback',
         'syntekpro-toggle-frontend-colors'
     );
     
     add_settings_field(
         'color_scheme_mode',
-        'Color Scheme Mode',
+        __('Color Scheme Mode', 'syntekpro-toggle'),
         'syntekpro_toggle_color_scheme_mode_callback',
         'syntekpro-toggle-frontend-colors',
         'syntekpro_toggle_color_scheme_section'
@@ -1311,7 +1364,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'color_preset',
-        'Color Preset',
+        __('Color Preset', 'syntekpro-toggle'),
         'syntekpro_toggle_color_preset_callback',
         'syntekpro-toggle-frontend-colors',
         'syntekpro_toggle_color_scheme_section'
@@ -1319,7 +1372,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'bg_color',
-        'Background Color',
+        __('Background Color', 'syntekpro-toggle'),
         'syntekpro_toggle_bg_color_callback',
         'syntekpro-toggle-frontend-colors',
         'syntekpro_toggle_color_scheme_section'
@@ -1327,7 +1380,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'text_color',
-        'Text Color',
+        __('Text Color', 'syntekpro-toggle'),
         'syntekpro_toggle_text_color_callback',
         'syntekpro-toggle-frontend-colors',
         'syntekpro_toggle_color_scheme_section'
@@ -1335,7 +1388,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'link_color',
-        'Link Color',
+        __('Link Color', 'syntekpro-toggle'),
         'syntekpro_toggle_link_color_callback',
         'syntekpro-toggle-frontend-colors',
         'syntekpro_toggle_color_scheme_section'
@@ -1343,7 +1396,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'secondary_bg_color',
-        'Secondary Background',
+        __('Secondary Background', 'syntekpro-toggle'),
         'syntekpro_toggle_secondary_bg_callback',
         'syntekpro-toggle-frontend-colors',
         'syntekpro_toggle_color_scheme_section'
@@ -1352,14 +1405,14 @@ function syntekpro_toggle_register_settings() {
     // Frontend Page - Color Adjustments Section
     add_settings_section(
         'syntekpro_toggle_color_adjustments_section',
-        '🎚️ Color Adjustments',
+        __('🎚️ Color Adjustments', 'syntekpro-toggle'),
         'syntekpro_toggle_color_adjustments_section_callback',
         'syntekpro-toggle-frontend-adjustments'
     );
     
     add_settings_field(
         'brightness',
-        '☀️ Brightness',
+        __('☀️ Brightness', 'syntekpro-toggle'),
         'syntekpro_toggle_brightness_callback',
         'syntekpro-toggle-frontend-adjustments',
         'syntekpro_toggle_color_adjustments_section'
@@ -1367,7 +1420,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'contrast',
-        '🔲 Contrast',
+        __('🔲 Contrast', 'syntekpro-toggle'),
         'syntekpro_toggle_contrast_callback',
         'syntekpro-toggle-frontend-adjustments',
         'syntekpro_toggle_color_adjustments_section'
@@ -1375,7 +1428,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'sepia',
-        '📜 Sepia',
+        __('📜 Sepia', 'syntekpro-toggle'),
         'syntekpro_toggle_sepia_callback',
         'syntekpro-toggle-frontend-adjustments',
         'syntekpro_toggle_color_adjustments_section'
@@ -1383,7 +1436,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'grayscale',
-        '⚫ Grayscale',
+        __('⚫ Grayscale', 'syntekpro-toggle'),
         'syntekpro_toggle_grayscale_callback',
         'syntekpro-toggle-frontend-adjustments',
         'syntekpro_toggle_color_adjustments_section'
@@ -1392,14 +1445,14 @@ function syntekpro_toggle_register_settings() {
     // Images Settings Section
     add_settings_section(
         'syntekpro_toggle_images_section',
-        '🖼️ Images Settings',
+        __('🖼️ Images Settings', 'syntekpro-toggle'),
         'syntekpro_toggle_images_section_callback',
         'syntekpro-toggle-frontend-images'
     );
     
     add_settings_field(
         'enable_image_filter',
-        'Enable Image Filters',
+        __('Enable Image Filters', 'syntekpro-toggle'),
         'syntekpro_toggle_enable_image_filter_callback',
         'syntekpro-toggle-frontend-images',
         'syntekpro_toggle_images_section'
@@ -1407,7 +1460,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'image_brightness',
-        'Image Brightness',
+        __('Image Brightness', 'syntekpro-toggle'),
         'syntekpro_toggle_image_brightness_callback',
         'syntekpro-toggle-frontend-images',
         'syntekpro_toggle_images_section'
@@ -1415,7 +1468,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'image_contrast',
-        'Image Contrast',
+        __('Image Contrast', 'syntekpro-toggle'),
         'syntekpro_toggle_image_contrast_callback',
         'syntekpro-toggle-frontend-images',
         'syntekpro_toggle_images_section'
@@ -1424,14 +1477,14 @@ function syntekpro_toggle_register_settings() {
     // Videos Settings Section
     add_settings_section(
         'syntekpro_toggle_videos_section',
-        '🎬 Videos Settings',
+        __('🎬 Videos Settings', 'syntekpro-toggle'),
         'syntekpro_toggle_videos_section_callback',
         'syntekpro-toggle-frontend-videos'
     );
     
     add_settings_field(
         'enable_video_filter',
-        'Enable Video Filters',
+        __('Enable Video Filters', 'syntekpro-toggle'),
         'syntekpro_toggle_enable_video_filter_callback',
         'syntekpro-toggle-frontend-videos',
         'syntekpro_toggle_videos_section'
@@ -1439,7 +1492,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'video_brightness',
-        'Video Brightness',
+        __('Video Brightness', 'syntekpro-toggle'),
         'syntekpro_toggle_video_brightness_callback',
         'syntekpro-toggle-frontend-videos',
         'syntekpro_toggle_videos_section'
@@ -1447,7 +1500,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'video_contrast',
-        'Video Contrast',
+        __('Video Contrast', 'syntekpro-toggle'),
         'syntekpro_toggle_video_contrast_callback',
         'syntekpro-toggle-frontend-videos',
         'syntekpro_toggle_videos_section'
@@ -1456,14 +1509,14 @@ function syntekpro_toggle_register_settings() {
     // Slides Settings Section
     add_settings_section(
         'syntekpro_toggle_slides_section',
-        '📊 Slides Settings',
+        __('📊 Slides Settings', 'syntekpro-toggle'),
         'syntekpro_toggle_slides_section_callback',
         'syntekpro-toggle-frontend-slides'
     );
     
     add_settings_field(
         'enable_slide_filter',
-        'Enable Slide Filters',
+        __('Enable Slide Filters', 'syntekpro-toggle'),
         'syntekpro_toggle_enable_slide_filter_callback',
         'syntekpro-toggle-frontend-slides',
         'syntekpro_toggle_slides_section'
@@ -1471,7 +1524,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'slide_brightness',
-        'Slide Brightness',
+        __('Slide Brightness', 'syntekpro-toggle'),
         'syntekpro_toggle_slide_brightness_callback',
         'syntekpro-toggle-frontend-slides',
         'syntekpro_toggle_slides_section'
@@ -1479,7 +1532,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'slide_invert',
-        'Slide Invert Colors',
+        __('Slide Invert Colors', 'syntekpro-toggle'),
         'syntekpro_toggle_slide_invert_callback',
         'syntekpro-toggle-frontend-slides',
         'syntekpro_toggle_slides_section'
@@ -1488,14 +1541,14 @@ function syntekpro_toggle_register_settings() {
     // Admin UI Page - Admin UI Section
     add_settings_section(
         'syntekpro_toggle_admin_ui_section',
-        'Admin UI Settings',
+        __('Admin UI Settings', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_ui_section_callback',
         'syntekpro-toggle-admin-ui'
     );
 
     add_settings_field(
         'enable_admin_dark_mode',
-        'Admin Dark Mode',
+        __('Admin Dark Mode', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_dark_mode_callback',
         'syntekpro-toggle-admin-ui',
         'syntekpro_toggle_admin_ui_section'
@@ -1503,7 +1556,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'enable_admin_bar_icon',
-        'Top Bar Icon',
+        __('Top Bar Icon', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_bar_icon_callback',
         'syntekpro-toggle-admin-ui',
         'syntekpro_toggle_admin_ui_section'
@@ -1511,7 +1564,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'enable_dashboard_widget',
-        'Dashboard Widget',
+        __('Dashboard Widget', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_dashboard_widget_callback',
         'syntekpro-toggle-admin-ui',
         'syntekpro_toggle_admin_ui_section'
@@ -1519,7 +1572,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'admin_toggle_theme',
-        'Admin Toggle Theme',
+        __('Admin Toggle Theme', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_theme_callback',
         'syntekpro-toggle-admin-ui',
         'syntekpro_toggle_admin_ui_section'
@@ -1528,14 +1581,14 @@ function syntekpro_toggle_register_settings() {
     // Admin UI Page - Color Scheme Section
     add_settings_section(
         'syntekpro_toggle_admin_color_section',
-        '🎨 Admin UI Color Scheme',
+        __('🎨 Admin UI Color Scheme', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_color_section_callback',
         'syntekpro-toggle-admin-color'
     );
     
     add_settings_field(
         'admin_color_scheme_mode',
-        'Color Mode',
+        __('Color Mode', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_color_scheme_mode_callback',
         'syntekpro-toggle-admin-color',
         'syntekpro_toggle_admin_color_section'
@@ -1543,7 +1596,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'admin_color_preset',
-        'Color Presets',
+        __('Color Presets', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_color_preset_callback',
         'syntekpro-toggle-admin-color',
         'syntekpro_toggle_admin_color_section'
@@ -1551,7 +1604,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'admin_bg_color',
-        'Admin Background',
+        __('Admin Background', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_bg_color_callback',
         'syntekpro-toggle-admin-color',
         'syntekpro_toggle_admin_color_section'
@@ -1559,7 +1612,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'admin_text_color',
-        'Admin Text',
+        __('Admin Text', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_text_color_callback',
         'syntekpro-toggle-admin-color',
         'syntekpro_toggle_admin_color_section'
@@ -1567,7 +1620,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'admin_accent_color',
-        'Admin Accent',
+        __('Admin Accent', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_accent_color_callback',
         'syntekpro-toggle-admin-color',
         'syntekpro_toggle_admin_color_section'
@@ -1575,7 +1628,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'admin_surface_color',
-        'Admin Surface',
+        __('Admin Surface', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_surface_color_callback',
         'syntekpro-toggle-admin-color',
         'syntekpro_toggle_admin_color_section'
@@ -1583,7 +1636,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'admin_border_color',
-        'Admin Border',
+        __('Admin Border', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_border_color_callback',
         'syntekpro-toggle-admin-color',
         'syntekpro_toggle_admin_color_section'
@@ -1591,7 +1644,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'admin_link_color',
-        'Admin Link',
+        __('Admin Link', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_link_color_callback',
         'syntekpro-toggle-admin-color',
         'syntekpro_toggle_admin_color_section'
@@ -1599,7 +1652,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'admin_link_hover_color',
-        'Admin Link Hover',
+        __('Admin Link Hover', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_link_hover_color_callback',
         'syntekpro-toggle-admin-color',
         'syntekpro_toggle_admin_color_section'
@@ -1608,14 +1661,14 @@ function syntekpro_toggle_register_settings() {
     // Options Page - Display Rules Section
     add_settings_section(
         'syntekpro_toggle_display_section',
-        'Display Rules',
+        __('Display Rules', 'syntekpro-toggle'),
         'syntekpro_toggle_display_section_callback',
         'syntekpro-toggle-frontend-advanced'
     );
 
     add_settings_field(
         'display_mode',
-        'Display Mode',
+        __('Display Mode', 'syntekpro-toggle'),
         'syntekpro_toggle_display_mode_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_display_section'
@@ -1623,7 +1676,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'display_post_types',
-        'Post Types',
+        __('Post Types', 'syntekpro-toggle'),
         'syntekpro_toggle_display_post_types_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_display_section'
@@ -1631,7 +1684,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'display_pages',
-        'Page IDs',
+        __('Page IDs', 'syntekpro-toggle'),
         'syntekpro_toggle_display_pages_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_display_section'
@@ -1639,7 +1692,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'display_categories',
-        'Category IDs',
+        __('Category IDs', 'syntekpro-toggle'),
         'syntekpro_toggle_display_categories_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_display_section'
@@ -1647,7 +1700,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'display_tags',
-        'Tag IDs',
+        __('Tag IDs', 'syntekpro-toggle'),
         'syntekpro_toggle_display_tags_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_display_section'
@@ -1655,7 +1708,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'exclude_special_pages',
-        'Exclude Special Pages',
+        __('Exclude Special Pages', 'syntekpro-toggle'),
         'syntekpro_toggle_exclude_special_pages_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_display_section'
@@ -1664,14 +1717,14 @@ function syntekpro_toggle_register_settings() {
     // Options Page - User Targeting Section
     add_settings_section(
         'syntekpro_toggle_user_targeting_section',
-        'User Targeting',
+        __('User Targeting', 'syntekpro-toggle'),
         'syntekpro_toggle_user_targeting_section_callback',
         'syntekpro-toggle-frontend-advanced'
     );
 
     add_settings_field(
         'user_visibility',
-        'Visibility',
+        __('Visibility', 'syntekpro-toggle'),
         'syntekpro_toggle_user_visibility_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_user_targeting_section'
@@ -1679,7 +1732,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'user_roles',
-        'Allowed Roles',
+        __('Allowed Roles', 'syntekpro-toggle'),
         'syntekpro_toggle_user_roles_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_user_targeting_section'
@@ -1688,14 +1741,14 @@ function syntekpro_toggle_register_settings() {
     // Options Page - Schedule Section
     add_settings_section(
         'syntekpro_toggle_schedule_section',
-        'Schedule',
+        __('Schedule', 'syntekpro-toggle'),
         'syntekpro_toggle_schedule_section_callback',
         'syntekpro-toggle-frontend-advanced'
     );
 
     add_settings_field(
         'schedule_enabled',
-        'Enable Schedule',
+        __('Enable Schedule', 'syntekpro-toggle'),
         'syntekpro_toggle_schedule_enabled_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_schedule_section'
@@ -1703,7 +1756,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'schedule_days',
-        'Days',
+        __('Days', 'syntekpro-toggle'),
         'syntekpro_toggle_schedule_days_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_schedule_section'
@@ -1711,7 +1764,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'schedule_start',
-        'Start Time',
+        __('Start Time', 'syntekpro-toggle'),
         'syntekpro_toggle_schedule_start_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_schedule_section'
@@ -1719,7 +1772,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'schedule_end',
-        'End Time',
+        __('End Time', 'syntekpro-toggle'),
         'syntekpro_toggle_schedule_end_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_schedule_section'
@@ -1728,14 +1781,14 @@ function syntekpro_toggle_register_settings() {
     // Options Page - Behavior Section
     add_settings_section(
         'syntekpro_toggle_behavior_section',
-        'Behavior',
+        __('Behavior', 'syntekpro-toggle'),
         'syntekpro_toggle_behavior_section_callback',
         'syntekpro-toggle-frontend-advanced'
     );
 
     add_settings_field(
         'auto_mode_source',
-        'Auto Mode Source',
+        __('Auto Mode Source', 'syntekpro-toggle'),
         'syntekpro_toggle_auto_mode_source_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_behavior_section'
@@ -1743,7 +1796,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'auto_time_start',
-        'Auto Start Time',
+        __('Auto Start Time', 'syntekpro-toggle'),
         'syntekpro_toggle_auto_time_start_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_behavior_section'
@@ -1751,7 +1804,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'auto_time_end',
-        'Auto End Time',
+        __('Auto End Time', 'syntekpro-toggle'),
         'syntekpro_toggle_auto_time_end_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_behavior_section'
@@ -1759,7 +1812,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'auto_apply_on_load',
-        'Apply Auto On Load',
+        __('Apply Auto On Load', 'syntekpro-toggle'),
         'syntekpro_toggle_auto_apply_on_load_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_behavior_section'
@@ -1767,7 +1820,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'auto_listen_os',
-        'Listen To OS Changes',
+        __('Listen To OS Changes', 'syntekpro-toggle'),
         'syntekpro_toggle_auto_listen_os_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_behavior_section'
@@ -1776,14 +1829,14 @@ function syntekpro_toggle_register_settings() {
     // Options Page - Storage & Privacy Section
     add_settings_section(
         'syntekpro_toggle_storage_section',
-        'Storage & Privacy',
+        __('Storage & Privacy', 'syntekpro-toggle'),
         'syntekpro_toggle_storage_section_callback',
         'syntekpro-toggle-frontend-advanced'
     );
 
     add_settings_field(
         'storage_mode',
-        'Storage Mode',
+        __('Storage Mode', 'syntekpro-toggle'),
         'syntekpro_toggle_storage_mode_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_storage_section'
@@ -1791,7 +1844,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'storage_days',
-        'Cookie Lifetime (Days)',
+        __('Cookie Lifetime (Days)', 'syntekpro-toggle'),
         'syntekpro_toggle_storage_days_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_storage_section'
@@ -1799,7 +1852,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'reset_storage',
-        'Reset Stored Preferences',
+        __('Reset Stored Preferences', 'syntekpro-toggle'),
         'syntekpro_toggle_reset_storage_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_storage_section'
@@ -1808,14 +1861,14 @@ function syntekpro_toggle_register_settings() {
     // Options Page - Animations Section
     add_settings_section(
         'syntekpro_toggle_animation_section',
-        'Animations',
+        __('Animations', 'syntekpro-toggle'),
         'syntekpro_toggle_animation_section_callback',
         'syntekpro-toggle-frontend-advanced'
     );
 
     add_settings_field(
         'enable_animations',
-        'Enable Animations',
+        __('Enable Animations', 'syntekpro-toggle'),
         'syntekpro_toggle_enable_animations_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_animation_section'
@@ -1823,7 +1876,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'toggle_animation_speed',
-        'Toggle Animation Speed',
+        __('Toggle Animation Speed', 'syntekpro-toggle'),
         'syntekpro_toggle_toggle_animation_speed_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_animation_section'
@@ -1832,14 +1885,14 @@ function syntekpro_toggle_register_settings() {
     // Options Page - Accessibility Section
     add_settings_section(
         'syntekpro_toggle_accessibility_section',
-        'Accessibility',
+        __('Accessibility', 'syntekpro-toggle'),
         'syntekpro_toggle_accessibility_section_callback',
         'syntekpro-toggle-frontend-advanced'
     );
 
     add_settings_field(
         'respect_reduced_motion',
-        'Respect Reduced Motion',
+        __('Respect Reduced Motion', 'syntekpro-toggle'),
         'syntekpro_toggle_respect_reduced_motion_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_accessibility_section'
@@ -1847,7 +1900,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'force_high_contrast',
-        'Force High Contrast',
+        __('Force High Contrast', 'syntekpro-toggle'),
         'syntekpro_toggle_force_high_contrast_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_accessibility_section'
@@ -1855,7 +1908,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'focus_ring_style',
-        'Focus Ring Style',
+        __('Focus Ring Style', 'syntekpro-toggle'),
         'syntekpro_toggle_focus_ring_style_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_accessibility_section'
@@ -1864,14 +1917,14 @@ function syntekpro_toggle_register_settings() {
     // Options Page - Integrations Section
     add_settings_section(
         'syntekpro_toggle_integrations_section',
-        'Integrations',
+        __('Integrations', 'syntekpro-toggle'),
         'syntekpro_toggle_integrations_section_callback',
         'syntekpro-toggle-frontend-advanced'
     );
 
     add_settings_field(
         'enable_shortcode',
-        'Shortcode Output',
+        __('Shortcode Output', 'syntekpro-toggle'),
         'syntekpro_toggle_enable_shortcode_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_integrations_section'
@@ -1879,7 +1932,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'enable_widget',
-        'Widget Output',
+        __('Widget Output', 'syntekpro-toggle'),
         'syntekpro_toggle_enable_widget_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_integrations_section'
@@ -1888,14 +1941,14 @@ function syntekpro_toggle_register_settings() {
     // Options Page - Theme Overrides Section
     add_settings_section(
         'syntekpro_toggle_theme_override_section',
-        'Theme Overrides',
+        __('Theme Overrides', 'syntekpro-toggle'),
         'syntekpro_toggle_theme_override_section_callback',
         'syntekpro-toggle-frontend-advanced'
     );
 
     add_settings_field(
         'excluded_themes',
-        'Disable On Themes',
+        __('Disable On Themes', 'syntekpro-toggle'),
         'syntekpro_toggle_excluded_themes_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_theme_override_section'
@@ -1903,7 +1956,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'exclude_selectors',
-        'Exclude Selectors',
+        __('Exclude Selectors', 'syntekpro-toggle'),
         'syntekpro_toggle_exclude_selectors_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_theme_override_section'
@@ -1912,14 +1965,14 @@ function syntekpro_toggle_register_settings() {
     // Options Page - Performance Section
     add_settings_section(
         'syntekpro_toggle_performance_section',
-        'Performance',
+        __('Performance', 'syntekpro-toggle'),
         'syntekpro_toggle_performance_section_callback',
         'syntekpro-toggle-frontend-advanced'
     );
 
     add_settings_field(
         'analytics_debounce_ms',
-        'Analytics Debounce (ms)',
+        __('Analytics Debounce (ms)', 'syntekpro-toggle'),
         'syntekpro_toggle_analytics_debounce_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_performance_section'
@@ -1927,7 +1980,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'analytics_batch',
-        'Batch Analytics',
+        __('Batch Analytics', 'syntekpro-toggle'),
         'syntekpro_toggle_analytics_batch_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_performance_section'
@@ -1935,7 +1988,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'analytics_batch_interval',
-        'Batch Interval (ms)',
+        __('Batch Interval (ms)', 'syntekpro-toggle'),
         'syntekpro_toggle_analytics_batch_interval_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_performance_section'
@@ -1943,7 +1996,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'analytics_batch_max',
-        'Batch Size',
+        __('Batch Size', 'syntekpro-toggle'),
         'syntekpro_toggle_analytics_batch_max_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_performance_section'
@@ -1951,7 +2004,7 @@ function syntekpro_toggle_register_settings() {
 
     add_settings_field(
         'analytics_pageview_once_session',
-        'Page View Once Per Session',
+        __('Page View Once Per Session', 'syntekpro-toggle'),
         'syntekpro_toggle_analytics_pageview_once_session_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_performance_section'
@@ -1960,14 +2013,14 @@ function syntekpro_toggle_register_settings() {
     // Options Page - Debug Section
     add_settings_section(
         'syntekpro_toggle_debug_section',
-        'Debug',
+        __('Debug', 'syntekpro-toggle'),
         'syntekpro_toggle_debug_section_callback',
         'syntekpro-toggle-frontend-advanced'
     );
 
     add_settings_field(
         'debug_mode',
-        'Debug Mode',
+        __('Debug Mode', 'syntekpro-toggle'),
         'syntekpro_toggle_debug_mode_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_debug_section'
@@ -1976,14 +2029,14 @@ function syntekpro_toggle_register_settings() {
     // Advanced Settings Section - Now MERGED INTO FRONTEND PAGE
     add_settings_section(
         'syntekpro_toggle_advanced_section',
-        'Advanced Settings',
+        __('Advanced Settings', 'syntekpro-toggle'),
         'syntekpro_toggle_advanced_section_callback',
         'syntekpro-toggle-frontend-advanced'
     );
     
     add_settings_field(
         'custom_css',
-        'Custom CSS',
+        __('Custom CSS', 'syntekpro-toggle'),
         'syntekpro_toggle_custom_css_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_advanced_section'
@@ -1991,7 +2044,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'transition_speed',
-        'Transition Speed',
+        __('Transition Speed', 'syntekpro-toggle'),
         'syntekpro_toggle_transition_speed_callback',
         'syntekpro-toggle-frontend-advanced',
         'syntekpro_toggle_advanced_section'
@@ -2000,14 +2053,14 @@ function syntekpro_toggle_register_settings() {
     // Analytics Page - Analytics Settings Section
     add_settings_section(
         'syntekpro_toggle_analytics_section',
-        '📊 Analytics Settings',
+        __('📊 Analytics Settings', 'syntekpro-toggle'),
         'syntekpro_toggle_analytics_section_callback',
         'syntekpro-toggle-analytics-settings'
     );
     
     add_settings_field(
         'enable_analytics',
-        'Enable Analytics',
+        __('Enable Analytics', 'syntekpro-toggle'),
         'syntekpro_toggle_enable_analytics_callback',
         'syntekpro-toggle-analytics-settings',
         'syntekpro_toggle_analytics_section'
@@ -2015,7 +2068,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'analytics_track_toggles',
-        'Track Toggle Clicks',
+        __('Track Toggle Clicks', 'syntekpro-toggle'),
         'syntekpro_toggle_analytics_track_toggles_callback',
         'syntekpro-toggle-analytics-settings',
         'syntekpro_toggle_analytics_section'
@@ -2023,7 +2076,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'analytics_track_pageviews',
-        'Track Page Views',
+        __('Track Page Views', 'syntekpro-toggle'),
         'syntekpro_toggle_analytics_track_pageviews_callback',
         'syntekpro-toggle-analytics-settings',
         'syntekpro_toggle_analytics_section'
@@ -2031,7 +2084,7 @@ function syntekpro_toggle_register_settings() {
     
     add_settings_field(
         'analytics_track_modes',
-        'Track Mode Changes',
+        __('Track Mode Changes', 'syntekpro-toggle'),
         'syntekpro_toggle_analytics_track_modes_callback',
         'syntekpro-toggle-analytics-settings',
         'syntekpro_toggle_analytics_section'
@@ -2507,75 +2560,75 @@ function syntekpro_toggle_sanitize_options($input) {
  * Section callbacks
  */
 function syntekpro_toggle_general_section_callback() {
-    echo '<p>Configure the general behavior of the dark mode toggle.</p>';
+    echo '<p>' . esc_html__('Configure the general behavior of the dark mode toggle.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_color_scheme_section_callback() {
-    echo '<p>Choose how dark mode colors are applied: Dynamic (smart auto-adjust), Presets (curated color schemes), or Custom (manual control).</p>';
+    echo '<p>' . esc_html__('Choose how dark mode colors are applied: Dynamic (smart auto-adjust), Presets (curated color schemes), or Custom (manual control).', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_color_adjustments_section_callback() {
-    echo '<p>Fine-tune the visual appearance with brightness, contrast, sepia, and grayscale filters.</p>';
+    echo '<p>' . esc_html__('Fine-tune the visual appearance with brightness, contrast, sepia, and grayscale filters.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_images_section_callback() {
-    echo '<p>Apply filters and adjustments to images in dark mode for better visibility and consistency.</p>';
+    echo '<p>' . esc_html__('Apply filters and adjustments to images in dark mode for better visibility and consistency.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_videos_section_callback() {
-    echo '<p>Apply filters and adjustments to videos in dark mode for improved viewing experience.</p>';
+    echo '<p>' . esc_html__('Apply filters and adjustments to videos in dark mode for improved viewing experience.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_slides_section_callback() {
-    echo '<p>Apply filters and adjustments to presentation slides (SlideShare, Impress, etc.) in dark mode.</p>';
+    echo '<p>' . esc_html__('Apply filters and adjustments to presentation slides (SlideShare, Impress, etc.) in dark mode.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_advanced_section_callback() {
-    echo '<p>Advanced customization options for power users.</p>';
+    echo '<p>' . esc_html__('Advanced customization options for power users.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_display_section_callback() {
-    echo '<p>Control where the toggle is shown across your site.</p>';
+    echo '<p>' . esc_html__('Control where the toggle is shown across your site.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_user_targeting_section_callback() {
-    echo '<p>Limit the toggle to specific visitors or user roles.</p>';
+    echo '<p>' . esc_html__('Limit the toggle to specific visitors or user roles.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_schedule_section_callback() {
-    echo '<p>Show the toggle only during selected hours and days.</p>';
+    echo '<p>' . esc_html__('Show the toggle only during selected hours and days.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_behavior_section_callback() {
-    echo '<p>Configure how auto mode chooses dark or light.</p>';
+    echo '<p>' . esc_html__('Configure how auto mode chooses dark or light.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_storage_section_callback() {
-    echo '<p>Choose how user preferences are stored and reset.</p>';
+    echo '<p>' . esc_html__('Choose how user preferences are stored and reset.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_animation_section_callback() {
-    echo '<p>Control animation behavior and speeds.</p>';
+    echo '<p>' . esc_html__('Control animation behavior and speeds.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_accessibility_section_callback() {
-    echo '<p>Accessibility options for motion and contrast.</p>';
+    echo '<p>' . esc_html__('Accessibility options for motion and contrast.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_integrations_section_callback() {
-    echo '<p>Enable shortcode or widget output.</p>';
+    echo '<p>' . esc_html__('Enable shortcode or widget output.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_theme_override_section_callback() {
-    echo '<p>Disable features for specific themes or selectors.</p>';
+    echo '<p>' . esc_html__('Disable features for specific themes or selectors.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_performance_section_callback() {
-    echo '<p>Tune tracking performance and page view behavior.</p>';
+    echo '<p>' . esc_html__('Tune tracking performance and page view behavior.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_debug_section_callback() {
-    echo '<p>Enable logging to help troubleshoot issues.</p>';
+    echo '<p>' . esc_html__('Enable logging to help troubleshoot issues.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_render_settings_section($page, $section_id) {
@@ -2600,11 +2653,11 @@ function syntekpro_toggle_display_mode_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <select name="syntekpro_toggle_options[display_mode]" id="display_mode">
-        <option value="all" <?php selected($options['display_mode'], 'all'); ?>>Show everywhere</option>
-        <option value="include" <?php selected($options['display_mode'], 'include'); ?>>Show only on selected</option>
-        <option value="exclude" <?php selected($options['display_mode'], 'exclude'); ?>>Hide on selected</option>
+        <option value="all" <?php selected($options['display_mode'], 'all'); ?>><?php esc_html_e('Show everywhere', 'syntekpro-toggle'); ?></option>
+        <option value="include" <?php selected($options['display_mode'], 'include'); ?>><?php esc_html_e('Show only on selected', 'syntekpro-toggle'); ?></option>
+        <option value="exclude" <?php selected($options['display_mode'], 'exclude'); ?>><?php esc_html_e('Hide on selected', 'syntekpro-toggle'); ?></option>
     </select>
-    <p class="description">Use the lists below to include or exclude specific content.</p>
+    <p class="description"><?php esc_html_e('Use the lists below to include or exclude specific content.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -2621,7 +2674,7 @@ function syntekpro_toggle_display_post_types_callback() {
             </label>
         <?php endforeach; ?>
     </div>
-    <p class="description">Used when display mode is set to include or exclude.</p>
+    <p class="description"><?php esc_html_e('Used when display mode is set to include or exclude.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -2629,7 +2682,7 @@ function syntekpro_toggle_display_pages_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[display_pages]" value="<?php echo esc_attr($options['display_pages']); ?>" placeholder="12, 34, 56" class="regular-text">
-    <p class="description">Comma-separated page IDs.</p>
+    <p class="description"><?php esc_html_e('Comma-separated page IDs.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -2637,7 +2690,7 @@ function syntekpro_toggle_display_categories_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[display_categories]" value="<?php echo esc_attr($options['display_categories']); ?>" placeholder="3, 9" class="regular-text">
-    <p class="description">Comma-separated category IDs.</p>
+    <p class="description"><?php esc_html_e('Comma-separated category IDs.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -2645,7 +2698,7 @@ function syntekpro_toggle_display_tags_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[display_tags]" value="<?php echo esc_attr($options['display_tags']); ?>" placeholder="5, 8" class="regular-text">
-    <p class="description">Comma-separated tag IDs.</p>
+    <p class="description"><?php esc_html_e('Comma-separated tag IDs.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -2654,7 +2707,7 @@ function syntekpro_toggle_exclude_special_pages_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[exclude_special_pages]" value="1" <?php checked($options['exclude_special_pages'], '1'); ?>>
-        Hide on login, register, checkout, cart, and account pages
+        <?php esc_html_e('Hide on login, register, checkout, cart, and account pages', 'syntekpro-toggle'); ?>
     </label>
     <?php
 }
@@ -2663,10 +2716,10 @@ function syntekpro_toggle_user_visibility_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <select name="syntekpro_toggle_options[user_visibility]" id="user_visibility">
-        <option value="all" <?php selected($options['user_visibility'], 'all'); ?>>All visitors</option>
-        <option value="logged_in" <?php selected($options['user_visibility'], 'logged_in'); ?>>Logged-in users only</option>
-        <option value="guests" <?php selected($options['user_visibility'], 'guests'); ?>>Guests only</option>
-        <option value="roles" <?php selected($options['user_visibility'], 'roles'); ?>>Specific roles</option>
+        <option value="all" <?php selected($options['user_visibility'], 'all'); ?>><?php esc_html_e('All visitors', 'syntekpro-toggle'); ?></option>
+        <option value="logged_in" <?php selected($options['user_visibility'], 'logged_in'); ?>><?php esc_html_e('Logged-in users only', 'syntekpro-toggle'); ?></option>
+        <option value="guests" <?php selected($options['user_visibility'], 'guests'); ?>><?php esc_html_e('Guests only', 'syntekpro-toggle'); ?></option>
+        <option value="roles" <?php selected($options['user_visibility'], 'roles'); ?>><?php esc_html_e('Specific roles', 'syntekpro-toggle'); ?></option>
     </select>
     <?php
 }
@@ -2684,7 +2737,7 @@ function syntekpro_toggle_user_roles_callback() {
             </label>
         <?php endforeach; ?>
     </div>
-    <p class="description">Used when visibility is set to specific roles.</p>
+    <p class="description"><?php esc_html_e('Used when visibility is set to specific roles.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -2693,7 +2746,7 @@ function syntekpro_toggle_schedule_enabled_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[schedule_enabled]" value="1" <?php checked($options['schedule_enabled'], '1'); ?>>
-        Enable schedule
+        <?php esc_html_e('Enable schedule', 'syntekpro-toggle'); ?>
     </label>
     <?php
 }
@@ -2740,8 +2793,8 @@ function syntekpro_toggle_auto_mode_source_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <select name="syntekpro_toggle_options[auto_mode_source]">
-        <option value="os" <?php selected($options['auto_mode_source'], 'os'); ?>>Follow OS</option>
-        <option value="time" <?php selected($options['auto_mode_source'], 'time'); ?>>Use time range</option>
+        <option value="os" <?php selected($options['auto_mode_source'], 'os'); ?>><?php esc_html_e('Follow OS', 'syntekpro-toggle'); ?></option>
+        <option value="time" <?php selected($options['auto_mode_source'], 'time'); ?>><?php esc_html_e('Use time range', 'syntekpro-toggle'); ?></option>
     </select>
     <?php
 }
@@ -2765,7 +2818,7 @@ function syntekpro_toggle_auto_apply_on_load_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[auto_apply_on_load]" value="1" <?php checked($options['auto_apply_on_load'], '1'); ?>>
-        Apply auto mode on page load
+        <?php esc_html_e('Apply auto mode on page load', 'syntekpro-toggle'); ?>
     </label>
     <?php
 }
@@ -2775,7 +2828,7 @@ function syntekpro_toggle_auto_listen_os_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[auto_listen_os]" value="1" <?php checked($options['auto_listen_os'], '1'); ?>>
-        Listen for OS theme changes
+        <?php esc_html_e('Listen for OS theme changes', 'syntekpro-toggle'); ?>
     </label>
     <?php
 }
@@ -2784,9 +2837,9 @@ function syntekpro_toggle_storage_mode_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <select name="syntekpro_toggle_options[storage_mode]">
-        <option value="local" <?php selected($options['storage_mode'], 'local'); ?>>Local storage</option>
-        <option value="cookie" <?php selected($options['storage_mode'], 'cookie'); ?>>Cookie only</option>
-        <option value="both" <?php selected($options['storage_mode'], 'both'); ?>>Local storage + cookie</option>
+        <option value="local" <?php selected($options['storage_mode'], 'local'); ?>><?php esc_html_e('Local storage', 'syntekpro-toggle'); ?></option>
+        <option value="cookie" <?php selected($options['storage_mode'], 'cookie'); ?>><?php esc_html_e('Cookie only', 'syntekpro-toggle'); ?></option>
+        <option value="both" <?php selected($options['storage_mode'], 'both'); ?>><?php esc_html_e('Local storage + cookie', 'syntekpro-toggle'); ?></option>
     </select>
     <?php
 }
@@ -2795,7 +2848,7 @@ function syntekpro_toggle_storage_days_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="number" name="syntekpro_toggle_options[storage_days]" value="<?php echo esc_attr($options['storage_days']); ?>" min="1" max="3650">
-    <p class="description">Used when cookie storage is enabled.</p>
+    <p class="description"><?php esc_html_e('Used when cookie storage is enabled.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -2803,9 +2856,9 @@ function syntekpro_toggle_reset_storage_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <button type="submit" name="syntekpro_toggle_options[reset_storage]" value="1" class="button button-secondary">
-        Reset stored preferences
+        <?php esc_html_e('Reset stored preferences', 'syntekpro-toggle'); ?>
     </button>
-    <p class="description">Current storage version: <?php echo esc_html($options['storage_version']); ?>.</p>
+    <p class="description"><?php esc_html_e('Current storage version:', 'syntekpro-toggle'); ?> <?php echo esc_html($options['storage_version']); ?>.</p>
     <?php
 }
 
@@ -2814,7 +2867,7 @@ function syntekpro_toggle_enable_animations_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[enable_animations]" value="1" <?php checked($options['enable_animations'], '1'); ?>>
-        Enable animations and transitions
+        <?php esc_html_e('Enable animations and transitions', 'syntekpro-toggle'); ?>
     </label>
     <?php
 }
@@ -2832,7 +2885,7 @@ function syntekpro_toggle_respect_reduced_motion_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[respect_reduced_motion]" value="1" <?php checked($options['respect_reduced_motion'], '1'); ?>>
-        Reduce motion when user prefers reduced motion
+        <?php esc_html_e('Reduce motion when user prefers reduced motion', 'syntekpro-toggle'); ?>
     </label>
     <?php
 }
@@ -2842,7 +2895,7 @@ function syntekpro_toggle_force_high_contrast_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[force_high_contrast]" value="1" <?php checked($options['force_high_contrast'], '1'); ?>>
-        Force high contrast mode
+        <?php esc_html_e('Force high contrast mode', 'syntekpro-toggle'); ?>
     </label>
     <?php
 }
@@ -2851,9 +2904,9 @@ function syntekpro_toggle_focus_ring_style_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <select name="syntekpro_toggle_options[focus_ring_style]">
-        <option value="default" <?php selected($options['focus_ring_style'], 'default'); ?>>Default</option>
-        <option value="strong" <?php selected($options['focus_ring_style'], 'strong'); ?>>Strong</option>
-        <option value="minimal" <?php selected($options['focus_ring_style'], 'minimal'); ?>>Minimal</option>
+        <option value="default" <?php selected($options['focus_ring_style'], 'default'); ?>><?php esc_html_e('Default', 'syntekpro-toggle'); ?></option>
+        <option value="strong" <?php selected($options['focus_ring_style'], 'strong'); ?>><?php esc_html_e('Strong', 'syntekpro-toggle'); ?></option>
+        <option value="minimal" <?php selected($options['focus_ring_style'], 'minimal'); ?>><?php esc_html_e('Minimal', 'syntekpro-toggle'); ?></option>
     </select>
     <?php
 }
@@ -2863,9 +2916,9 @@ function syntekpro_toggle_enable_shortcode_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[enable_shortcode]" value="1" <?php checked($options['enable_shortcode'], '1'); ?>>
-        Enable shortcode output
+        <?php esc_html_e('Enable shortcode output', 'syntekpro-toggle'); ?>
     </label>
-    <p class="description">Shortcode: <code>[syntekpro_toggle]</code></p>
+    <p class="description"><?php esc_html_e('Shortcode:', 'syntekpro-toggle'); ?> <code>[syntekpro_toggle]</code></p>
     <?php
 }
 
@@ -2874,7 +2927,7 @@ function syntekpro_toggle_enable_widget_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[enable_widget]" value="1" <?php checked($options['enable_widget'], '1'); ?>>
-        Enable widget output
+        <?php esc_html_e('Enable widget output', 'syntekpro-toggle'); ?>
     </label>
     <?php
 }
@@ -2884,7 +2937,7 @@ function syntekpro_toggle_excluded_themes_callback() {
     $theme = wp_get_theme();
     ?>
     <input type="text" name="syntekpro_toggle_options[excluded_themes]" value="<?php echo esc_attr($options['excluded_themes']); ?>" placeholder="theme-slug, child-theme" class="regular-text">
-    <p class="description">Current theme: <?php echo esc_html($theme->get_stylesheet()); ?>.</p>
+    <p class="description"><?php esc_html_e('Current theme:', 'syntekpro-toggle'); ?> <?php echo esc_html($theme->get_stylesheet()); ?>.</p>
     <?php
 }
 
@@ -2892,7 +2945,7 @@ function syntekpro_toggle_exclude_selectors_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <textarea name="syntekpro_toggle_options[exclude_selectors]" rows="4" class="large-text" placeholder=".no-dark-mode\n#hero img"><?php echo esc_textarea($options['exclude_selectors']); ?></textarea>
-    <p class="description">One selector per line to skip filters in dark mode.</p>
+    <p class="description"><?php esc_html_e('One selector per line to skip filters in dark mode.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -2908,7 +2961,7 @@ function syntekpro_toggle_analytics_batch_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[analytics_batch]" value="1" <?php checked($options['analytics_batch'], '1'); ?>>
-        Send analytics in batches
+        <?php esc_html_e('Send analytics in batches', 'syntekpro-toggle'); ?>
     </label>
     <?php
 }
@@ -2932,7 +2985,7 @@ function syntekpro_toggle_analytics_pageview_once_session_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[analytics_pageview_once_session]" value="1" <?php checked($options['analytics_pageview_once_session'], '1'); ?>>
-        Count a page view once per session
+        <?php esc_html_e('Count a page view once per session', 'syntekpro-toggle'); ?>
     </label>
     <?php
 }
@@ -2942,7 +2995,7 @@ function syntekpro_toggle_debug_mode_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[debug_mode]" value="1" <?php checked($options['debug_mode'], '1'); ?>>
-        Enable debug logging
+        <?php esc_html_e('Enable debug logging', 'syntekpro-toggle'); ?>
     </label>
     <?php
 }
@@ -2954,12 +3007,12 @@ function syntekpro_toggle_default_mode_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <select name="syntekpro_toggle_options[default_mode]" id="default_mode">
-        <option value="auto" <?php selected($options['default_mode'], 'auto'); ?>>Auto (Follow OS Preference)</option>
-        <option value="light" <?php selected($options['default_mode'], 'light'); ?>>Light Mode</option>
-        <option value="dark" <?php selected($options['default_mode'], 'dark'); ?>>Dark Mode</option>
-        <option value="manual" <?php selected($options['default_mode'], 'manual'); ?>>Manual Only (User Chooses)</option>
+        <option value="auto" <?php selected($options['default_mode'], 'auto'); ?>><?php esc_html_e('Auto (Follow OS Preference)', 'syntekpro-toggle'); ?></option>
+        <option value="light" <?php selected($options['default_mode'], 'light'); ?>><?php esc_html_e('Light Mode', 'syntekpro-toggle'); ?></option>
+        <option value="dark" <?php selected($options['default_mode'], 'dark'); ?>><?php esc_html_e('Dark Mode', 'syntekpro-toggle'); ?></option>
+        <option value="manual" <?php selected($options['default_mode'], 'manual'); ?>><?php esc_html_e('Manual Only (User Chooses)', 'syntekpro-toggle'); ?></option>
     </select>
-    <p class="description">Set the default mode when users first visit your site.</p>
+    <p class="description"><?php esc_html_e('Set the default mode when users first visit your site.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -2968,9 +3021,9 @@ function syntekpro_toggle_enable_toggle_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[enable_toggle]" value="1" <?php checked($options['enable_toggle'], '1'); ?>>
-        Show toggle button on frontend
+        <?php esc_html_e('Show toggle button on frontend', 'syntekpro-toggle'); ?>
     </label>
-    <p class="description">Uncheck to hide the toggle button (useful if using shortcode or widget).</p>
+    <p class="description"><?php esc_html_e('Uncheck to hide the toggle button (useful if using shortcode or widget).', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -2978,12 +3031,12 @@ function syntekpro_toggle_button_position_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <select name="syntekpro_toggle_options[button_position]" id="button_position">
-        <option value="bottom-right" <?php selected($options['button_position'], 'bottom-right'); ?>>Bottom Right</option>
-        <option value="bottom-left" <?php selected($options['button_position'], 'bottom-left'); ?>>Bottom Left</option>
-        <option value="top-right" <?php selected($options['button_position'], 'top-right'); ?>>Top Right</option>
-        <option value="top-left" <?php selected($options['button_position'], 'top-left'); ?>>Top Left</option>
+        <option value="bottom-right" <?php selected($options['button_position'], 'bottom-right'); ?>><?php esc_html_e('Bottom Right', 'syntekpro-toggle'); ?></option>
+        <option value="bottom-left" <?php selected($options['button_position'], 'bottom-left'); ?>><?php esc_html_e('Bottom Left', 'syntekpro-toggle'); ?></option>
+        <option value="top-right" <?php selected($options['button_position'], 'top-right'); ?>><?php esc_html_e('Top Right', 'syntekpro-toggle'); ?></option>
+        <option value="top-left" <?php selected($options['button_position'], 'top-left'); ?>><?php esc_html_e('Top Left', 'syntekpro-toggle'); ?></option>
     </select>
-    <p class="description">Choose where to display the toggle button.</p>
+    <p class="description"><?php esc_html_e('Choose where to display the toggle button.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -2992,7 +3045,7 @@ function syntekpro_toggle_button_size_callback() {
     ?>
     <input type="number" name="syntekpro_toggle_options[button_size]" value="<?php echo esc_attr($options['button_size']); ?>" min="30" max="100" step="5">
     <span>px</span>
-    <p class="description">Button size in pixels (30-100).</p>
+    <p class="description"><?php esc_html_e('Button size in pixels (30-100).', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3055,7 +3108,7 @@ function syntekpro_toggle_theme_callback() {
         <?php foreach ($themes as $key => $theme):
             $is_premium = syntekpro_toggle_is_premium_feature('theme', $key);
         ?>
-            <label class="theme-option <?php echo $is_premium ? 'premium-locked' : ''; ?>" style="cursor: <?php echo $is_premium ? 'not-allowed' : 'pointer'; ?>; border: 2px solid <?php echo $is_premium ? '#f0ad4e' : '#ddd'; ?>; border-radius: 8px; padding: 15px; transition: all 0.3s; text-align: center; position: relative; <?php echo $is_premium ? 'opacity: 0.7; background: #fffbf0;' : ''; ?>" title="<?php echo $is_premium ? 'Premium - Toggle+ Required' : 'Free'; ?>">
+            <label class="theme-option <?php echo $is_premium ? 'premium-locked' : ''; ?>" style="cursor: <?php echo $is_premium ? 'not-allowed' : 'pointer'; ?>; border: 2px solid <?php echo $is_premium ? '#f0ad4e' : '#ddd'; ?>; border-radius: 8px; padding: 15px; transition: all 0.3s; text-align: center; position: relative; <?php echo $is_premium ? 'opacity: 0.7; background: #fffbf0;' : ''; ?>" title="<?php echo esc_attr($is_premium ? __('Premium - Toggle+ Required', 'syntekpro-toggle') : __('Free', 'syntekpro-toggle')); ?>">
                 <input type="radio" name="syntekpro_toggle_options[toggle_theme]" value="<?php echo esc_attr($key); ?>" <?php checked($options['toggle_theme'], $key); echo $is_premium ? ' disabled' : ''; ?> style="margin-bottom: 10px;">
                 
                 <!-- Premium Lock Badge -->
@@ -3073,13 +3126,13 @@ function syntekpro_toggle_theme_callback() {
                 <strong style="display: block; margin-bottom: 3px;"><?php echo esc_html($theme['name']); ?></strong>
                 <span style="font-size: 11px; color: <?php echo $is_premium ? '#f0ad4e' : '#666'; ?>; display: block;">
                     <?php echo esc_html($theme['desc']); ?>
-                    <?php echo $is_premium ? '<br><strong style="color: #f0ad4e;">🔒 Premium</strong>' : ''; ?>
+                    <?php echo $is_premium ? '<br><strong style="color: #f0ad4e;">' . esc_html__('🔒 Premium', 'syntekpro-toggle') . '</strong>' : ''; ?>
                 </span>
             </label>
         <?php endforeach; ?>
     </div>
     <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 12px; border-radius: 6px; margin-top: 15px; font-size: 13px; color: #856404;">
-        <strong>💡 Tip:</strong> Lock icons indicate premium features. <a href="?page=syntekpro-toggle-plus" style="color: #0066cc; text-decoration: none; font-weight: 600;">Unlock all features with Toggle+ →</a>
+        <strong><?php esc_html_e('💡 Tip:', 'syntekpro-toggle'); ?></strong> <?php esc_html_e('Lock icons indicate premium features.', 'syntekpro-toggle'); ?> <a href="?page=syntekpro-toggle-plus" style="color: #0066cc; text-decoration: none; font-weight: 600;"><?php esc_html_e('Unlock all features with Toggle+ →', 'syntekpro-toggle'); ?></a>
     </div>
     <style>
         .theme-option:hover:not(.premium-locked) { border-color: #2271b1; background: #f0f6fc; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
@@ -3112,7 +3165,7 @@ function syntekpro_toggle_theme_callback() {
         @keyframes bounce { 0%, 100% { transform: scale(1.05) translateY(0); } 50% { transform: scale(1.05) translateY(-3px); } }
         @keyframes morph { 0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; } 50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; } }
     </style>
-    <p class="description">Choose a visual style for your toggle button.</p>
+    <p class="description"><?php esc_html_e('Choose a visual style for your toggle button.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3134,7 +3187,7 @@ function syntekpro_toggle_button_shape_callback() {
             </option>
         <?php endforeach; ?>
     </select>
-    <p class="description">Choose the button shape or size variation. Pill and Vertical shapes will display the moon/sun icon next to text.</p>
+    <p class="description"><?php esc_html_e('Choose the button shape or size variation. Pill and Vertical shapes will display the moon/sun icon next to text.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3161,7 +3214,7 @@ function syntekpro_toggle_button_animation_callback() {
             </option>
         <?php endforeach; ?>
     </select>
-    <p class="description">Choose a continuous animation for your button. Animations pause on click and respond to hover states.</p>
+    <p class="description"><?php esc_html_e('Choose a continuous animation for your button. Animations pause on click and respond to hover states.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3182,7 +3235,7 @@ function syntekpro_toggle_button_bg_style_callback() {
             </option>
         <?php endforeach; ?>
     </select>
-    <p class="description">Choose a background pattern style for your button.</p>
+    <p class="description"><?php esc_html_e('Choose a background pattern style for your button.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3190,7 +3243,7 @@ function syntekpro_toggle_bg_color_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[bg_color]" value="<?php echo esc_attr($options['bg_color']); ?>" class="syntekpro-color-picker">
-    <p class="description">Main background color for dark mode.</p>
+    <p class="description"><?php esc_html_e('Main background color for dark mode.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3198,7 +3251,7 @@ function syntekpro_toggle_text_color_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[text_color]" value="<?php echo esc_attr($options['text_color']); ?>" class="syntekpro-color-picker">
-    <p class="description">Text color for dark mode.</p>
+    <p class="description"><?php esc_html_e('Text color for dark mode.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3206,7 +3259,7 @@ function syntekpro_toggle_link_color_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[link_color]" value="<?php echo esc_attr($options['link_color']); ?>" class="syntekpro-color-picker">
-    <p class="description">Link color for dark mode.</p>
+    <p class="description"><?php esc_html_e('Link color for dark mode.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3214,7 +3267,7 @@ function syntekpro_toggle_secondary_bg_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[secondary_bg_color]" value="<?php echo esc_attr($options['secondary_bg_color']); ?>" class="syntekpro-color-picker">
-    <p class="description">Secondary background color (headers, sidebars, widgets).</p>
+    <p class="description"><?php esc_html_e('Secondary background color (headers, sidebars, widgets).', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3225,14 +3278,14 @@ function syntekpro_toggle_color_scheme_mode_callback() {
         <label class="syntekpro-mode-option">
             <input type="radio" name="syntekpro_toggle_options[color_scheme_mode]" value="preset" <?php checked($options['color_scheme_mode'], 'preset'); ?>>
             <span class="mode-icon">🎨</span>
-            <strong>Presets</strong>
-            <p class="description">Choose from curated color schemes</p>
+            <strong><?php esc_html_e('Presets', 'syntekpro-toggle'); ?></strong>
+            <p class="description"><?php esc_html_e('Choose from curated color schemes', 'syntekpro-toggle'); ?></p>
         </label>
         <label class="syntekpro-mode-option">
             <input type="radio" name="syntekpro_toggle_options[color_scheme_mode]" value="custom" <?php checked($options['color_scheme_mode'], 'custom'); ?>>
             <span class="mode-icon">🎛️</span>
-            <strong>Custom</strong>
-            <p class="description">Manually configure all colors</p>
+            <strong><?php esc_html_e('Custom', 'syntekpro-toggle'); ?></strong>
+            <p class="description"><?php esc_html_e('Manually configure all colors', 'syntekpro-toggle'); ?></p>
         </label>
     </div>
     <style>
@@ -3278,9 +3331,9 @@ function syntekpro_toggle_color_preset_callback() {
     );
     ?>
     <div style="background: #f0f6fc; border: 1px solid #0073aa; padding: 10px; margin: 10px 0; border-radius: 4px; font-size: 12px;">
-        <strong>Debug Info:</strong><br>
-        Color Scheme Mode: <code><?php echo esc_html($current_mode); ?></code> | 
-        Color Preset: <code><?php echo esc_html($current_preset); ?></code>
+        <strong><?php esc_html_e('Debug Info:', 'syntekpro-toggle'); ?></strong><br>
+        <?php esc_html_e('Color Scheme Mode:', 'syntekpro-toggle'); ?> <code><?php echo esc_html($current_mode); ?></code> | 
+        <?php esc_html_e('Color Preset:', 'syntekpro-toggle'); ?> <code><?php echo esc_html($current_preset); ?></code>
     </div>
     <div id="preset-container" style="<?php echo $options['color_scheme_mode'] !== 'preset' ? 'display:none;' : ''; ?>">
         <div class="syntekpro-preset-grid">
@@ -3323,14 +3376,14 @@ function syntekpro_toggle_color_preset_callback() {
                             <?php 
                             echo esc_html($preset['name']);
                             if ($is_premium) {
-                                echo '<div style="font-size: 9px; margin-top: 2px; color: #f0ad4e;">🔒 PREMIUM</div>';
+                                echo '<div style="font-size: 9px; margin-top: 2px; color: #f0ad4e;">' . esc_html__('🔒 PREMIUM', 'syntekpro-toggle') . '</div>';
                             }
                             ?>
                         </div>
                         
                         <!-- Selected Label -->
                         <div class="preset-selected-label" style="display: none; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(34, 113, 177, 0.9); color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; white-space: nowrap;">
-                            SELECTED
+                            <?php esc_html_e('SELECTED', 'syntekpro-toggle'); ?>
                         </div>
                     </div>
                 </label>
@@ -3338,7 +3391,7 @@ function syntekpro_toggle_color_preset_callback() {
         </div>
     </div>
     <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 12px; border-radius: 6px; margin-top: 15px; font-size: 13px; color: #856404; display: <?php echo $options['color_scheme_mode'] !== 'preset' ? 'none' : 'block'; ?>">
-        <strong>💡 Tip:</strong> Lock icons indicate premium presets. <a href="?page=syntekpro-toggle-plus" style="color: #0066cc; text-decoration: none; font-weight: 600;">Get Toggle+ for all presets →</a>
+        <strong><?php esc_html_e('💡 Tip:', 'syntekpro-toggle'); ?></strong> <?php esc_html_e('Lock icons indicate premium presets.', 'syntekpro-toggle'); ?> <a href="?page=syntekpro-toggle-plus" style="color: #0066cc; text-decoration: none; font-weight: 600;"><?php esc_html_e('Get Toggle+ for all presets →', 'syntekpro-toggle'); ?></a>
     </div>
     <style>
         /* Preset Grid */
@@ -3499,7 +3552,7 @@ function syntekpro_toggle_brightness_callback() {
     ?>
     <input type="range" name="syntekpro_toggle_options[brightness]" value="<?php echo esc_attr($options['brightness']); ?>" min="0" max="200" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
     <output><?php echo esc_attr($options['brightness']); ?>%</output>
-    <p class="description">Adjust overall brightness (0-200%, default: 100%)</p>
+    <p class="description"><?php esc_html_e('Adjust overall brightness (0-200%, default: 100%)', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3508,7 +3561,7 @@ function syntekpro_toggle_contrast_callback() {
     ?>
     <input type="range" name="syntekpro_toggle_options[contrast]" value="<?php echo esc_attr($options['contrast']); ?>" min="0" max="200" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
     <output><?php echo esc_attr($options['contrast']); ?>%</output>
-    <p class="description">Adjust contrast between colors (0-200%, default: 100%)</p>
+    <p class="description"><?php esc_html_e('Adjust contrast between colors (0-200%, default: 100%)', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3517,7 +3570,7 @@ function syntekpro_toggle_sepia_callback() {
     ?>
     <input type="range" name="syntekpro_toggle_options[sepia]" value="<?php echo esc_attr($options['sepia']); ?>" min="0" max="100" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
     <output><?php echo esc_attr($options['sepia']); ?>%</output>
-    <p class="description">Apply sepia filter for a vintage look (0-100%, default: 0%)</p>
+    <p class="description"><?php esc_html_e('Apply sepia filter for a vintage look (0-100%, default: 0%)', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3526,7 +3579,7 @@ function syntekpro_toggle_grayscale_callback() {
     ?>
     <input type="range" name="syntekpro_toggle_options[grayscale]" value="<?php echo esc_attr($options['grayscale']); ?>" min="0" max="100" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
     <output><?php echo esc_attr($options['grayscale']); ?>%</output>
-    <p class="description">Convert to grayscale (0-100%, default: 0%)</p>
+    <p class="description"><?php esc_html_e('Convert to grayscale (0-100%, default: 0%)', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3538,9 +3591,9 @@ function syntekpro_toggle_enable_image_filter_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[enable_image_filter]" value="1" <?php checked($options['enable_image_filter'], '1'); ?>>
-        Apply filters to images in dark mode
+        <?php esc_html_e('Apply filters to images in dark mode', 'syntekpro-toggle'); ?>
     </label>
-    <p class="description">Enable automatic filter adjustments for images when dark mode is active.</p>
+    <p class="description"><?php esc_html_e('Enable automatic filter adjustments for images when dark mode is active.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3549,7 +3602,7 @@ function syntekpro_toggle_image_brightness_callback() {
     ?>
     <input type="range" name="syntekpro_toggle_options[image_brightness]" value="<?php echo esc_attr($options['image_brightness']); ?>" min="0" max="150" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
     <output><?php echo esc_attr($options['image_brightness']); ?>%</output>
-    <p class="description">Adjust image brightness in dark mode (50-150%, default: 100% = normal)</p>
+    <p class="description"><?php esc_html_e('Adjust image brightness in dark mode (50-150%, default: 100% = normal)', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3558,7 +3611,7 @@ function syntekpro_toggle_image_contrast_callback() {
     ?>
     <input type="range" name="syntekpro_toggle_options[image_contrast]" value="<?php echo esc_attr($options['image_contrast']); ?>" min="0" max="200" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
     <output><?php echo esc_attr($options['image_contrast']); ?>%</output>
-    <p class="description">Adjust image contrast in dark mode (50-200%, default: 100% = normal)</p>
+    <p class="description"><?php esc_html_e('Adjust image contrast in dark mode (50-200%, default: 100% = normal)', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3570,9 +3623,9 @@ function syntekpro_toggle_enable_video_filter_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[enable_video_filter]" value="1" <?php checked($options['enable_video_filter'], '1'); ?>>
-        Apply filters to videos in dark mode
+        <?php esc_html_e('Apply filters to videos in dark mode', 'syntekpro-toggle'); ?>
     </label>
-    <p class="description">Enable automatic filter adjustments for embedded videos when dark mode is active.</p>
+    <p class="description"><?php esc_html_e('Enable automatic filter adjustments for embedded videos when dark mode is active.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3581,7 +3634,7 @@ function syntekpro_toggle_video_brightness_callback() {
     ?>
     <input type="range" name="syntekpro_toggle_options[video_brightness]" value="<?php echo esc_attr($options['video_brightness']); ?>" min="0" max="150" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
     <output><?php echo esc_attr($options['video_brightness']); ?>%</output>
-    <p class="description">Adjust video brightness in dark mode (50-150%, default: 100% = normal)</p>
+    <p class="description"><?php esc_html_e('Adjust video brightness in dark mode (50-150%, default: 100% = normal)', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3590,7 +3643,7 @@ function syntekpro_toggle_video_contrast_callback() {
     ?>
     <input type="range" name="syntekpro_toggle_options[video_contrast]" value="<?php echo esc_attr($options['video_contrast']); ?>" min="0" max="200" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
     <output><?php echo esc_attr($options['video_contrast']); ?>%</output>
-    <p class="description">Adjust video contrast in dark mode (50-200%, default: 100% = normal)</p>
+    <p class="description"><?php esc_html_e('Adjust video contrast in dark mode (50-200%, default: 100% = normal)', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3602,9 +3655,9 @@ function syntekpro_toggle_enable_slide_filter_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[enable_slide_filter]" value="1" <?php checked($options['enable_slide_filter'], '1'); ?>>
-        Apply filters to slides in dark mode
+        <?php esc_html_e('Apply filters to slides in dark mode', 'syntekpro-toggle'); ?>
     </label>
-    <p class="description">Enable automatic filter adjustments for presentation slides when dark mode is active.</p>
+    <p class="description"><?php esc_html_e('Enable automatic filter adjustments for presentation slides when dark mode is active.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3613,7 +3666,7 @@ function syntekpro_toggle_slide_brightness_callback() {
     ?>
     <input type="range" name="syntekpro_toggle_options[slide_brightness]" value="<?php echo esc_attr($options['slide_brightness']); ?>" min="0" max="150" step="1" oninput="this.nextElementSibling.value = this.value + '%'">
     <output><?php echo esc_attr($options['slide_brightness']); ?>%</output>
-    <p class="description">Adjust slide brightness in dark mode (50-150%, default: 100% = normal)</p>
+    <p class="description"><?php esc_html_e('Adjust slide brightness in dark mode (50-150%, default: 100% = normal)', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3622,9 +3675,9 @@ function syntekpro_toggle_slide_invert_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[slide_invert]" value="1" <?php checked($options['slide_invert'], '1'); ?>>
-        Invert slide colors
+        <?php esc_html_e('Invert slide colors', 'syntekpro-toggle'); ?>
     </label>
-    <p class="description">Invert colors on slides for better visibility in dark mode.</p>
+    <p class="description"><?php esc_html_e('Invert colors on slides for better visibility in dark mode.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3632,7 +3685,7 @@ function syntekpro_toggle_custom_css_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <textarea name="syntekpro_toggle_options[custom_css]" rows="8" cols="50" class="large-text code"><?php echo esc_textarea($options['custom_css']); ?></textarea>
-    <p class="description">Add custom CSS for dark mode. Will be wrapped in <code>html.dark-mode { }</code></p>
+    <p class="description"><?php esc_html_e('Add custom CSS for dark mode. Will be wrapped in', 'syntekpro-toggle'); ?> <code>html.dark-mode { }</code></p>
     <?php
 }
 
@@ -3640,13 +3693,13 @@ function syntekpro_toggle_transition_speed_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="number" name="syntekpro_toggle_options[transition_speed]" value="<?php echo esc_attr($options['transition_speed']); ?>" min="0" max="2" step="0.1">
-    <span>seconds</span>
-    <p class="description">Color transition speed (0-2 seconds, 0 = instant).</p>
+    <span><?php esc_html_e('seconds', 'syntekpro-toggle'); ?></span>
+    <p class="description"><?php esc_html_e('Color transition speed (0-2 seconds, 0 = instant).', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
 function syntekpro_toggle_analytics_section_callback() {
-    echo '<p>Configure what analytics data to track about dark mode usage on your site.</p>';
+    echo '<p>' . esc_html__('Configure what analytics data to track about dark mode usage on your site.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_enable_analytics_callback() {
@@ -3654,9 +3707,9 @@ function syntekpro_toggle_enable_analytics_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[enable_analytics]" value="1" <?php checked($options['enable_analytics'], '1'); ?>>
-        Enable analytics tracking
+        <?php esc_html_e('Enable analytics tracking', 'syntekpro-toggle'); ?>
     </label>
-    <p class="description">Master switch for all analytics tracking. When disabled, no data is collected.</p>
+    <p class="description"><?php esc_html_e('Master switch for all analytics tracking. When disabled, no data is collected.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3665,9 +3718,9 @@ function syntekpro_toggle_analytics_track_toggles_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[analytics_track_toggles]" value="1" <?php checked($options['analytics_track_toggles'], '1'); ?>>
-        Track toggle button clicks
+        <?php esc_html_e('Track toggle button clicks', 'syntekpro-toggle'); ?>
     </label>
-    <p class="description">Count how many times users click the dark/light mode toggle button.</p>
+    <p class="description"><?php esc_html_e('Count how many times users click the dark/light mode toggle button.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3676,9 +3729,9 @@ function syntekpro_toggle_analytics_track_pageviews_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[analytics_track_pageviews]" value="1" <?php checked($options['analytics_track_pageviews'], '1'); ?>>
-        Track page views
+        <?php esc_html_e('Track page views', 'syntekpro-toggle'); ?>
     </label>
-    <p class="description">Count total page views where the toggle button is displayed.</p>
+    <p class="description"><?php esc_html_e('Count total page views where the toggle button is displayed.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3687,14 +3740,14 @@ function syntekpro_toggle_analytics_track_modes_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[analytics_track_modes]" value="1" <?php checked($options['analytics_track_modes'], '1'); ?>>
-        Track mode preferences
+        <?php esc_html_e('Track mode preferences', 'syntekpro-toggle'); ?>
     </label>
-    <p class="description">Track whether users prefer dark or light mode.</p>
+    <p class="description"><?php esc_html_e('Track whether users prefer dark or light mode.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
 function syntekpro_toggle_admin_ui_section_callback() {
-    echo '<p>Control admin UI helpers like dark mode, top bar icon, and dashboard widget.</p>';
+    echo '<p>' . esc_html__('Control admin UI helpers like dark mode, top bar icon, and dashboard widget.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_admin_dark_mode_callback() {
@@ -3702,9 +3755,9 @@ function syntekpro_toggle_admin_dark_mode_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[enable_admin_dark_mode]" value="1" <?php checked($options['enable_admin_dark_mode'], '1'); ?>>
-        Enable admin dark mode toggle (per browser)
+        <?php esc_html_e('Enable admin dark mode toggle (per browser)', 'syntekpro-toggle'); ?>
     </label>
-    <p class="description">Adds a dark/light toggle for the WordPress admin UI (state saved in localStorage).</p>
+    <p class="description"><?php esc_html_e('Adds a dark/light toggle for the WordPress admin UI (state saved in localStorage).', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3713,9 +3766,9 @@ function syntekpro_toggle_admin_bar_icon_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[enable_admin_bar_icon]" value="1" <?php checked($options['enable_admin_bar_icon'], '1'); ?>>
-        Show top bar icon (also triggers admin dark toggle)
+        <?php esc_html_e('Show top bar icon (also triggers admin dark toggle)', 'syntekpro-toggle'); ?>
     </label>
-    <p class="description">Adds a small icon to the WordPress admin bar for quick access.</p>
+    <p class="description"><?php esc_html_e('Adds a small icon to the WordPress admin bar for quick access.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3724,9 +3777,9 @@ function syntekpro_toggle_admin_dashboard_widget_callback() {
     ?>
     <label>
         <input type="checkbox" name="syntekpro_toggle_options[enable_dashboard_widget]" value="1" <?php checked($options['enable_dashboard_widget'], '1'); ?>>
-        Show dashboard widget
+        <?php esc_html_e('Show dashboard widget', 'syntekpro-toggle'); ?>
     </label>
-    <p class="description">Displays the Syntekpro Toggle status widget on the WordPress Dashboard.</p>
+    <p class="description"><?php esc_html_e('Displays the Syntekpro Toggle status widget on the WordPress Dashboard.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3734,7 +3787,7 @@ function syntekpro_toggle_admin_bg_color_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[admin_bg_color]" value="<?php echo esc_attr($options['admin_bg_color']); ?>" class="syntekpro-color-picker">
-    <p class="description">Background color for admin dark mode.</p>
+    <p class="description"><?php esc_html_e('Background color for admin dark mode.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3742,7 +3795,7 @@ function syntekpro_toggle_admin_text_color_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[admin_text_color]" value="<?php echo esc_attr($options['admin_text_color']); ?>" class="syntekpro-color-picker">
-    <p class="description">Primary text color for admin dark mode.</p>
+    <p class="description"><?php esc_html_e('Primary text color for admin dark mode.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3750,7 +3803,7 @@ function syntekpro_toggle_admin_accent_color_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[admin_accent_color]" value="<?php echo esc_attr($options['admin_accent_color']); ?>" class="syntekpro-color-picker">
-    <p class="description">Accent color for buttons and highlights.</p>
+    <p class="description"><?php esc_html_e('Accent color for buttons and highlights.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3758,7 +3811,7 @@ function syntekpro_toggle_admin_surface_color_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[admin_surface_color]" value="<?php echo esc_attr($options['admin_surface_color']); ?>" class="syntekpro-color-picker">
-    <p class="description">Surface color for cards, boxes, and panels.</p>
+    <p class="description"><?php esc_html_e('Surface color for cards, boxes, and panels.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3766,7 +3819,7 @@ function syntekpro_toggle_admin_border_color_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[admin_border_color]" value="<?php echo esc_attr($options['admin_border_color']); ?>" class="syntekpro-color-picker">
-    <p class="description">Border color for admin elements.</p>
+    <p class="description"><?php esc_html_e('Border color for admin elements.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3774,7 +3827,7 @@ function syntekpro_toggle_admin_link_color_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[admin_link_color]" value="<?php echo esc_attr($options['admin_link_color']); ?>" class="syntekpro-color-picker">
-    <p class="description">Link color for admin dark mode.</p>
+    <p class="description"><?php esc_html_e('Link color for admin dark mode.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3782,7 +3835,7 @@ function syntekpro_toggle_admin_link_hover_color_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <input type="text" name="syntekpro_toggle_options[admin_link_hover_color]" value="<?php echo esc_attr($options['admin_link_hover_color']); ?>" class="syntekpro-color-picker">
-    <p class="description">Link hover color for admin dark mode.</p>
+    <p class="description"><?php esc_html_e('Link hover color for admin dark mode.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -3893,12 +3946,12 @@ function syntekpro_toggle_admin_theme_callback() {
         @keyframes admin-neon-pulse { 0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); } 50% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.8); } }
         @keyframes admin-aurora-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     </style>
-    <p class="description">Choose theme for the admin floating toggle button.</p>
+    <p class="description"><?php esc_html_e('Choose theme for the admin floating toggle button.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
 function syntekpro_toggle_admin_color_section_callback() {
-    echo '<p>Choose color presets for admin dark mode or customize manually.</p>';
+    echo '<p>' . esc_html__('Choose color presets for admin dark mode or customize manually.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_admin_color_scheme_mode_callback() {
@@ -3909,14 +3962,14 @@ function syntekpro_toggle_admin_color_scheme_mode_callback() {
         <label class="syntekpro-mode-option">
             <input type="radio" name="syntekpro_toggle_options[admin_color_scheme_mode]" value="preset" <?php checked($admin_mode, 'preset'); ?>>
             <span class="mode-icon">🎨</span>
-            <strong>Presets</strong>
-            <p class="description">Choose from curated admin themes</p>
+            <strong><?php esc_html_e('Presets', 'syntekpro-toggle'); ?></strong>
+            <p class="description"><?php esc_html_e('Choose from curated admin themes', 'syntekpro-toggle'); ?></p>
         </label>
         <label class="syntekpro-mode-option">
             <input type="radio" name="syntekpro_toggle_options[admin_color_scheme_mode]" value="custom" <?php checked($admin_mode, 'custom'); ?>>
             <span class="mode-icon">🎛️</span>
-            <strong>Custom</strong>
-            <p class="description">Manually configure admin colors</p>
+            <strong><?php esc_html_e('Custom', 'syntekpro-toggle'); ?></strong>
+            <p class="description"><?php esc_html_e('Manually configure admin colors', 'syntekpro-toggle'); ?></p>
         </label>
     </div>
     <?php
@@ -4142,15 +4195,19 @@ function syntekpro_toggle_admin_color_preset_callback() {
 /**
  * Shared page header
  */
-function syntekpro_toggle_page_header($page_title = 'Toggle Settings') {
+function syntekpro_toggle_page_header($page_title = '') {
     $options = syntekpro_toggle_get_options();
+    if ($page_title === '') {
+        $page_title = __('Toggle Settings', 'syntekpro-toggle');
+    }
     
-    // Determine which logo to use
-    $use_plugins_logo = (strpos($page_title, 'Other Plugins') !== false);
+    // Determine which logo to use.
+    $current_page = syntekpro_toggle_get_current_admin_page_slug();
+    $use_plugins_logo = ($current_page === 'syntekpro-toggle-plugins');
     $logo_path = $use_plugins_logo 
         ? 'assets/img/SyntekPro%20Plugins%20Logo.png'
         : 'assets/img/syntekpro-toggle-logo%20New.png';
-    $logo_alt = $use_plugins_logo ? 'SyntekPro Plugins' : 'Syntekpro Toggle';
+    $logo_alt = $use_plugins_logo ? __('SyntekPro Plugins', 'syntekpro-toggle') : __('Syntekpro Toggle', 'syntekpro-toggle');
     $logo_class = $use_plugins_logo ? 'syntekpro-header-logo syntekpro-header-logo-small' : 'syntekpro-header-logo';
     ?>
     <div class="wrap syntekpro-toggle-admin">
@@ -4234,48 +4291,48 @@ function syntekpro_toggle_dashboard_widget_content() {
         <div class="syntekpro-widget-stats">
             <div class="syntekpro-widget-stat">
                 <span class="dashicons dashicons-admin-appearance"></span>
-                <strong>Mode:</strong> <?php echo esc_html(ucfirst($options['default_mode'])); ?>
+                <strong><?php esc_html_e('Mode:', 'syntekpro-toggle'); ?></strong> <?php echo esc_html(ucfirst($options['default_mode'])); ?>
             </div>
             <div class="syntekpro-widget-stat">
                 <span class="dashicons dashicons-visibility"></span>
-                <strong>Status:</strong> <?php echo $options['enable_toggle'] === '1' ? '<span style="color:#46b450;">Active</span>' : '<span style="color:#dc3232;">Inactive</span>'; ?>
+                <strong><?php esc_html_e('Status:', 'syntekpro-toggle'); ?></strong> <?php echo $options['enable_toggle'] === '1' ? '<span style="color:#46b450;">' . esc_html__('Active', 'syntekpro-toggle') . '</span>' : '<span style="color:#dc3232;">' . esc_html__('Inactive', 'syntekpro-toggle') . '</span>'; ?>
             </div>
             <div class="syntekpro-widget-stat">
                 <span class="dashicons dashicons-location-alt"></span>
-                <strong>Position:</strong> <?php echo esc_html(ucwords(str_replace('-', ' ', $options['button_position']))); ?>
+                <strong><?php esc_html_e('Position:', 'syntekpro-toggle'); ?></strong> <?php echo esc_html(ucwords(str_replace('-', ' ', $options['button_position']))); ?>
             </div>
         </div>
         
         <?php if ($options['enable_analytics'] === '1'): ?>
         <div class="syntekpro-widget-analytics">
-            <h4 style="margin: 15px 0 10px 0; padding-top: 15px; border-top: 1px solid #f0f0f1;">📊 Analytics Overview</h4>
+            <h4 style="margin: 15px 0 10px 0; padding-top: 15px; border-top: 1px solid #f0f0f1;"><?php esc_html_e('📊 Analytics Overview', 'syntekpro-toggle'); ?></h4>
             <div class="syntekpro-widget-analytics-grid">
                 <div class="analytics-mini-card">
                     <span class="dashicons dashicons-chart-line" style="color: #667eea;"></span>
                     <div>
                         <strong><?php echo number_format($analytics['total_toggles']); ?></strong>
-                        <small>Toggle Clicks</small>
+                        <small><?php esc_html_e('Toggle Clicks', 'syntekpro-toggle'); ?></small>
                     </div>
                 </div>
                 <div class="analytics-mini-card">
                     <span class="dashicons dashicons-visibility" style="color: #f59e0b;"></span>
                     <div>
                         <strong><?php echo number_format($analytics['page_views']); ?></strong>
-                        <small>Page Views</small>
+                        <small><?php esc_html_e('Page Views', 'syntekpro-toggle'); ?></small>
                     </div>
                 </div>
                 <div class="analytics-mini-card">
                     <span class="dashicons dashicons-admin-appearance" style="color: #667eea;"></span>
                     <div>
                         <strong><?php echo number_format($analytics['dark_mode_count']); ?></strong>
-                        <small>Dark Mode</small>
+                        <small><?php esc_html_e('Dark Mode', 'syntekpro-toggle'); ?></small>
                     </div>
                 </div>
                 <div class="analytics-mini-card">
                     <span class="dashicons dashicons-lightbulb" style="color: #f59e0b;"></span>
                     <div>
                         <strong><?php echo number_format($analytics['light_mode_count']); ?></strong>
-                        <small>Light Mode</small>
+                        <small><?php esc_html_e('Light Mode', 'syntekpro-toggle'); ?></small>
                     </div>
                 </div>
             </div>
@@ -4284,18 +4341,18 @@ function syntekpro_toggle_dashboard_widget_content() {
         
         <div class="syntekpro-widget-actions">
             <a href="<?php echo esc_url(admin_url('admin.php?page=syntekpro-toggle')); ?>" class="button button-primary">
-                <span class="dashicons dashicons-admin-settings"></span> Settings
+                <span class="dashicons dashicons-admin-settings"></span> <?php esc_html_e('Settings', 'syntekpro-toggle'); ?>
             </a>
             <?php if ($options['enable_analytics'] === '1'): ?>
             <a href="<?php echo esc_url(admin_url('admin.php?page=syntekpro-toggle-analytics')); ?>" class="button button-secondary">
-                <span class="dashicons dashicons-chart-bar"></span> Analytics
+                <span class="dashicons dashicons-chart-bar"></span> <?php esc_html_e('Analytics', 'syntekpro-toggle'); ?>
             </a>
             <?php endif; ?>
             <a href="<?php echo esc_url(admin_url('admin.php?page=syntekpro-toggle-options')); ?>" class="button button-secondary">
-                <span class="dashicons dashicons-admin-generic"></span> Options
+                <span class="dashicons dashicons-admin-generic"></span> <?php esc_html_e('Options', 'syntekpro-toggle'); ?>
             </a>
             <a href="<?php echo esc_url(home_url()); ?>" class="button button-secondary" target="_blank">
-                <span class="dashicons dashicons-external"></span> View Site
+                <span class="dashicons dashicons-external"></span> <?php esc_html_e('View Site', 'syntekpro-toggle'); ?>
             </a>
         </div>
         
@@ -4439,116 +4496,116 @@ function syntekpro_toggle_settings_combined_page() {
         return;
     }
     
-    if (isset($_GET['settings-updated'])) {
-        add_settings_error('syntekpro_toggle_messages', 'syntekpro_toggle_message', '✓ Settings saved successfully! Your changes have been applied.', 'updated');
+    if (syntekpro_toggle_has_settings_updated_flag()) {
+        add_settings_error('syntekpro_toggle_messages', 'syntekpro_toggle_message', __('✓ Settings saved successfully! Your changes have been applied.', 'syntekpro-toggle'), 'updated');
     }
     
     settings_errors('syntekpro_toggle_messages');
     
     $options = syntekpro_toggle_get_options();
     
-    syntekpro_toggle_page_header('Mode Settings');
+    syntekpro_toggle_page_header(__('Mode Settings', 'syntekpro-toggle'));
     ?>
     <div class="syntekpro-content-wrapper syntekpro-mode-layout" style="display: flex; gap: 24px; margin-top: 20px;">
         <div class="syntekpro-sidebar-nav syntekpro-mode-sidebar" style="width: 260px; flex-shrink: 0;">
             <div class="syntekpro-nav-section" style="gap: 6px;">
                 <div style="padding: 8px 0; border-bottom: 1px solid #ddd;">
-                    <p style="margin: 5px 15px; font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase;">Frontend</p>
-                    <a href="#" class="syntekpro-nav-item active" data-section="frontend-settings"><span class="dashicons dashicons-admin-appearance"></span> Frontend Settings</a>
-                    <a href="#" class="syntekpro-nav-item" data-section="frontend-presets"><span class="dashicons dashicons-smiley"></span> Frontend Presets</a>
+                    <p style="margin: 5px 15px; font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase;"><?php esc_html_e('Frontend', 'syntekpro-toggle'); ?></p>
+                    <a href="#" class="syntekpro-nav-item active" data-section="frontend-settings"><span class="dashicons dashicons-admin-appearance"></span> <?php esc_html_e('Frontend Settings', 'syntekpro-toggle'); ?></a>
+                    <a href="#" class="syntekpro-nav-item" data-section="frontend-presets"><span class="dashicons dashicons-smiley"></span> <?php esc_html_e('Frontend Presets', 'syntekpro-toggle'); ?></a>
                 </div>
 
                 <div style="padding: 8px 0; border-bottom: 1px solid #ddd;">
-                    <p style="margin: 5px 15px; font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase;">Admin</p>
-                    <a href="#" class="syntekpro-nav-item" data-section="admin-settings"><span class="dashicons dashicons-admin-generic"></span> Admin Settings</a>
-                    <a href="#" class="syntekpro-nav-item" data-section="admin-presets"><span class="dashicons dashicons-art"></span> Admin Presets</a>
+                    <p style="margin: 5px 15px; font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase;"><?php esc_html_e('Admin', 'syntekpro-toggle'); ?></p>
+                    <a href="#" class="syntekpro-nav-item" data-section="admin-settings"><span class="dashicons dashicons-admin-generic"></span> <?php esc_html_e('Admin Settings', 'syntekpro-toggle'); ?></a>
+                    <a href="#" class="syntekpro-nav-item" data-section="admin-presets"><span class="dashicons dashicons-art"></span> <?php esc_html_e('Admin Presets', 'syntekpro-toggle'); ?></a>
                 </div>
 
                 <div style="padding: 8px 0;">
-                    <p style="margin: 5px 15px; font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase;">Media</p>
-                    <a href="#" class="syntekpro-nav-item" data-section="images"><span class="dashicons dashicons-format-image"></span> Images Settings</a>
-                    <a href="#" class="syntekpro-nav-item" data-section="videos"><span class="dashicons dashicons-format-video"></span> Videos Settings</a>
-                    <a href="#" class="syntekpro-nav-item" data-section="slides"><span class="dashicons dashicons-slides"></span> Slides Settings</a>
+                    <p style="margin: 5px 15px; font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase;"><?php esc_html_e('Media', 'syntekpro-toggle'); ?></p>
+                    <a href="#" class="syntekpro-nav-item" data-section="images"><span class="dashicons dashicons-format-image"></span> <?php esc_html_e('Images Settings', 'syntekpro-toggle'); ?></a>
+                    <a href="#" class="syntekpro-nav-item" data-section="videos"><span class="dashicons dashicons-format-video"></span> <?php esc_html_e('Videos Settings', 'syntekpro-toggle'); ?></a>
+                    <a href="#" class="syntekpro-nav-item" data-section="slides"><span class="dashicons dashicons-slides"></span> <?php esc_html_e('Slides Settings', 'syntekpro-toggle'); ?></a>
                 </div>
             </div>
         </div>
 
         <div class="syntekpro-main-content syntekpro-mode-main" style="flex: 1;">
             <div class="syntekpro-section-panel active" id="section-frontend-settings">
-                <h2>Frontend Settings</h2>
+                <h2><?php esc_html_e('Frontend Settings', 'syntekpro-toggle'); ?></h2>
                 <form action="options.php" method="post">
                     <?php settings_fields('syntekpro_toggle_settings'); ?>
                     <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php do_settings_sections('syntekpro-toggle-frontend-general'); ?>
                     </div>
-                    <?php submit_button('Save Settings'); ?>
+                    <?php submit_button(__('Save Settings', 'syntekpro-toggle')); ?>
                 </form>
             </div>
 
             <div class="syntekpro-section-panel" id="section-frontend-presets">
-                <h2>Frontend Presets</h2>
+                <h2><?php esc_html_e('Frontend Presets', 'syntekpro-toggle'); ?></h2>
                 <form action="options.php" method="post">
                     <?php settings_fields('syntekpro_toggle_settings'); ?>
                     <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php do_settings_sections('syntekpro-toggle-frontend-colors'); ?>
                         <?php do_settings_sections('syntekpro-toggle-frontend-adjustments'); ?>
                     </div>
-                    <?php submit_button('Save Presets'); ?>
+                    <?php submit_button(__('Save Presets', 'syntekpro-toggle')); ?>
                 </form>
             </div>
 
             <div class="syntekpro-section-panel" id="section-admin-settings">
-                <h2>Admin Settings</h2>
+                <h2><?php esc_html_e('Admin Settings', 'syntekpro-toggle'); ?></h2>
                 <form action="options.php" method="post">
                     <?php settings_fields('syntekpro_toggle_settings'); ?>
                     <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php do_settings_sections('syntekpro-toggle-admin-ui'); ?>
                     </div>
-                    <?php submit_button('Save Settings'); ?>
+                    <?php submit_button(__('Save Settings', 'syntekpro-toggle')); ?>
                 </form>
             </div>
 
             <div class="syntekpro-section-panel" id="section-admin-presets">
-                <h2>Admin Presets</h2>
+                <h2><?php esc_html_e('Admin Presets', 'syntekpro-toggle'); ?></h2>
                 <form action="options.php" method="post">
                     <?php settings_fields('syntekpro_toggle_settings'); ?>
                     <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php do_settings_sections('syntekpro-toggle-admin-color'); ?>
                     </div>
-                    <?php submit_button('Save Presets'); ?>
+                    <?php submit_button(__('Save Presets', 'syntekpro-toggle')); ?>
                 </form>
             </div>
 
             <div class="syntekpro-section-panel" id="section-images">
-                <h2>Images Settings</h2>
+                <h2><?php esc_html_e('Images Settings', 'syntekpro-toggle'); ?></h2>
                 <form action="options.php" method="post">
                     <?php settings_fields('syntekpro_toggle_settings'); ?>
                     <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php do_settings_sections('syntekpro-toggle-frontend-images'); ?>
                     </div>
-                    <?php submit_button('Save Settings'); ?>
+                    <?php submit_button(__('Save Settings', 'syntekpro-toggle')); ?>
                 </form>
             </div>
 
             <div class="syntekpro-section-panel" id="section-videos">
-                <h2>Videos Settings</h2>
+                <h2><?php esc_html_e('Videos Settings', 'syntekpro-toggle'); ?></h2>
                 <form action="options.php" method="post">
                     <?php settings_fields('syntekpro_toggle_settings'); ?>
                     <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php do_settings_sections('syntekpro-toggle-frontend-videos'); ?>
                     </div>
-                    <?php submit_button('Save Settings'); ?>
+                    <?php submit_button(__('Save Settings', 'syntekpro-toggle')); ?>
                 </form>
             </div>
 
             <div class="syntekpro-section-panel" id="section-slides">
-                <h2>Slides Settings</h2>
+                <h2><?php esc_html_e('Slides Settings', 'syntekpro-toggle'); ?></h2>
                 <form action="options.php" method="post">
                     <?php settings_fields('syntekpro_toggle_settings'); ?>
                     <div style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php do_settings_sections('syntekpro-toggle-frontend-slides'); ?>
                     </div>
-                    <?php submit_button('Save Settings'); ?>
+                    <?php submit_button(__('Save Settings', 'syntekpro-toggle')); ?>
                 </form>
             </div>
         </div>
@@ -4566,13 +4623,13 @@ function syntekpro_toggle_options_page() {
         return;
     }
 
-    if (isset($_GET['settings-updated'])) {
-        add_settings_error('syntekpro_toggle_messages', 'syntekpro_toggle_message', '✓ Options saved successfully.', 'updated');
+    if (syntekpro_toggle_has_settings_updated_flag()) {
+        add_settings_error('syntekpro_toggle_messages', 'syntekpro_toggle_message', __('✓ Options saved successfully.', 'syntekpro-toggle'), 'updated');
     }
 
     settings_errors('syntekpro_toggle_messages');
 
-    syntekpro_toggle_page_header('Options');
+    syntekpro_toggle_page_header(__('Options', 'syntekpro-toggle'));
     ?>
     <div class="syntekpro-content-wrapper syntekpro-options-layout" style="display: flex; gap: 24px; margin-top: 20px;">
         <div class="syntekpro-sidebar-nav syntekpro-options-sidebar" style="width: 260px; flex-shrink: 0;">
@@ -4597,90 +4654,90 @@ function syntekpro_toggle_options_page() {
                 <?php settings_fields('syntekpro_toggle_settings'); ?>
 
                 <div class="syntekpro-section-panel active" id="section-options-display" data-section="options-display">
-                    <h2>Display Rules</h2>
+                    <h2><?php esc_html_e('Display Rules', 'syntekpro-toggle'); ?></h2>
                     <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_display_section'); ?>
                     </div>
                 </div>
 
                 <div class="syntekpro-section-panel" id="section-options-targeting" data-section="options-targeting">
-                    <h2>User Targeting</h2>
+                    <h2><?php esc_html_e('User Targeting', 'syntekpro-toggle'); ?></h2>
                     <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_user_targeting_section'); ?>
                     </div>
                 </div>
 
                 <div class="syntekpro-section-panel" id="section-options-schedule" data-section="options-schedule">
-                    <h2>Schedule</h2>
+                    <h2><?php esc_html_e('Schedule', 'syntekpro-toggle'); ?></h2>
                     <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_schedule_section'); ?>
                     </div>
                 </div>
 
                 <div class="syntekpro-section-panel" id="section-options-behavior" data-section="options-behavior">
-                    <h2>Behavior</h2>
+                    <h2><?php esc_html_e('Behavior', 'syntekpro-toggle'); ?></h2>
                     <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_behavior_section'); ?>
                     </div>
                 </div>
 
                 <div class="syntekpro-section-panel" id="section-options-storage" data-section="options-storage">
-                    <h2>Storage &amp; Privacy</h2>
+                    <h2><?php esc_html_e('Storage & Privacy', 'syntekpro-toggle'); ?></h2>
                     <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_storage_section'); ?>
                     </div>
                 </div>
 
                 <div class="syntekpro-section-panel" id="section-options-animations" data-section="options-animations">
-                    <h2>Animations</h2>
+                    <h2><?php esc_html_e('Animations', 'syntekpro-toggle'); ?></h2>
                     <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_animation_section'); ?>
                     </div>
                 </div>
 
                 <div class="syntekpro-section-panel" id="section-options-accessibility" data-section="options-accessibility">
-                    <h2>Accessibility</h2>
+                    <h2><?php esc_html_e('Accessibility', 'syntekpro-toggle'); ?></h2>
                     <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_accessibility_section'); ?>
                     </div>
                 </div>
 
                 <div class="syntekpro-section-panel" id="section-options-integrations" data-section="options-integrations">
-                    <h2>Integrations</h2>
+                    <h2><?php esc_html_e('Integrations', 'syntekpro-toggle'); ?></h2>
                     <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_integrations_section'); ?>
                     </div>
                 </div>
 
                 <div class="syntekpro-section-panel" id="section-options-overrides" data-section="options-overrides">
-                    <h2>Theme Overrides</h2>
+                    <h2><?php esc_html_e('Theme Overrides', 'syntekpro-toggle'); ?></h2>
                     <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_theme_override_section'); ?>
                     </div>
                 </div>
 
                 <div class="syntekpro-section-panel" id="section-options-performance" data-section="options-performance">
-                    <h2>Performance</h2>
+                    <h2><?php esc_html_e('Performance', 'syntekpro-toggle'); ?></h2>
                     <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_performance_section'); ?>
                     </div>
                 </div>
 
                 <div class="syntekpro-section-panel" id="section-options-debug" data-section="options-debug">
-                    <h2>Debug</h2>
+                    <h2><?php esc_html_e('Debug', 'syntekpro-toggle'); ?></h2>
                     <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_debug_section'); ?>
                     </div>
                 </div>
 
                 <div class="syntekpro-section-panel" id="section-options-advanced" data-section="options-advanced">
-                    <h2>Advanced Options</h2>
+                    <h2><?php esc_html_e('Advanced Options', 'syntekpro-toggle'); ?></h2>
                     <div class="syntekpro-section-body" style="background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 20px;">
                         <?php syntekpro_toggle_render_settings_section('syntekpro-toggle-frontend-advanced', 'syntekpro_toggle_advanced_section'); ?>
                     </div>
                 </div>
 
-                <?php submit_button('Save Options'); ?>
+                <?php submit_button(__('Save Options', 'syntekpro-toggle')); ?>
             </form>
         </div>
     </div>
@@ -4699,64 +4756,62 @@ function syntekpro_toggle_about_page() {
         return;
     }
     
-    syntekpro_toggle_page_header('About Syntekpro Toggle');
+    syntekpro_toggle_page_header(__('About Syntekpro Toggle', 'syntekpro-toggle'));
     ?>
     <div class="syntekpro-content-wrapper" style="display: flex; gap: 30px; margin-top: 20px;">
         <!-- Main Content -->
         <div class="syntekpro-about-main" style="flex: 1;">
             <!-- Welcome Section -->
             <div class="syntekpro-admin-box" style="background: #ffffff; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; border: 1px solid #e0e0e0;">
-                <h2 style="color: #1a1a1a; margin-top: 0; font-size: 2em;">🌓 Syntekpro Toggle</h2>
-                <p style="font-size: 1.1em; margin-bottom: 0; color: #555;">The Ultimate Dark Mode Solution for WordPress</p>
+                <h2 style="color: #1a1a1a; margin-top: 0; font-size: 2em;"><?php esc_html_e('🌓 Syntekpro Toggle', 'syntekpro-toggle'); ?></h2>
+                <p style="font-size: 1.1em; margin-bottom: 0; color: #555;"><?php esc_html_e('Dark mode tools for WordPress sites.', 'syntekpro-toggle'); ?></p>
             </div>
             
             <!-- About Description -->
             <div class="syntekpro-admin-box">
-                <h3 style="font-size: 1.3em; color: #1a1a1a; margin-top: 0; font-weight: 700;">Welcome to Syntekpro Toggle</h3>
+                <h3 style="font-size: 1.3em; color: #1a1a1a; margin-top: 0; font-weight: 700;"><?php esc_html_e('Welcome to Syntekpro Toggle', 'syntekpro-toggle'); ?></h3>
                 <p style="font-size: 1em; line-height: 1.8; color: #555;">
-                    <strong>Syntekpro Toggle</strong> is a powerful, lightweight dark mode plugin for WordPress that puts the user experience first. 
-                    Whether your visitors prefer dark mode for comfort or accessibility, our plugin seamlessly handles the transition with 
-                    smooth animations, customizable colors, and intelligent theme detection.
+                    <?php esc_html_e('Syntekpro Toggle is a lightweight dark mode plugin for WordPress. It helps apply dark and light preferences with configurable behavior, accessibility options, and theme-compatible styling controls.', 'syntekpro-toggle'); ?>
                 </p>
             </div>
             
             <!-- Key Features -->
             <div class="syntekpro-admin-box">
-                <h3 style="font-size: 1.2em; color: #1a1a1a; margin-top: 0; padding-bottom: 10px; border-bottom: 2px solid #667eea; font-weight: 700;">✨ Key Features</h3>
+                <h3 style="font-size: 1.2em; color: #1a1a1a; margin-top: 0; padding-bottom: 10px; border-bottom: 2px solid #667eea; font-weight: 700;"><?php esc_html_e('✨ Key Features', 'syntekpro-toggle'); ?></h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
                     <div style="padding: 15px; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 4px;">
-                        <h4 style="margin: 0 0 8px 0; color: #667eea;">🎨 Full Customization</h4>
-                        <p style="margin: 0; font-size: 0.95em; color: #555;">Complete control over dark mode colors, themes, and animations</p>
+                        <h4 style="margin: 0 0 8px 0; color: #667eea;"><?php esc_html_e('🎨 Full Customization', 'syntekpro-toggle'); ?></h4>
+                        <p style="margin: 0; font-size: 0.95em; color: #555;"><?php esc_html_e('Complete control over dark mode colors, themes, and animations', 'syntekpro-toggle'); ?></p>
                     </div>
                     <div style="padding: 15px; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 4px;">
-                        <h4 style="margin: 0 0 8px 0; color: #667eea;">🔄 Smart Auto Mode</h4>
-                        <p style="margin: 0; font-size: 0.95em; color: #555;">Automatically respects users' OS dark mode preferences</p>
+                        <h4 style="margin: 0 0 8px 0; color: #667eea;"><?php esc_html_e('🔄 Smart Auto Mode', 'syntekpro-toggle'); ?></h4>
+                        <p style="margin: 0; font-size: 0.95em; color: #555;"><?php esc_html_e('Automatically respects users\' OS dark mode preferences', 'syntekpro-toggle'); ?></p>
                     </div>
                     <div style="padding: 15px; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 4px;">
-                        <h4 style="margin: 0 0 8px 0; color: #667eea;">🎯 Block Theme Compatible</h4>
-                        <p style="margin: 0; font-size: 0.95em; color: #555;">Works seamlessly with all modern WordPress block themes</p>
+                        <h4 style="margin: 0 0 8px 0; color: #667eea;"><?php esc_html_e('🎯 Block Theme Compatible', 'syntekpro-toggle'); ?></h4>
+                        <p style="margin: 0; font-size: 0.95em; color: #555;"><?php esc_html_e('Works seamlessly with all modern WordPress block themes', 'syntekpro-toggle'); ?></p>
                     </div>
                     <div style="padding: 15px; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 4px;">
-                        <h4 style="margin: 0 0 8px 0; color: #667eea;">⚡ Admin Dark Mode</h4>
-                        <p style="margin: 0; font-size: 0.95em; color: #555;">Beautiful dark mode for the WordPress admin dashboard</p>
+                        <h4 style="margin: 0 0 8px 0; color: #667eea;"><?php esc_html_e('⚡ Admin Dark Mode', 'syntekpro-toggle'); ?></h4>
+                        <p style="margin: 0; font-size: 0.95em; color: #555;"><?php esc_html_e('Beautiful dark mode for the WordPress admin dashboard', 'syntekpro-toggle'); ?></p>
                     </div>
                     <div style="padding: 15px; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 4px;">
-                        <h4 style="margin: 0 0 8px 0; color: #667eea;">📊 Analytics Tracking</h4>
-                        <p style="margin: 0; font-size: 0.95em; color: #555;">Track user preferences and toggle behavior with built-in analytics</p>
+                        <h4 style="margin: 0 0 8px 0; color: #667eea;"><?php esc_html_e('📊 Analytics Tracking', 'syntekpro-toggle'); ?></h4>
+                        <p style="margin: 0; font-size: 0.95em; color: #555;"><?php esc_html_e('Track user preferences and toggle behavior with built-in analytics', 'syntekpro-toggle'); ?></p>
                     </div>
                     <div style="padding: 15px; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 4px;">
-                        <h4 style="margin: 0 0 8px 0; color: #667eea;">⚙️ Advanced Options</h4>
-                        <p style="margin: 0; font-size: 0.95em; color: #555;">Media filters, custom CSS, transition controls, and more</p>
+                        <h4 style="margin: 0 0 8px 0; color: #667eea;"><?php esc_html_e('⚙️ Advanced Options', 'syntekpro-toggle'); ?></h4>
+                        <p style="margin: 0; font-size: 0.95em; color: #555;"><?php esc_html_e('Media filters, custom CSS, transition controls, and more', 'syntekpro-toggle'); ?></p>
                     </div>
                 </div>
             </div>
             
             <!-- Version Info -->
             <div class="syntekpro-admin-box" style="background: #f0f6ff; border: 1px solid #cce5ff;">
-                <h3 style="font-size: 1.1em; color: #333; margin-top: 0;">📦 Plugin Information</h3>
-                <p style="margin: 5px 0;"><strong>Current Version:</strong> <?php echo esc_html(SYNTEKPRO_TOGGLE_VERSION); ?></p>
-                <p style="margin: 5px 0;"><strong>Requires:</strong> WordPress 5.0+ | PHP 7.2+</p>
-                <p style="margin: 5px 0;"><strong>License:</strong> GPL v2 or later</p>
+                <h3 style="font-size: 1.1em; color: #333; margin-top: 0;"><?php esc_html_e('📦 Plugin Information', 'syntekpro-toggle'); ?></h3>
+                <p style="margin: 5px 0;"><strong><?php esc_html_e('Current Version:', 'syntekpro-toggle'); ?></strong> <?php echo esc_html(SYNTEKPRO_TOGGLE_VERSION); ?></p>
+                <p style="margin: 5px 0;"><strong><?php esc_html_e('Requires:', 'syntekpro-toggle'); ?></strong> <?php esc_html_e('WordPress 5.0+ | PHP 7.2+', 'syntekpro-toggle'); ?></p>
+                <p style="margin: 5px 0;"><strong><?php esc_html_e('License:', 'syntekpro-toggle'); ?></strong> <?php esc_html_e('GPL v2 or later', 'syntekpro-toggle'); ?></p>
             </div>
         </div>
         
@@ -4764,42 +4819,42 @@ function syntekpro_toggle_about_page() {
         <div class="syntekpro-about-sidebar" style="width: 300px; flex-shrink: 0;">
             <!-- Quick Actions -->
             <div class="syntekpro-admin-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-bottom: 20px;">
-                <h3 style="color: white; margin-top: 0; margin-bottom: 15px;">⚙️ Quick Links</h3>
+                <h3 style="color: white; margin-top: 0; margin-bottom: 15px;"><?php esc_html_e('⚙️ Quick Links', 'syntekpro-toggle'); ?></h3>
                 <a href="?page=syntekpro-toggle" class="button button-light" style="width: 100%; margin-bottom: 8px; display: block; text-align: center; background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); color: white; text-decoration: none;">
-                    <- Mode Settings
+                    <?php esc_html_e('<- Mode Settings', 'syntekpro-toggle'); ?>
                 </a>
                 <a href="?page=syntekpro-toggle-options" class="button button-light" style="width: 100%; display: block; text-align: center; background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); color: white; text-decoration: none;">
-                    <- Options
+                    <?php esc_html_e('<- Options', 'syntekpro-toggle'); ?>
                 </a>
             </div>
             
             <!-- Support Box -->
             <div class="syntekpro-admin-box" style="border: 2px solid #667eea;">
-                <h3 style="color: #667eea; margin-top: 0; text-align: center;">💬 Need Help?</h3>
-                <p style="text-align: center; font-size: 0.95em; margin-bottom: 15px;">We're here to support you!</p>
+                <h3 style="color: #667eea; margin-top: 0; text-align: center;"><?php esc_html_e('💬 Help & Resources', 'syntekpro-toggle'); ?></h3>
+                <p style="text-align: center; font-size: 0.95em; margin-bottom: 15px;"><?php esc_html_e('Documentation and support channels are available below.', 'syntekpro-toggle'); ?></p>
                 <a href="https://docs.syntekpro.com/toggle" target="_blank" rel="noopener noreferrer" class="button button-secondary" style="width: 100%; text-align: center; margin-bottom: 8px; display: block;">
-                    📚 View Docs
+                    <?php esc_html_e('📚 View Docs', 'syntekpro-toggle'); ?>
                 </a>
                 <a href="mailto:support@syntekpro.com" class="button button-secondary" style="width: 100%; text-align: center; margin-bottom: 8px; display: block;">
-                    📧 Email Support
+                    <?php esc_html_e('📧 Email Support', 'syntekpro-toggle'); ?>
                 </a>
                 <a href="https://github.com/syntekpro/toggle/issues" target="_blank" rel="noopener noreferrer" class="button button-secondary" style="width: 100%; text-align: center; display: block;">
-                    🐛 Report Issue
+                    <?php esc_html_e('🐛 Report Issue', 'syntekpro-toggle'); ?>
                 </a>
             </div>
             
             <!-- Rate Box -->
             <div class="syntekpro-admin-box" style="background: #fff9e6; border: 2px solid #ffc107;">
-                <h3 style="color: #ff9800; margin-top: 0; text-align: center;">⭐ Love This Plugin?</h3>
-                <p style="text-align: center; font-size: 0.95em; margin-bottom: 15px;">Help us grow with a 5-star review!</p>
+                <h3 style="color: #ff9800; margin-top: 0; text-align: center;"><?php esc_html_e('⭐ Share Feedback', 'syntekpro-toggle'); ?></h3>
+                <p style="text-align: center; font-size: 0.95em; margin-bottom: 15px;"><?php esc_html_e('If the plugin is useful for your site, you can leave a review.', 'syntekpro-toggle'); ?></p>
                 <a href="https://wordpress.org/support/plugin/syntekpro-toggle/reviews/#new-post" target="_blank" rel="noopener noreferrer" class="button button-primary" style="width: 100%; text-align: center; display: block; background: #ff9800; border-color: #ff9800;">
-                    ⭐ Write a Review
+                    <?php esc_html_e('⭐ Leave a Review', 'syntekpro-toggle'); ?>
                 </a>
             </div>
             
             <!-- Social Links -->
             <div class="syntekpro-admin-box" style="text-align: center;">
-                <h3 style="color: #333; margin-top: 0; margin-bottom: 15px;">🌐 Follow Us</h3>
+                <h3 style="color: #333; margin-top: 0; margin-bottom: 15px;"><?php esc_html_e('🌐 Follow Us', 'syntekpro-toggle'); ?></h3>
                 <a href="https://twitter.com/syntekpro" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin: 0 8px; color: #667eea; text-decoration: none; font-size: 1.5em;" title="Twitter">𝕏</a>
                 <a href="https://facebook.com/syntekpro" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin: 0 8px; color: #667eea; text-decoration: none; font-size: 1.5em;" title="Facebook">f</a>
                 <a href="https://github.com/syntekpro" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin: 0 8px; color: #667eea; text-decoration: none; font-size: 1.5em;" title="GitHub">◎</a>
@@ -4820,7 +4875,7 @@ function syntekpro_toggle_plus_page() {
 
     $options = syntekpro_toggle_get_options();
 
-    if (isset($_POST['syntekpro_toggle_save_license']) && check_admin_referer('syntekpro_toggle_plus_license_action', 'syntekpro_toggle_plus_license_nonce')) {
+    if (syntekpro_toggle_has_post_action('syntekpro_toggle_save_license') && check_admin_referer('syntekpro_toggle_plus_license_action', 'syntekpro_toggle_plus_license_nonce')) {
         $license_key = isset($_POST['syntekpro_toggle_plus_license_key']) ? sanitize_text_field(wp_unslash($_POST['syntekpro_toggle_plus_license_key'])) : '';
         $license_key = trim($license_key);
 
@@ -4830,19 +4885,19 @@ function syntekpro_toggle_plus_page() {
         add_settings_error(
             'syntekpro_toggle_messages',
             'syntekpro_toggle_plus_license_saved',
-            $license_key !== '' ? 'Toggle+ license key saved.' : 'License key cleared.',
+            $license_key !== '' ? __('Toggle+ license key saved.', 'syntekpro-toggle') : __('License key cleared.', 'syntekpro-toggle'),
             'updated'
         );
     }
 
-    if (isset($_POST['syntekpro_toggle_remove_license']) && check_admin_referer('syntekpro_toggle_plus_license_action', 'syntekpro_toggle_plus_license_nonce')) {
+    if (syntekpro_toggle_has_post_action('syntekpro_toggle_remove_license') && check_admin_referer('syntekpro_toggle_plus_license_action', 'syntekpro_toggle_plus_license_nonce')) {
         $options['toggle_plus_license_key'] = '';
         update_option('syntekpro_toggle_options', $options);
 
         add_settings_error(
             'syntekpro_toggle_messages',
             'syntekpro_toggle_plus_license_removed',
-            'Toggle+ license key removed.',
+            __('Toggle+ license key removed.', 'syntekpro-toggle'),
             'updated'
         );
     }
@@ -4853,15 +4908,15 @@ function syntekpro_toggle_plus_page() {
         ? str_repeat('*', max(0, strlen($license_key) - 4)) . substr($license_key, -4)
         : '';
     
-    syntekpro_toggle_page_header('Toggle+ - Premium Features');
+    syntekpro_toggle_page_header(__('Toggle+ - Premium Features', 'syntekpro-toggle'));
     settings_errors('syntekpro_toggle_messages');
     ?>
     <div class="syntekpro-content-wrapper" style="display:block; max-width: 1100px; margin: 0 auto;">
         <div class="syntekpro-main-content">
 
             <div class="syntekpro-admin-box" style="background: #ffffff; border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; margin-bottom: 30px;">
-                <h2 style="margin: 0 0 12px 0; color: #333;">🔑 Toggle+ License</h2>
-                <p style="margin: 0 0 16px 0; color: #555;">Add your Toggle+ license key to keep premium features linked to this site.</p>
+                <h2 style="margin: 0 0 12px 0; color: #333;"><?php esc_html_e('🔑 Toggle+ License', 'syntekpro-toggle'); ?></h2>
+                <p style="margin: 0 0 16px 0; color: #555;"><?php esc_html_e('Add your Toggle+ license key to keep premium features linked to this site.', 'syntekpro-toggle'); ?></p>
 
                 <form method="post" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
                     <?php wp_nonce_field('syntekpro_toggle_plus_license_action', 'syntekpro_toggle_plus_license_nonce'); ?>
@@ -4869,94 +4924,95 @@ function syntekpro_toggle_plus_page() {
                         type="text"
                         name="syntekpro_toggle_plus_license_key"
                         value="<?php echo esc_attr($license_key); ?>"
-                        placeholder="Enter your Toggle+ license key"
+                        placeholder="<?php echo esc_attr__('Enter your Toggle+ license key', 'syntekpro-toggle'); ?>"
                         class="regular-text"
                         style="min-width: 320px;"
                     />
-                    <button type="submit" name="syntekpro_toggle_save_license" class="button button-primary">Save License</button>
+                    <button type="submit" name="syntekpro_toggle_save_license" class="button button-primary"><?php esc_html_e('Save License', 'syntekpro-toggle'); ?></button>
                     <?php if ($has_license): ?>
-                        <button type="submit" name="syntekpro_toggle_remove_license" class="button button-secondary" onclick="return confirm('Remove saved Toggle+ license key?');">Remove License</button>
+                        <button type="submit" name="syntekpro_toggle_remove_license" class="button button-secondary" onclick="return confirm('<?php echo esc_js(__('Remove saved Toggle+ license key?', 'syntekpro-toggle')); ?>');"><?php esc_html_e('Remove License', 'syntekpro-toggle'); ?></button>
                     <?php endif; ?>
                 </form>
 
                 <p style="margin: 12px 0 0 0; color: #666; font-size: 13px;">
-                    <strong>Status:</strong>
+                    <strong><?php esc_html_e('Status:', 'syntekpro-toggle'); ?></strong>
                     <?php if ($has_license): ?>
-                        <span style="color: #46b450;">Active — Premium unlocked (<?php echo esc_html($masked_license); ?>)</span>
+                        <?php /* translators: %s is the masked license key suffix shown to the admin user. */ ?>
+                        <span style="color: #46b450;"><?php echo esc_html(sprintf(__('Active — Premium unlocked (%s)', 'syntekpro-toggle'), $masked_license)); ?></span>
                     <?php else: ?>
-                        <span style="color: #d63638;">Not set</span>
+                        <span style="color: #d63638;"><?php esc_html_e('Not set', 'syntekpro-toggle'); ?></span>
                     <?php endif; ?>
                 </p>
             </div>
             
             <!-- Hero Section -->
             <div class="syntekpro-premium-hero" style="background: #ffffff; border: 2px solid #e0e0e0; color: #333; padding: 40px 30px; border-radius: 12px; margin-bottom: 30px; text-align: center;">
-                <h2 style="color: #333; margin: 0 0 15px 0; font-size: 2.5em; font-weight: 700;">Toggle+</h2>
-                <p style="font-size: 1.3em; margin: 0 0 25px 0; color: #555;">Unlock Premium Features & Take Your Dark Mode to the Next Level</p>
+                <h2 style="color: #333; margin: 0 0 15px 0; font-size: 2.5em; font-weight: 700;"><?php esc_html_e('Toggle+', 'syntekpro-toggle'); ?></h2>
+                <p style="font-size: 1.3em; margin: 0 0 25px 0; color: #555;"><?php esc_html_e('Optional add-on features for extended dark mode controls.', 'syntekpro-toggle'); ?></p>
                 <a href="https://plugins.syntekpro.com/toggle-plus" target="_blank" rel="noopener noreferrer" class="button button-light" style="background: #667eea; color: white; border-color: #667eea; font-size: 16px; padding: 12px 30px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;">
-                    🚀 Upgrade to Toggle+
+                    <?php esc_html_e('View Toggle+ details', 'syntekpro-toggle'); ?>
                 </a>
             </div>
             
             <!-- Feature Comparison -->
-            <h2 style="text-align: center; margin-top: 20px; margin-bottom: 20px;">🎯 Features Comparison</h2>
+            <h2 style="text-align: center; margin-top: 20px; margin-bottom: 20px;"><?php esc_html_e('🎯 Features Comparison', 'syntekpro-toggle'); ?></h2>
             <div class="syntekpro-comparison-table" style="overflow-x: auto; margin-bottom: 40px;">
                 <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                     <thead>
                         <tr style="background: #f8f9ff; border-bottom: 2px solid #e0e0e0;">
-                            <th style="padding: 20px; text-align: left; font-weight: 600; color: #333;">Feature</th>
-                            <th style="padding: 20px; text-align: center; font-weight: 600; color: #333;">Free Edition</th>
-                            <th style="padding: 20px; text-align: center; font-weight: 600; color: #667eea;">Toggle+</th>
+                            <th style="padding: 20px; text-align: left; font-weight: 600; color: #333;"><?php esc_html_e('Feature', 'syntekpro-toggle'); ?></th>
+                            <th style="padding: 20px; text-align: center; font-weight: 600; color: #333;"><?php esc_html_e('Free Edition', 'syntekpro-toggle'); ?></th>
+                            <th style="padding: 20px; text-align: center; font-weight: 600; color: #667eea;"><?php esc_html_e('Toggle+', 'syntekpro-toggle'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr style="border-bottom: 1px solid #e0e0e0;">
-                            <td style="padding: 18px 20px; color: #555;">Basic Dark Mode Toggle</td>
+                            <td style="padding: 18px 20px; color: #555;"><?php esc_html_e('Basic Dark Mode Toggle', 'syntekpro-toggle'); ?></td>
                             <td style="padding: 18px 20px; text-align: center;">✅</td>
                             <td style="padding: 18px 20px; text-align: center;">✅</td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e0e0e0; background: #fafafa;">
-                            <td style="padding: 18px 20px; color: #555;">36 Button Themes</td>
-                            <td style="padding: 18px 20px; text-align: center;">✅ (5 Free)</td>
-                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;">✅ All 36</td>
+                            <td style="padding: 18px 20px; color: #555;"><?php esc_html_e('36 Button Themes', 'syntekpro-toggle'); ?></td>
+                            <td style="padding: 18px 20px; text-align: center;"><?php esc_html_e('✅ (5 Free)', 'syntekpro-toggle'); ?></td>
+                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;"><?php esc_html_e('✅ All 36', 'syntekpro-toggle'); ?></td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e0e0e0;">
-                            <td style="padding: 18px 20px; color: #555;">20 Color Presets</td>
-                            <td style="padding: 18px 20px; text-align: center;">✅ (1 Free)</td>
-                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;">✅ All 20</td>
+                            <td style="padding: 18px 20px; color: #555;"><?php esc_html_e('20 Color Presets', 'syntekpro-toggle'); ?></td>
+                            <td style="padding: 18px 20px; text-align: center;"><?php esc_html_e('✅ (1 Free)', 'syntekpro-toggle'); ?></td>
+                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;"><?php esc_html_e('✅ All 20', 'syntekpro-toggle'); ?></td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e0e0e0; background: #fafafa;">
-                            <td style="padding: 18px 20px; color: #555;">Shape & Animation Options</td>
+                            <td style="padding: 18px 20px; color: #555;"><?php esc_html_e('Shape & Animation Options', 'syntekpro-toggle'); ?></td>
                             <td style="padding: 18px 20px; text-align: center;">✅</td>
                             <td style="padding: 18px 20px; text-align: center;">✅</td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e0e0e0;">
-                            <td style="padding: 18px 20px; color: #555;">Admin Dark Mode</td>
+                            <td style="padding: 18px 20px; color: #555;"><?php esc_html_e('Admin Dark Mode', 'syntekpro-toggle'); ?></td>
                             <td style="padding: 18px 20px; text-align: center;">✅</td>
                             <td style="padding: 18px 20px; text-align: center;">✅</td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e0e0e0; background: #fafafa;">
-                            <td style="padding: 18px 20px; color: #555;">Analytics Dashboard</td>
-                            <td style="padding: 18px 20px; text-align: center;">✅ (Basic)</td>
-                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;">✅ Advanced</td>
+                            <td style="padding: 18px 20px; color: #555;"><?php esc_html_e('Analytics Dashboard', 'syntekpro-toggle'); ?></td>
+                            <td style="padding: 18px 20px; text-align: center;"><?php esc_html_e('✅ (Basic)', 'syntekpro-toggle'); ?></td>
+                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;"><?php esc_html_e('✅ Advanced', 'syntekpro-toggle'); ?></td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e0e0e0;">
-                            <td style="padding: 18px 20px; color: #555;">Media Filters (Images, Videos)</td>
+                            <td style="padding: 18px 20px; color: #555;"><?php esc_html_e('Media Filters (Images, Videos)', 'syntekpro-toggle'); ?></td>
                             <td style="padding: 18px 20px; text-align: center;">✅</td>
                             <td style="padding: 18px 20px; text-align: center;">✅</td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e0e0e0; background: #fafafa;">
-                            <td style="padding: 18px 20px; color: #555;">Premium Support</td>
+                            <td style="padding: 18px 20px; color: #555;"><?php esc_html_e('Support', 'syntekpro-toggle'); ?></td>
                             <td style="padding: 18px 20px; text-align: center;"></td>
-                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;">✅ Priority</td>
+                            <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;"><?php esc_html_e('✅ Extended', 'syntekpro-toggle'); ?></td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e0e0e0;">
-                            <td style="padding: 18px 20px; color: #555;">Beta Features Access</td>
+                            <td style="padding: 18px 20px; color: #555;"><?php esc_html_e('Beta Features Access', 'syntekpro-toggle'); ?></td>
                             <td style="padding: 18px 20px; text-align: center;"></td>
                             <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;">✅</td>
                         </tr>
                         <tr style="background: #fafafa;">
-                            <td style="padding: 18px 20px; color: #555;">Advanced Custom CSS</td>
+                            <td style="padding: 18px 20px; color: #555;"><?php esc_html_e('Advanced Custom CSS', 'syntekpro-toggle'); ?></td>
                             <td style="padding: 18px 20px; text-align: center;"></td>
                             <td style="padding: 18px 20px; text-align: center; color: #667eea; font-weight: 600;">✅</td>
                         </tr>
@@ -4964,37 +5020,37 @@ function syntekpro_toggle_plus_page() {
                 </table>
             </div>
             
-            <!-- Why Upgrade -->
+            <!-- Feature Highlights -->
             <div style="background: #f0f6ff; border-left: 4px solid #667eea; padding: 30px; border-radius: 8px; margin-bottom: 40px;">
-                <h3 style="color: #667eea; margin-top: 0;">💡 Why Upgrade to Toggle+?</h3>
+                <h3 style="color: #667eea; margin-top: 0;"><?php esc_html_e('💡 Toggle+ Highlights', 'syntekpro-toggle'); ?></h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div>
-                        <h4 style="color: #333; margin-bottom: 8px;">🎨 Unlimited Customization</h4>
-                        <p style="margin: 0; color: #555; font-size: 0.95em;">Access all 36 premium button themes and 20 carefully curated color schemes</p>
+                        <h4 style="color: #333; margin-bottom: 8px;"><?php esc_html_e('🎨 Unlimited Customization', 'syntekpro-toggle'); ?></h4>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;"><?php esc_html_e('Access all 36 premium button themes and 20 carefully curated color schemes', 'syntekpro-toggle'); ?></p>
                     </div>
                     <div>
-                        <h4 style="color: #333; margin-bottom: 8px;">📊 Advanced Analytics</h4>
-                        <p style="margin: 0; color: #555; font-size: 0.95em;">Get detailed insights into user behavior and dark mode preferences</p>
+                        <h4 style="color: #333; margin-bottom: 8px;"><?php esc_html_e('📊 Advanced Analytics', 'syntekpro-toggle'); ?></h4>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;"><?php esc_html_e('Get detailed insights into user behavior and dark mode preferences', 'syntekpro-toggle'); ?></p>
                     </div>
                     <div>
-                        <h4 style="color: #333; margin-bottom: 8px;">🚀 Early Access</h4>
-                        <p style="margin: 0; color: #555; font-size: 0.95em;">Be the first to access new features and beta testing opportunities</p>
+                        <h4 style="color: #333; margin-bottom: 8px;"><?php esc_html_e('🚀 Early Access', 'syntekpro-toggle'); ?></h4>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;"><?php esc_html_e('Be the first to access new features and beta testing opportunities', 'syntekpro-toggle'); ?></p>
                     </div>
                     <div>
-                        <h4 style="color: #333; margin-bottom: 8px;">💬 Priority Support</h4>
-                        <p style="margin: 0; color: #555; font-size: 0.95em;">Get faster response times and dedicated support from our team</p>
+                        <h4 style="color: #333; margin-bottom: 8px;"><?php esc_html_e('💬 Extended Support', 'syntekpro-toggle'); ?></h4>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;"><?php esc_html_e('Get faster response times and dedicated support from our team', 'syntekpro-toggle'); ?></p>
                     </div>
                 </div>
             </div>
             
-            <!-- Upgrade CTA -->
+            <!-- Details CTA -->
             <div style="text-align: center; padding: 40px; background: #ffffff; border: 2px solid #667eea; border-radius: 12px; color: #333;">
-                <h2 style="color: #333; margin-top: 0;">Ready to Unlock Premium Features?</h2>
-                <p style="font-size: 1.1em; margin-bottom: 25px; color: #555;">Join thousands of WordPress users enjoying the full power of Syntekpro Toggle</p>
+                <h2 style="color: #333; margin-top: 0;"><?php esc_html_e('Need additional features?', 'syntekpro-toggle'); ?></h2>
+                <p style="font-size: 1.1em; margin-bottom: 25px; color: #555;"><?php esc_html_e('Review the Toggle+ add-on feature set and choose what fits your site.', 'syntekpro-toggle'); ?></p>
                 <a href="https://plugins.syntekpro.com/toggle-plus" target="_blank" rel="noopener noreferrer" class="button button-light" style="background: #667eea; color: white; border-color: #667eea; font-size: 16px; padding: 14px 40px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;">
-                    🚀 Upgrade Now - Get Toggle+
+                    <?php esc_html_e('Open Toggle+ page', 'syntekpro-toggle'); ?>
                 </a>
-                <p style="margin: 20px 0 0 0; color: #666; font-size: 0.95em;">30-day money-back guarantee • No questions asked</p>
+                <p style="margin: 20px 0 0 0; color: #666; font-size: 0.95em;"><?php esc_html_e('Available as an optional add-on.', 'syntekpro-toggle'); ?></p>
             </div>
         </div>
     </div>
@@ -5010,34 +5066,52 @@ function syntekpro_toggle_plugins_page() {
         return;
     }
     
-    syntekpro_toggle_page_header('Other Plugins - By SyntekPro');
+    syntekpro_toggle_page_header(__('Other Plugins - By SyntekPro', 'syntekpro-toggle'));
     
     // Plugin data
     $plugins = array(
         array(
-            'name' => 'SyntekPro Forms',
+            'name' => __('SyntekPro Forms', 'syntekpro-toggle'),
             'icon' => '📝',
-            'tagline' => 'Advanced WordPress Form Builder',
-            'description' => 'Create powerful forms with conditional logic, email notifications, payment integration, and advanced routing. Perfect for lead capture, surveys, contact forms, and more.',
-            'features' => array('30+ Field Types', 'Conditional Logic', 'Payment Processing', 'Email Routing', 'Multi-page Forms'),
+            'tagline' => __('Advanced WordPress Form Builder', 'syntekpro-toggle'),
+            'description' => __('Create powerful forms with conditional logic, email notifications, payment integration, and advanced routing. Perfect for lead capture, surveys, contact forms, and more.', 'syntekpro-toggle'),
+            'features' => array(
+                __('30+ Field Types', 'syntekpro-toggle'),
+                __('Conditional Logic', 'syntekpro-toggle'),
+                __('Payment Processing', 'syntekpro-toggle'),
+                __('Email Routing', 'syntekpro-toggle'),
+                __('Multi-page Forms', 'syntekpro-toggle')
+            ),
             'url' => 'https://plugins.syntekpro.com/syntekpro-forms',
             'color' => '#FF6B6B'
         ),
         array(
-            'name' => 'SyntekPro Animations',
+            'name' => __('SyntekPro Animations', 'syntekpro-toggle'),
             'icon' => '✨',
-            'tagline' => 'Pure CSS & JavaScript Animations',
-            'description' => 'Add stunning animations and transitions to any WordPress element without jQuery. Smooth scroll effects, fade-ins, slide animations, and more with incredible performance.',
-            'features' => array('50+ Animations', 'Scroll Triggers', 'Entry Effects', 'Loop Animation', '60 FPS Performance'),
+            'tagline' => __('Pure CSS & JavaScript Animations', 'syntekpro-toggle'),
+            'description' => __('Add stunning animations and transitions to any WordPress element without jQuery. Smooth scroll effects, fade-ins, slide animations, and more with incredible performance.', 'syntekpro-toggle'),
+            'features' => array(
+                __('50+ Animations', 'syntekpro-toggle'),
+                __('Scroll Triggers', 'syntekpro-toggle'),
+                __('Entry Effects', 'syntekpro-toggle'),
+                __('Loop Animation', 'syntekpro-toggle'),
+                __('60 FPS Performance', 'syntekpro-toggle')
+            ),
             'url' => 'https://plugins.syntekpro.com/syntekpro-animations',
             'color' => '#4ECDC4'
         ),
         array(
-            'name' => 'SyntekPro License Server',
+            'name' => __('SyntekPro License Server', 'syntekpro-toggle'),
             'icon' => '🔐',
-            'tagline' => 'License Management & Product Activation',
-            'description' => 'Manage software licenses, product keys, and user activations. Perfect for selling plugins, themes, software, or digital products with built-in security and analytics.',
-            'features' => array('License Generation', 'Activation Tracking', 'API Integration', 'License Revocation', 'Sales Analytics'),
+            'tagline' => __('License Management & Product Activation', 'syntekpro-toggle'),
+            'description' => __('Manage software licenses, product keys, and user activations. Perfect for selling plugins, themes, software, or digital products with built-in security and analytics.', 'syntekpro-toggle'),
+            'features' => array(
+                __('License Generation', 'syntekpro-toggle'),
+                __('Activation Tracking', 'syntekpro-toggle'),
+                __('API Integration', 'syntekpro-toggle'),
+                __('License Revocation', 'syntekpro-toggle'),
+                __('Sales Analytics', 'syntekpro-toggle')
+            ),
             'url' => 'https://plugins.syntekpro.com/syntekpro-license-server',
             'color' => '#9B59B6'
         )
@@ -5048,8 +5122,8 @@ function syntekpro_toggle_plugins_page() {
             
             <!-- Hero Section -->
             <div style="background: #ffffff; border: 2px solid #e0e0e0; color: #333; padding: 50px 40px; border-radius: 12px; margin-bottom: 40px; text-align: center;">
-                <h2 style="color: #333; margin: 0 0 10px 0; font-size: 2.2em; font-weight: 700;">🚀 SyntekPro Plugins Suite</h2>
-                <p style="font-size: 1.1em; margin: 0; color: #555;">Powerful WordPress plugins built for professionals</p>
+                <h2 style="color: #333; margin: 0 0 10px 0; font-size: 2.2em; font-weight: 700;"><?php esc_html_e('SyntekPro Plugins', 'syntekpro-toggle'); ?></h2>
+                <p style="font-size: 1.1em; margin: 0; color: #555;"><?php esc_html_e('Related WordPress plugins from the same developer.', 'syntekpro-toggle'); ?></p>
             </div>
             
             <!-- Plugin Cards -->
@@ -5081,7 +5155,7 @@ function syntekpro_toggle_plugins_page() {
                     
                     <!-- CTA Button -->
                     <a href="<?php echo esc_url($plugin['url']); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary" style="width: 100%; text-align: center; display: block; background: <?php echo esc_attr($plugin['color']); ?>; border-color: <?php echo esc_attr($plugin['color']); ?>; color: white; font-weight: 600; padding: 12px; border-radius: 6px; text-decoration: none; margin-top: 20px; cursor: pointer; transition: all 0.3s;">
-                        Learn More →
+                        <?php esc_html_e('View plugin details', 'syntekpro-toggle'); ?>
                     </a>
                 </div>
                 <?php endforeach; ?>
@@ -5089,41 +5163,41 @@ function syntekpro_toggle_plugins_page() {
             
             <!-- Why SyntekPro -->
             <div style="background: #f8f9ff; border-left: 4px solid #667eea; padding: 40px; border-radius: 12px; margin-bottom: 40px;">
-                <h2 style="color: #333; margin-top: 0; text-align: center;">💼 Why Choose SyntekPro?</h2>
+                <h2 style="color: #333; margin-top: 0; text-align: center;"><?php esc_html_e('Plugin Notes', 'syntekpro-toggle'); ?></h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px; margin-top: 25px;">
                     <div style="text-align: center;">
-                        <h3 style="color: #667eea; margin: 0 0 10px 0;">🏆 Professional</h3>
-                        <p style="margin: 0; color: #555; font-size: 0.95em;">Built by experienced WordPress developers for enterprise-grade performance</p>
+                        <h3 style="color: #667eea; margin: 0 0 10px 0;"><?php esc_html_e('🏆 Professional', 'syntekpro-toggle'); ?></h3>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;"><?php esc_html_e('Built by experienced WordPress developers for enterprise-grade performance', 'syntekpro-toggle'); ?></p>
                     </div>
                     <div style="text-align: center;">
-                        <h3 style="color: #667eea; margin: 0 0 10px 0;">🔒 Secure</h3>
-                        <p style="margin: 0; color: #555; font-size: 0.95em;">Security-first approach with regular updates and professional support</p>
+                        <h3 style="color: #667eea; margin: 0 0 10px 0;"><?php esc_html_e('🔒 Secure', 'syntekpro-toggle'); ?></h3>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;"><?php esc_html_e('Security-first approach with regular updates and professional support', 'syntekpro-toggle'); ?></p>
                     </div>
                     <div style="text-align: center;">
-                        <h3 style="color: #667eea; margin: 0 0 10px 0;">⚡ Fast</h3>
-                        <p style="margin: 0; color: #555; font-size: 0.95em;">Optimized for performance with minimal overhead and smart caching</p>
+                        <h3 style="color: #667eea; margin: 0 0 10px 0;"><?php esc_html_e('⚡ Fast', 'syntekpro-toggle'); ?></h3>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;"><?php esc_html_e('Optimized for performance with minimal overhead and smart caching', 'syntekpro-toggle'); ?></p>
                     </div>
                     <div style="text-align: center; padding-top: 15px; border-top: 1px solid #e0e0e0; margin-top: 15px;">
-                        <h3 style="color: #667eea; margin: 0 0 10px 0;">📞 Support</h3>
-                        <p style="margin: 0; color: #555; font-size: 0.95em;">Dedicated support team ready to help you succeed</p>
+                        <h3 style="color: #667eea; margin: 0 0 10px 0;"><?php esc_html_e('📞 Support', 'syntekpro-toggle'); ?></h3>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;"><?php esc_html_e('Support resources are available for setup and troubleshooting.', 'syntekpro-toggle'); ?></p>
                     </div>
                     <div style="text-align: center; padding-top: 15px; border-top: 1px solid #e0e0e0; margin-top: 15px;">
-                        <h3 style="color: #667eea; margin: 0 0 10px 0;">🎓 Documentation</h3>
-                        <p style="margin: 0; color: #555; font-size: 0.95em;">Comprehensive tutorials and guides for easy implementation</p>
+                        <h3 style="color: #667eea; margin: 0 0 10px 0;"><?php esc_html_e('🎓 Documentation', 'syntekpro-toggle'); ?></h3>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;"><?php esc_html_e('Comprehensive tutorials and guides for easy implementation', 'syntekpro-toggle'); ?></p>
                     </div>
                     <div style="text-align: center; padding-top: 15px; border-top: 1px solid #e0e0e0; margin-top: 15px;">
-                        <h3 style="color: #667eea; margin: 0 0 10px 0;">🔄 Updates</h3>
-                        <p style="margin: 0; color: #555; font-size: 0.95em;">Regular updates with new features and improvement</p>
+                        <h3 style="color: #667eea; margin: 0 0 10px 0;"><?php esc_html_e('🔄 Updates', 'syntekpro-toggle'); ?></h3>
+                        <p style="margin: 0; color: #555; font-size: 0.95em;"><?php esc_html_e('Regular updates with new features and improvement', 'syntekpro-toggle'); ?></p>
                     </div>
                 </div>
             </div>
             
             <!-- Connect CTA -->
             <div style="text-align: center; padding: 40px; background: #ffffff; border: 2px solid #667eea; border-radius: 12px; color: #333;">
-                <h2 style="color: #333; margin-top: 0;">Want to Explore More?</h2>
-                <p style="font-size: 1em; margin-bottom: 25px; color: #555;">Visit all our plugins and extensions on SyntekPro.com</p>
+                <h2 style="color: #333; margin-top: 0;"><?php esc_html_e('Explore the plugin catalog', 'syntekpro-toggle'); ?></h2>
+                <p style="font-size: 1em; margin-bottom: 25px; color: #555;"><?php esc_html_e('View additional plugins and related resources.', 'syntekpro-toggle'); ?></p>
                 <a href="https://plugins.syntekpro.com" target="_blank" rel="noopener noreferrer" class="button button-light" style="background: #667eea; color: white; border-color: #667eea; font-size: 15px; padding: 12px 35px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;">
-                    🌐 Visit Our Store
+                    <?php esc_html_e('🌐 Open plugin catalog', 'syntekpro-toggle'); ?>
                 </a>
             </div>
         </div>
@@ -5145,50 +5219,50 @@ function syntekpro_toggle_analytics_page() {
     $options = syntekpro_toggle_get_options();
     
     // Handle settings update
-    if (isset($_GET['settings-updated'])) {
-        add_settings_error('syntekpro_toggle_messages', 'syntekpro_toggle_message', 'Analytics Settings Saved', 'updated');
+    if (syntekpro_toggle_has_settings_updated_flag()) {
+        add_settings_error('syntekpro_toggle_messages', 'syntekpro_toggle_message', __('Analytics settings saved.', 'syntekpro-toggle'), 'updated');
     }
     
     // Handle reset analytics
-    if (isset($_POST['reset_analytics']) && check_admin_referer('syntekpro_analytics_reset', 'analytics_nonce')) {
+    if (syntekpro_toggle_has_post_action('reset_analytics') && check_admin_referer('syntekpro_analytics_reset', 'analytics_nonce')) {
         syntekpro_toggle_reset_analytics();
-        add_settings_error('syntekpro_toggle_messages', 'syntekpro_toggle_message', 'Analytics Data Reset Successfully', 'updated');
+        add_settings_error('syntekpro_toggle_messages', 'syntekpro_toggle_message', __('Analytics data reset successfully.', 'syntekpro-toggle'), 'updated');
         $analytics = syntekpro_toggle_get_analytics(); // Refresh data
     }
     
     settings_errors('syntekpro_toggle_messages');
     
-    syntekpro_toggle_page_header('Analytics Dashboard');
+    syntekpro_toggle_page_header(__('Analytics Dashboard', 'syntekpro-toggle'));
     ?>
     <div class="syntekpro-content-wrapper syntekpro-analytics-layout" style="display: flex; gap: 24px; margin-top: 20px;">
         <div class="syntekpro-sidebar-nav syntekpro-analytics-sidebar" style="width: 260px; flex-shrink: 0;">
             <div class="syntekpro-nav-section" style="gap: 6px;">
-                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item active" data-section="analytics-settings"><span class="dashicons dashicons-chart-bar"></span> Analytics Settings</a>
-                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-overview"><span class="dashicons dashicons-chart-line"></span> Usage Statistics</a>
-                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-modes"><span class="dashicons dashicons-visibility"></span> Mode Preferences</a>
-                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-themes"><span class="dashicons dashicons-art"></span> Popular Themes</a>
-                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-activity"><span class="dashicons dashicons-clock"></span> Recent Activity</a>
-                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-reset"><span class="dashicons dashicons-trash"></span> Reset Analytics</a>
-                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-info"><span class="dashicons dashicons-lock"></span> Info &amp; Privacy</a>
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item active" data-section="analytics-settings"><span class="dashicons dashicons-chart-bar"></span> <?php esc_html_e('Analytics Settings', 'syntekpro-toggle'); ?></a>
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-overview"><span class="dashicons dashicons-chart-line"></span> <?php esc_html_e('Usage Statistics', 'syntekpro-toggle'); ?></a>
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-modes"><span class="dashicons dashicons-visibility"></span> <?php esc_html_e('Mode Preferences', 'syntekpro-toggle'); ?></a>
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-themes"><span class="dashicons dashicons-art"></span> <?php esc_html_e('Popular Themes', 'syntekpro-toggle'); ?></a>
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-activity"><span class="dashicons dashicons-clock"></span> <?php esc_html_e('Recent Activity', 'syntekpro-toggle'); ?></a>
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-reset"><span class="dashicons dashicons-trash"></span> <?php esc_html_e('Reset Analytics', 'syntekpro-toggle'); ?></a>
+                <a href="#" class="syntekpro-nav-item syntekpro-analytics-nav-item" data-section="analytics-info"><span class="dashicons dashicons-lock"></span> <?php esc_html_e('Info & Privacy', 'syntekpro-toggle'); ?></a>
             </div>
         </div>
 
         <div class="syntekpro-main-content syntekpro-analytics-main" style="flex: 1;">
             <div class="syntekpro-section-panel active" id="section-analytics-settings" data-section="analytics-settings">
-                <h2><span class="dashicons dashicons-chart-bar"></span> Analytics Settings</h2>
+                <h2><span class="dashicons dashicons-chart-bar"></span> <?php esc_html_e('Analytics Settings', 'syntekpro-toggle'); ?></h2>
                 <div class="syntekpro-section-body syntekpro-admin-box">
                     <form action="options.php" method="post">
                         <?php
                         settings_fields('syntekpro_toggle_settings');
                         do_settings_sections('syntekpro-toggle-analytics-settings');
-                        submit_button('Save Analytics Settings');
+                        submit_button(__('Save Analytics Settings', 'syntekpro-toggle'));
                         ?>
                     </form>
                 </div>
             </div>
 
             <div class="syntekpro-section-panel" id="section-analytics-overview" data-section="analytics-overview">
-                <h2><span class="dashicons dashicons-chart-line"></span> Usage Statistics</h2>
+                <h2><span class="dashicons dashicons-chart-line"></span> <?php esc_html_e('Usage Statistics', 'syntekpro-toggle'); ?></h2>
                 <div class="syntekpro-section-body">
                     <div class="syntekpro-analytics-grid">
                         <div class="syntekpro-analytics-card">
@@ -5197,7 +5271,7 @@ function syntekpro_toggle_analytics_page() {
                             </div>
                             <div class="analytics-data">
                                 <h3><?php echo number_format($analytics['total_toggles']); ?></h3>
-                                <p>Total Toggle Clicks</p>
+                                <p><?php esc_html_e('Total Toggle Clicks', 'syntekpro-toggle'); ?></p>
                             </div>
                         </div>
 
@@ -5207,7 +5281,7 @@ function syntekpro_toggle_analytics_page() {
                             </div>
                             <div class="analytics-data">
                                 <h3><?php echo number_format($analytics['page_views']); ?></h3>
-                                <p>Total Page Views</p>
+                                <p><?php esc_html_e('Total Page Views', 'syntekpro-toggle'); ?></p>
                             </div>
                         </div>
 
@@ -5217,7 +5291,7 @@ function syntekpro_toggle_analytics_page() {
                             </div>
                             <div class="analytics-data">
                                 <h3><?php echo esc_html($analytics['most_active_time']); ?></h3>
-                                <p>Most Active Time</p>
+                                <p><?php esc_html_e('Most Active Time', 'syntekpro-toggle'); ?></p>
                             </div>
                         </div>
 
@@ -5227,7 +5301,7 @@ function syntekpro_toggle_analytics_page() {
                             </div>
                             <div class="analytics-data">
                                 <h3><?php echo esc_html($analytics['tracking_since']); ?></h3>
-                                <p>Tracking Since</p>
+                                <p><?php esc_html_e('Tracking Since', 'syntekpro-toggle'); ?></p>
                             </div>
                         </div>
                     </div>
@@ -5235,7 +5309,7 @@ function syntekpro_toggle_analytics_page() {
             </div>
 
             <div class="syntekpro-section-panel" id="section-analytics-modes" data-section="analytics-modes">
-                <h2><span class="dashicons dashicons-visibility"></span> Mode Preferences</h2>
+                <h2><span class="dashicons dashicons-visibility"></span> <?php esc_html_e('Mode Preferences', 'syntekpro-toggle'); ?></h2>
                 <div class="syntekpro-section-body syntekpro-admin-box">
                     <div class="syntekpro-mode-stats">
                         <div class="mode-stat-item">
@@ -5270,7 +5344,7 @@ function syntekpro_toggle_analytics_page() {
             </div>
 
             <div class="syntekpro-section-panel" id="section-analytics-themes" data-section="analytics-themes">
-                <h2><span class="dashicons dashicons-art"></span> Popular Themes</h2>
+                <h2><span class="dashicons dashicons-art"></span> <?php esc_html_e('Popular Themes', 'syntekpro-toggle'); ?></h2>
                 <div class="syntekpro-section-body syntekpro-admin-box">
                     <div class="syntekpro-theme-stats">
                         <?php if (!empty($analytics['theme_usage']) && is_array($analytics['theme_usage'])): ?>
@@ -5281,14 +5355,14 @@ function syntekpro_toggle_analytics_page() {
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p>No theme usage data available yet.</p>
+                            <p><?php esc_html_e('No theme usage data available yet.', 'syntekpro-toggle'); ?></p>
                         <?php endif; ?>
                     </div>
                 </div>
             </div>
 
             <div class="syntekpro-section-panel" id="section-analytics-activity" data-section="analytics-activity">
-                <h2><span class="dashicons dashicons-clock"></span> Recent Activity</h2>
+                <h2><span class="dashicons dashicons-clock"></span> <?php esc_html_e('Recent Activity', 'syntekpro-toggle'); ?></h2>
                 <div class="syntekpro-section-body syntekpro-admin-box">
                     <div class="syntekpro-activity-timeline">
                         <?php if (!empty($analytics['recent_activity']) && is_array($analytics['recent_activity'])): ?>
@@ -5300,16 +5374,16 @@ function syntekpro_toggle_analytics_page() {
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p>No recent activity recorded.</p>
+                            <p><?php esc_html_e('No recent activity recorded.', 'syntekpro-toggle'); ?></p>
                         <?php endif; ?>
                     </div>
                 </div>
             </div>
 
             <div class="syntekpro-section-panel" id="section-analytics-reset" data-section="analytics-reset">
-                <h2><span class="dashicons dashicons-trash"></span> Reset Analytics</h2>
+                <h2><span class="dashicons dashicons-trash"></span> <?php esc_html_e('Reset Analytics', 'syntekpro-toggle'); ?></h2>
                 <div class="syntekpro-section-body syntekpro-admin-box" style="border-left: 4px solid #dc3232;">
-                    <p>Clear all analytics data and start fresh. This action cannot be undone.</p>
+                    <p><?php esc_html_e('Clear all analytics data and start fresh. This action cannot be undone.', 'syntekpro-toggle'); ?></p>
                     <form method="post">
                         <?php wp_nonce_field('syntekpro_analytics_reset', 'analytics_nonce'); ?>
                         <button type="submit" name="reset_analytics" class="button button-secondary" onclick="return confirm('Are you sure you want to reset all analytics data? This cannot be undone.');">
@@ -5320,11 +5394,11 @@ function syntekpro_toggle_analytics_page() {
             </div>
 
             <div class="syntekpro-section-panel" id="section-analytics-info" data-section="analytics-info">
-                <h2><span class="dashicons dashicons-lock"></span> Info &amp; Privacy</h2>
+                <h2><span class="dashicons dashicons-lock"></span> <?php esc_html_e('Info & Privacy', 'syntekpro-toggle'); ?></h2>
                 <div class="syntekpro-section-body">
                     <div class="syntekpro-admin-box">
-                        <h3>Analytics Info</h3>
-                        <p>Track how users interact with your dark mode toggle.</p>
+                        <h3><?php esc_html_e('Analytics Info', 'syntekpro-toggle'); ?></h3>
+                        <p><?php esc_html_e('Track how users interact with your dark mode toggle.', 'syntekpro-toggle'); ?></p>
                         <ul class="syntekpro-stats-list">
                             <li><strong>Status:</strong> <?php echo (isset($options['enable_analytics']) && $options['enable_analytics'] === '1') ? '<span style="color:#46b450;">Active</span>' : '<span style="color:#dc3232;">Inactive</span>'; ?></li>
                             <li><strong>Total Events:</strong> <?php echo number_format($analytics['total_events']); ?></li>
@@ -5333,7 +5407,7 @@ function syntekpro_toggle_analytics_page() {
                     </div>
 
                     <div class="syntekpro-admin-box">
-                        <h3>What We Track</h3>
+                        <h3><?php esc_html_e('What We Track', 'syntekpro-toggle'); ?></h3>
                         <ul class="syntekpro-stats-list">
                             <li>Toggle button clicks</li>
                             <li>Mode switches (Dark/Light)</li>
@@ -5344,9 +5418,9 @@ function syntekpro_toggle_analytics_page() {
                     </div>
 
                     <div class="syntekpro-admin-box">
-                        <h3>Privacy Notice</h3>
-                        <p>All analytics data is stored locally on your server. No data is sent to external services.</p>
-                        <p>We track usage patterns to help you understand how visitors use dark mode on your site.</p>
+                        <h3><?php esc_html_e('Privacy Notice', 'syntekpro-toggle'); ?></h3>
+                        <p><?php esc_html_e('All analytics data is stored locally on your server. No data is sent to external services.', 'syntekpro-toggle'); ?></p>
+                        <p><?php esc_html_e('We track usage patterns to help you understand how visitors use dark mode on your site.', 'syntekpro-toggle'); ?></p>
                     </div>
                 </div>
             </div>

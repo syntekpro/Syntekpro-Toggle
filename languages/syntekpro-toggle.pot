@@ -1,0 +1,1851 @@
+# Copyright (C) 2026 Syntekpro
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Syntekpro-Toggle 1.6.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/Syntekpro-Toggle\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-02-17T01:15:27+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: syntekpro-toggle\n"
+
+#. Plugin Name of the plugin
+#: syntekpro-toggle.php
+msgid "Syntekpro-Toggle"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: syntekpro-toggle.php
+msgid "https://plugins.syntekpro.com/toggle"
+msgstr ""
+
+#. Description of the plugin
+#: syntekpro-toggle.php
+msgid "A lightweight Dark/Light mode toggle that respects OS preferences and remembers user choices."
+msgstr ""
+
+#. Author of the plugin
+#: syntekpro-toggle.php
+msgid "Syntekpro"
+msgstr ""
+
+#. Author URI of the plugin
+#: syntekpro-toggle.php
+msgid "https://syntekpro.com"
+msgstr ""
+
+#: admin/admin.php:19
+msgid "Mode Settings - Dark Mode"
+msgstr ""
+
+#: admin/admin.php:20
+msgid "Toggle"
+msgstr ""
+
+#: admin/admin.php:31
+#: admin/admin.php:32
+#: admin/admin.php:4507
+msgid "Mode Settings"
+msgstr ""
+
+#: admin/admin.php:40
+#: admin/admin.php:41
+#: admin/admin.php:4348
+msgid "Analytics"
+msgstr ""
+
+#: admin/admin.php:49
+#: admin/admin.php:50
+#: admin/admin.php:4352
+#: admin/admin.php:4632
+msgid "Options"
+msgstr ""
+
+#: admin/admin.php:58
+#: admin/admin.php:59
+#: admin/admin.php:4950
+#: admin/admin.php:4965
+msgid "Toggle+"
+msgstr ""
+
+#: admin/admin.php:67
+#: admin/admin.php:68
+msgid "About"
+msgstr ""
+
+#: admin/admin.php:76
+#: admin/admin.php:77
+msgid "Other Plugins"
+msgstr ""
+
+#: admin/admin.php:142
+msgid "Thanks For Using"
+msgstr ""
+
+#: admin/admin.php:155
+msgid "Version"
+msgstr ""
+
+#: admin/admin.php:1024
+msgid "Toggle admin dark mode"
+msgstr ""
+
+#: admin/admin.php:1280
+msgid "General Settings"
+msgstr ""
+
+#: admin/admin.php:1287
+msgid "Default Mode"
+msgstr ""
+
+#: admin/admin.php:1295
+msgid "Toggle Button"
+msgstr ""
+
+#: admin/admin.php:1303
+msgid "Button Position"
+msgstr ""
+
+#: admin/admin.php:1311
+msgid "Button Size"
+msgstr ""
+
+#: admin/admin.php:1319
+msgid "Toggle Button Theme"
+msgstr ""
+
+#: admin/admin.php:1327
+msgid "Button Shape"
+msgstr ""
+
+#: admin/admin.php:1335
+msgid "Button Animation"
+msgstr ""
+
+#: admin/admin.php:1343
+msgid "Button Background Style"
+msgstr ""
+
+#: admin/admin.php:1352
+msgid "🎨 Dark Mode Color Scheme"
+msgstr ""
+
+#: admin/admin.php:1359
+msgid "Color Scheme Mode"
+msgstr ""
+
+#: admin/admin.php:1367
+msgid "Color Preset"
+msgstr ""
+
+#: admin/admin.php:1375
+msgid "Background Color"
+msgstr ""
+
+#: admin/admin.php:1383
+msgid "Text Color"
+msgstr ""
+
+#: admin/admin.php:1391
+msgid "Link Color"
+msgstr ""
+
+#: admin/admin.php:1399
+msgid "Secondary Background"
+msgstr ""
+
+#: admin/admin.php:1408
+msgid "🎚️ Color Adjustments"
+msgstr ""
+
+#: admin/admin.php:1415
+msgid "☀️ Brightness"
+msgstr ""
+
+#: admin/admin.php:1423
+msgid "🔲 Contrast"
+msgstr ""
+
+#: admin/admin.php:1431
+msgid "📜 Sepia"
+msgstr ""
+
+#: admin/admin.php:1439
+msgid "⚫ Grayscale"
+msgstr ""
+
+#: admin/admin.php:1448
+msgid "🖼️ Images Settings"
+msgstr ""
+
+#: admin/admin.php:1455
+msgid "Enable Image Filters"
+msgstr ""
+
+#: admin/admin.php:1463
+msgid "Image Brightness"
+msgstr ""
+
+#: admin/admin.php:1471
+msgid "Image Contrast"
+msgstr ""
+
+#: admin/admin.php:1480
+msgid "🎬 Videos Settings"
+msgstr ""
+
+#: admin/admin.php:1487
+msgid "Enable Video Filters"
+msgstr ""
+
+#: admin/admin.php:1495
+msgid "Video Brightness"
+msgstr ""
+
+#: admin/admin.php:1503
+msgid "Video Contrast"
+msgstr ""
+
+#: admin/admin.php:1512
+msgid "📊 Slides Settings"
+msgstr ""
+
+#: admin/admin.php:1519
+msgid "Enable Slide Filters"
+msgstr ""
+
+#: admin/admin.php:1527
+msgid "Slide Brightness"
+msgstr ""
+
+#: admin/admin.php:1535
+msgid "Slide Invert Colors"
+msgstr ""
+
+#: admin/admin.php:1544
+msgid "Admin UI Settings"
+msgstr ""
+
+#: admin/admin.php:1551
+#: admin/admin.php:4990
+msgid "Admin Dark Mode"
+msgstr ""
+
+#: admin/admin.php:1559
+msgid "Top Bar Icon"
+msgstr ""
+
+#: admin/admin.php:1567
+msgid "Dashboard Widget"
+msgstr ""
+
+#: admin/admin.php:1575
+msgid "Admin Toggle Theme"
+msgstr ""
+
+#: admin/admin.php:1584
+msgid "🎨 Admin UI Color Scheme"
+msgstr ""
+
+#: admin/admin.php:1591
+msgid "Color Mode"
+msgstr ""
+
+#: admin/admin.php:1599
+msgid "Color Presets"
+msgstr ""
+
+#: admin/admin.php:1607
+msgid "Admin Background"
+msgstr ""
+
+#: admin/admin.php:1615
+msgid "Admin Text"
+msgstr ""
+
+#: admin/admin.php:1623
+msgid "Admin Accent"
+msgstr ""
+
+#: admin/admin.php:1631
+msgid "Admin Surface"
+msgstr ""
+
+#: admin/admin.php:1639
+msgid "Admin Border"
+msgstr ""
+
+#: admin/admin.php:1647
+msgid "Admin Link"
+msgstr ""
+
+#: admin/admin.php:1655
+msgid "Admin Link Hover"
+msgstr ""
+
+#: admin/admin.php:1664
+#: admin/admin.php:4657
+msgid "Display Rules"
+msgstr ""
+
+#: admin/admin.php:1671
+msgid "Display Mode"
+msgstr ""
+
+#: admin/admin.php:1679
+msgid "Post Types"
+msgstr ""
+
+#: admin/admin.php:1687
+msgid "Page IDs"
+msgstr ""
+
+#: admin/admin.php:1695
+msgid "Category IDs"
+msgstr ""
+
+#: admin/admin.php:1703
+msgid "Tag IDs"
+msgstr ""
+
+#: admin/admin.php:1711
+msgid "Exclude Special Pages"
+msgstr ""
+
+#: admin/admin.php:1720
+#: admin/admin.php:4664
+msgid "User Targeting"
+msgstr ""
+
+#: admin/admin.php:1727
+msgid "Visibility"
+msgstr ""
+
+#: admin/admin.php:1735
+msgid "Allowed Roles"
+msgstr ""
+
+#: admin/admin.php:1744
+#: admin/admin.php:4671
+msgid "Schedule"
+msgstr ""
+
+#: admin/admin.php:1751
+msgid "Enable Schedule"
+msgstr ""
+
+#: admin/admin.php:1759
+msgid "Days"
+msgstr ""
+
+#: admin/admin.php:1767
+msgid "Start Time"
+msgstr ""
+
+#: admin/admin.php:1775
+msgid "End Time"
+msgstr ""
+
+#: admin/admin.php:1784
+#: admin/admin.php:4678
+msgid "Behavior"
+msgstr ""
+
+#: admin/admin.php:1791
+msgid "Auto Mode Source"
+msgstr ""
+
+#: admin/admin.php:1799
+msgid "Auto Start Time"
+msgstr ""
+
+#: admin/admin.php:1807
+msgid "Auto End Time"
+msgstr ""
+
+#: admin/admin.php:1815
+msgid "Apply Auto On Load"
+msgstr ""
+
+#: admin/admin.php:1823
+msgid "Listen To OS Changes"
+msgstr ""
+
+#: admin/admin.php:1832
+#: admin/admin.php:4685
+msgid "Storage & Privacy"
+msgstr ""
+
+#: admin/admin.php:1839
+msgid "Storage Mode"
+msgstr ""
+
+#: admin/admin.php:1847
+msgid "Cookie Lifetime (Days)"
+msgstr ""
+
+#: admin/admin.php:1855
+msgid "Reset Stored Preferences"
+msgstr ""
+
+#: admin/admin.php:1864
+#: admin/admin.php:4692
+msgid "Animations"
+msgstr ""
+
+#: admin/admin.php:1871
+msgid "Enable Animations"
+msgstr ""
+
+#: admin/admin.php:1879
+msgid "Toggle Animation Speed"
+msgstr ""
+
+#: admin/admin.php:1888
+#: admin/admin.php:4699
+msgid "Accessibility"
+msgstr ""
+
+#: admin/admin.php:1895
+msgid "Respect Reduced Motion"
+msgstr ""
+
+#: admin/admin.php:1903
+msgid "Force High Contrast"
+msgstr ""
+
+#: admin/admin.php:1911
+msgid "Focus Ring Style"
+msgstr ""
+
+#: admin/admin.php:1920
+#: admin/admin.php:4706
+msgid "Integrations"
+msgstr ""
+
+#: admin/admin.php:1927
+msgid "Shortcode Output"
+msgstr ""
+
+#: admin/admin.php:1935
+msgid "Widget Output"
+msgstr ""
+
+#: admin/admin.php:1944
+#: admin/admin.php:4713
+msgid "Theme Overrides"
+msgstr ""
+
+#: admin/admin.php:1951
+msgid "Disable On Themes"
+msgstr ""
+
+#: admin/admin.php:1959
+msgid "Exclude Selectors"
+msgstr ""
+
+#: admin/admin.php:1968
+#: admin/admin.php:4720
+msgid "Performance"
+msgstr ""
+
+#: admin/admin.php:1975
+msgid "Analytics Debounce (ms)"
+msgstr ""
+
+#: admin/admin.php:1983
+msgid "Batch Analytics"
+msgstr ""
+
+#: admin/admin.php:1991
+msgid "Batch Interval (ms)"
+msgstr ""
+
+#: admin/admin.php:1999
+msgid "Batch Size"
+msgstr ""
+
+#: admin/admin.php:2007
+msgid "Page View Once Per Session"
+msgstr ""
+
+#: admin/admin.php:2016
+#: admin/admin.php:4727
+msgid "Debug"
+msgstr ""
+
+#: admin/admin.php:2023
+msgid "Debug Mode"
+msgstr ""
+
+#: admin/admin.php:2032
+msgid "Advanced Settings"
+msgstr ""
+
+#: admin/admin.php:2039
+msgid "Custom CSS"
+msgstr ""
+
+#: admin/admin.php:2047
+msgid "Transition Speed"
+msgstr ""
+
+#: admin/admin.php:2056
+msgid "📊 Analytics Settings"
+msgstr ""
+
+#: admin/admin.php:2063
+msgid "Enable Analytics"
+msgstr ""
+
+#: admin/admin.php:2071
+msgid "Track Toggle Clicks"
+msgstr ""
+
+#: admin/admin.php:2079
+msgid "Track Page Views"
+msgstr ""
+
+#: admin/admin.php:2087
+msgid "Track Mode Changes"
+msgstr ""
+
+#: admin/admin.php:2563
+msgid "Configure the general behavior of the dark mode toggle."
+msgstr ""
+
+#: admin/admin.php:2567
+msgid "Choose how dark mode colors are applied: Dynamic (smart auto-adjust), Presets (curated color schemes), or Custom (manual control)."
+msgstr ""
+
+#: admin/admin.php:2571
+msgid "Fine-tune the visual appearance with brightness, contrast, sepia, and grayscale filters."
+msgstr ""
+
+#: admin/admin.php:2575
+msgid "Apply filters and adjustments to images in dark mode for better visibility and consistency."
+msgstr ""
+
+#: admin/admin.php:2579
+msgid "Apply filters and adjustments to videos in dark mode for improved viewing experience."
+msgstr ""
+
+#: admin/admin.php:2583
+msgid "Apply filters and adjustments to presentation slides (SlideShare, Impress, etc.) in dark mode."
+msgstr ""
+
+#: admin/admin.php:2587
+msgid "Advanced customization options for power users."
+msgstr ""
+
+#: admin/admin.php:2591
+msgid "Control where the toggle is shown across your site."
+msgstr ""
+
+#: admin/admin.php:2595
+msgid "Limit the toggle to specific visitors or user roles."
+msgstr ""
+
+#: admin/admin.php:2599
+msgid "Show the toggle only during selected hours and days."
+msgstr ""
+
+#: admin/admin.php:2603
+msgid "Configure how auto mode chooses dark or light."
+msgstr ""
+
+#: admin/admin.php:2607
+msgid "Choose how user preferences are stored and reset."
+msgstr ""
+
+#: admin/admin.php:2611
+msgid "Control animation behavior and speeds."
+msgstr ""
+
+#: admin/admin.php:2615
+msgid "Accessibility options for motion and contrast."
+msgstr ""
+
+#: admin/admin.php:2619
+msgid "Enable shortcode or widget output."
+msgstr ""
+
+#: admin/admin.php:2623
+msgid "Disable features for specific themes or selectors."
+msgstr ""
+
+#: admin/admin.php:2627
+msgid "Tune tracking performance and page view behavior."
+msgstr ""
+
+#: admin/admin.php:2631
+msgid "Enable logging to help troubleshoot issues."
+msgstr ""
+
+#: admin/admin.php:2656
+msgid "Show everywhere"
+msgstr ""
+
+#: admin/admin.php:2657
+msgid "Show only on selected"
+msgstr ""
+
+#: admin/admin.php:2658
+msgid "Hide on selected"
+msgstr ""
+
+#: admin/admin.php:2660
+msgid "Use the lists below to include or exclude specific content."
+msgstr ""
+
+#: admin/admin.php:2677
+msgid "Used when display mode is set to include or exclude."
+msgstr ""
+
+#: admin/admin.php:2685
+msgid "Comma-separated page IDs."
+msgstr ""
+
+#: admin/admin.php:2693
+msgid "Comma-separated category IDs."
+msgstr ""
+
+#: admin/admin.php:2701
+msgid "Comma-separated tag IDs."
+msgstr ""
+
+#: admin/admin.php:2710
+msgid "Hide on login, register, checkout, cart, and account pages"
+msgstr ""
+
+#: admin/admin.php:2719
+msgid "All visitors"
+msgstr ""
+
+#: admin/admin.php:2720
+msgid "Logged-in users only"
+msgstr ""
+
+#: admin/admin.php:2721
+msgid "Guests only"
+msgstr ""
+
+#: admin/admin.php:2722
+msgid "Specific roles"
+msgstr ""
+
+#: admin/admin.php:2740
+msgid "Used when visibility is set to specific roles."
+msgstr ""
+
+#: admin/admin.php:2749
+msgid "Enable schedule"
+msgstr ""
+
+#: admin/admin.php:2796
+msgid "Follow OS"
+msgstr ""
+
+#: admin/admin.php:2797
+msgid "Use time range"
+msgstr ""
+
+#: admin/admin.php:2821
+msgid "Apply auto mode on page load"
+msgstr ""
+
+#: admin/admin.php:2831
+msgid "Listen for OS theme changes"
+msgstr ""
+
+#: admin/admin.php:2840
+msgid "Local storage"
+msgstr ""
+
+#: admin/admin.php:2841
+msgid "Cookie only"
+msgstr ""
+
+#: admin/admin.php:2842
+msgid "Local storage + cookie"
+msgstr ""
+
+#: admin/admin.php:2851
+msgid "Used when cookie storage is enabled."
+msgstr ""
+
+#: admin/admin.php:2859
+msgid "Reset stored preferences"
+msgstr ""
+
+#: admin/admin.php:2861
+msgid "Current storage version:"
+msgstr ""
+
+#: admin/admin.php:2870
+msgid "Enable animations and transitions"
+msgstr ""
+
+#: admin/admin.php:2888
+msgid "Reduce motion when user prefers reduced motion"
+msgstr ""
+
+#: admin/admin.php:2898
+msgid "Force high contrast mode"
+msgstr ""
+
+#: admin/admin.php:2907
+msgid "Default"
+msgstr ""
+
+#: admin/admin.php:2908
+msgid "Strong"
+msgstr ""
+
+#: admin/admin.php:2909
+msgid "Minimal"
+msgstr ""
+
+#: admin/admin.php:2919
+msgid "Enable shortcode output"
+msgstr ""
+
+#: admin/admin.php:2921
+msgid "Shortcode:"
+msgstr ""
+
+#: admin/admin.php:2930
+msgid "Enable widget output"
+msgstr ""
+
+#: admin/admin.php:2940
+msgid "Current theme:"
+msgstr ""
+
+#: admin/admin.php:2948
+msgid "One selector per line to skip filters in dark mode."
+msgstr ""
+
+#: admin/admin.php:2964
+msgid "Send analytics in batches"
+msgstr ""
+
+#: admin/admin.php:2988
+msgid "Count a page view once per session"
+msgstr ""
+
+#: admin/admin.php:2998
+msgid "Enable debug logging"
+msgstr ""
+
+#: admin/admin.php:3010
+msgid "Auto (Follow OS Preference)"
+msgstr ""
+
+#: admin/admin.php:3011
+#: admin/admin.php:4335
+msgid "Light Mode"
+msgstr ""
+
+#: admin/admin.php:3012
+#: admin/admin.php:4328
+msgid "Dark Mode"
+msgstr ""
+
+#: admin/admin.php:3013
+msgid "Manual Only (User Chooses)"
+msgstr ""
+
+#: admin/admin.php:3015
+msgid "Set the default mode when users first visit your site."
+msgstr ""
+
+#: admin/admin.php:3024
+msgid "Show toggle button on frontend"
+msgstr ""
+
+#: admin/admin.php:3026
+msgid "Uncheck to hide the toggle button (useful if using shortcode or widget)."
+msgstr ""
+
+#: admin/admin.php:3034
+msgid "Bottom Right"
+msgstr ""
+
+#: admin/admin.php:3035
+msgid "Bottom Left"
+msgstr ""
+
+#: admin/admin.php:3036
+msgid "Top Right"
+msgstr ""
+
+#: admin/admin.php:3037
+msgid "Top Left"
+msgstr ""
+
+#: admin/admin.php:3039
+msgid "Choose where to display the toggle button."
+msgstr ""
+
+#: admin/admin.php:3048
+msgid "Button size in pixels (30-100)."
+msgstr ""
+
+#: admin/admin.php:3111
+msgid "Premium - Toggle+ Required"
+msgstr ""
+
+#: admin/admin.php:3111
+msgid "Free"
+msgstr ""
+
+#: admin/admin.php:3129
+msgid "🔒 Premium"
+msgstr ""
+
+#: admin/admin.php:3135
+#: admin/admin.php:3394
+msgid "💡 Tip:"
+msgstr ""
+
+#: admin/admin.php:3135
+msgid "Lock icons indicate premium features."
+msgstr ""
+
+#: admin/admin.php:3135
+msgid "Unlock all features with Toggle+ →"
+msgstr ""
+
+#: admin/admin.php:3168
+msgid "Choose a visual style for your toggle button."
+msgstr ""
+
+#: admin/admin.php:3190
+msgid "Choose the button shape or size variation. Pill and Vertical shapes will display the moon/sun icon next to text."
+msgstr ""
+
+#: admin/admin.php:3217
+msgid "Choose a continuous animation for your button. Animations pause on click and respond to hover states."
+msgstr ""
+
+#: admin/admin.php:3238
+msgid "Choose a background pattern style for your button."
+msgstr ""
+
+#: admin/admin.php:3246
+msgid "Main background color for dark mode."
+msgstr ""
+
+#: admin/admin.php:3254
+msgid "Text color for dark mode."
+msgstr ""
+
+#: admin/admin.php:3262
+msgid "Link color for dark mode."
+msgstr ""
+
+#: admin/admin.php:3270
+msgid "Secondary background color (headers, sidebars, widgets)."
+msgstr ""
+
+#: admin/admin.php:3281
+#: admin/admin.php:3965
+msgid "Presets"
+msgstr ""
+
+#: admin/admin.php:3282
+msgid "Choose from curated color schemes"
+msgstr ""
+
+#: admin/admin.php:3287
+#: admin/admin.php:3971
+msgid "Custom"
+msgstr ""
+
+#: admin/admin.php:3288
+msgid "Manually configure all colors"
+msgstr ""
+
+#: admin/admin.php:3334
+msgid "Debug Info:"
+msgstr ""
+
+#: admin/admin.php:3335
+msgid "Color Scheme Mode:"
+msgstr ""
+
+#: admin/admin.php:3336
+msgid "Color Preset:"
+msgstr ""
+
+#: admin/admin.php:3379
+msgid "🔒 PREMIUM"
+msgstr ""
+
+#: admin/admin.php:3386
+msgid "SELECTED"
+msgstr ""
+
+#: admin/admin.php:3394
+msgid "Lock icons indicate premium presets."
+msgstr ""
+
+#: admin/admin.php:3394
+msgid "Get Toggle+ for all presets →"
+msgstr ""
+
+#: admin/admin.php:3555
+msgid "Adjust overall brightness (0-200%, default: 100%)"
+msgstr ""
+
+#: admin/admin.php:3564
+msgid "Adjust contrast between colors (0-200%, default: 100%)"
+msgstr ""
+
+#: admin/admin.php:3573
+msgid "Apply sepia filter for a vintage look (0-100%, default: 0%)"
+msgstr ""
+
+#: admin/admin.php:3582
+msgid "Convert to grayscale (0-100%, default: 0%)"
+msgstr ""
+
+#: admin/admin.php:3594
+msgid "Apply filters to images in dark mode"
+msgstr ""
+
+#: admin/admin.php:3596
+msgid "Enable automatic filter adjustments for images when dark mode is active."
+msgstr ""
+
+#: admin/admin.php:3605
+msgid "Adjust image brightness in dark mode (50-150%, default: 100% = normal)"
+msgstr ""
+
+#: admin/admin.php:3614
+msgid "Adjust image contrast in dark mode (50-200%, default: 100% = normal)"
+msgstr ""
+
+#: admin/admin.php:3626
+msgid "Apply filters to videos in dark mode"
+msgstr ""
+
+#: admin/admin.php:3628
+msgid "Enable automatic filter adjustments for embedded videos when dark mode is active."
+msgstr ""
+
+#: admin/admin.php:3637
+msgid "Adjust video brightness in dark mode (50-150%, default: 100% = normal)"
+msgstr ""
+
+#: admin/admin.php:3646
+msgid "Adjust video contrast in dark mode (50-200%, default: 100% = normal)"
+msgstr ""
+
+#: admin/admin.php:3658
+msgid "Apply filters to slides in dark mode"
+msgstr ""
+
+#: admin/admin.php:3660
+msgid "Enable automatic filter adjustments for presentation slides when dark mode is active."
+msgstr ""
+
+#: admin/admin.php:3669
+msgid "Adjust slide brightness in dark mode (50-150%, default: 100% = normal)"
+msgstr ""
+
+#: admin/admin.php:3678
+msgid "Invert slide colors"
+msgstr ""
+
+#: admin/admin.php:3680
+msgid "Invert colors on slides for better visibility in dark mode."
+msgstr ""
+
+#: admin/admin.php:3688
+msgid "Add custom CSS for dark mode. Will be wrapped in"
+msgstr ""
+
+#: admin/admin.php:3696
+msgid "seconds"
+msgstr ""
+
+#: admin/admin.php:3697
+msgid "Color transition speed (0-2 seconds, 0 = instant)."
+msgstr ""
+
+#: admin/admin.php:3702
+msgid "Configure what analytics data to track about dark mode usage on your site."
+msgstr ""
+
+#: admin/admin.php:3710
+msgid "Enable analytics tracking"
+msgstr ""
+
+#: admin/admin.php:3712
+msgid "Master switch for all analytics tracking. When disabled, no data is collected."
+msgstr ""
+
+#: admin/admin.php:3721
+msgid "Track toggle button clicks"
+msgstr ""
+
+#: admin/admin.php:3723
+msgid "Count how many times users click the dark/light mode toggle button."
+msgstr ""
+
+#: admin/admin.php:3732
+msgid "Track page views"
+msgstr ""
+
+#: admin/admin.php:3734
+msgid "Count total page views where the toggle button is displayed."
+msgstr ""
+
+#: admin/admin.php:3743
+msgid "Track mode preferences"
+msgstr ""
+
+#: admin/admin.php:3745
+msgid "Track whether users prefer dark or light mode."
+msgstr ""
+
+#: admin/admin.php:3750
+msgid "Control admin UI helpers like dark mode, top bar icon, and dashboard widget."
+msgstr ""
+
+#: admin/admin.php:3758
+msgid "Enable admin dark mode toggle (per browser)"
+msgstr ""
+
+#: admin/admin.php:3760
+msgid "Adds a dark/light toggle for the WordPress admin UI (state saved in localStorage)."
+msgstr ""
+
+#: admin/admin.php:3769
+msgid "Show top bar icon (also triggers admin dark toggle)"
+msgstr ""
+
+#: admin/admin.php:3771
+msgid "Adds a small icon to the WordPress admin bar for quick access."
+msgstr ""
+
+#: admin/admin.php:3780
+msgid "Show dashboard widget"
+msgstr ""
+
+#: admin/admin.php:3782
+msgid "Displays the Syntekpro Toggle status widget on the WordPress Dashboard."
+msgstr ""
+
+#: admin/admin.php:3790
+msgid "Background color for admin dark mode."
+msgstr ""
+
+#: admin/admin.php:3798
+msgid "Primary text color for admin dark mode."
+msgstr ""
+
+#: admin/admin.php:3806
+msgid "Accent color for buttons and highlights."
+msgstr ""
+
+#: admin/admin.php:3814
+msgid "Surface color for cards, boxes, and panels."
+msgstr ""
+
+#: admin/admin.php:3822
+msgid "Border color for admin elements."
+msgstr ""
+
+#: admin/admin.php:3830
+msgid "Link color for admin dark mode."
+msgstr ""
+
+#: admin/admin.php:3838
+msgid "Link hover color for admin dark mode."
+msgstr ""
+
+#: admin/admin.php:3949
+msgid "Choose theme for the admin floating toggle button."
+msgstr ""
+
+#: admin/admin.php:3954
+msgid "Choose color presets for admin dark mode or customize manually."
+msgstr ""
+
+#: admin/admin.php:3966
+msgid "Choose from curated admin themes"
+msgstr ""
+
+#: admin/admin.php:3972
+msgid "Manually configure admin colors"
+msgstr ""
+
+#: admin/admin.php:4201
+msgid "Toggle Settings"
+msgstr ""
+
+#: admin/admin.php:4210
+#: admin/admin.php:5125
+msgid "SyntekPro Plugins"
+msgstr ""
+
+#: admin/admin.php:4210
+#: syntekpro-toggle.php:819
+msgid "Syntekpro Toggle"
+msgstr ""
+
+#: admin/admin.php:4294
+msgid "Mode:"
+msgstr ""
+
+#: admin/admin.php:4298
+#: admin/admin.php:4938
+msgid "Status:"
+msgstr ""
+
+#: admin/admin.php:4298
+msgid "Active"
+msgstr ""
+
+#: admin/admin.php:4298
+msgid "Inactive"
+msgstr ""
+
+#: admin/admin.php:4302
+msgid "Position:"
+msgstr ""
+
+#: admin/admin.php:4308
+msgid "📊 Analytics Overview"
+msgstr ""
+
+#: admin/admin.php:4314
+msgid "Toggle Clicks"
+msgstr ""
+
+#: admin/admin.php:4321
+msgid "Page Views"
+msgstr ""
+
+#: admin/admin.php:4344
+msgid "Settings"
+msgstr ""
+
+#: admin/admin.php:4355
+msgid "View Site"
+msgstr ""
+
+#: admin/admin.php:4500
+msgid "✓ Settings saved successfully! Your changes have been applied."
+msgstr ""
+
+#: admin/admin.php:4513
+msgid "Frontend"
+msgstr ""
+
+#: admin/admin.php:4514
+#: admin/admin.php:4535
+msgid "Frontend Settings"
+msgstr ""
+
+#: admin/admin.php:4515
+#: admin/admin.php:4546
+msgid "Frontend Presets"
+msgstr ""
+
+#: admin/admin.php:4519
+msgid "Admin"
+msgstr ""
+
+#: admin/admin.php:4520
+#: admin/admin.php:4558
+msgid "Admin Settings"
+msgstr ""
+
+#: admin/admin.php:4521
+#: admin/admin.php:4569
+msgid "Admin Presets"
+msgstr ""
+
+#: admin/admin.php:4525
+msgid "Media"
+msgstr ""
+
+#: admin/admin.php:4526
+#: admin/admin.php:4580
+msgid "Images Settings"
+msgstr ""
+
+#: admin/admin.php:4527
+#: admin/admin.php:4591
+msgid "Videos Settings"
+msgstr ""
+
+#: admin/admin.php:4528
+#: admin/admin.php:4602
+msgid "Slides Settings"
+msgstr ""
+
+#: admin/admin.php:4541
+#: admin/admin.php:4564
+#: admin/admin.php:4586
+#: admin/admin.php:4597
+#: admin/admin.php:4608
+msgid "Save Settings"
+msgstr ""
+
+#: admin/admin.php:4553
+#: admin/admin.php:4575
+msgid "Save Presets"
+msgstr ""
+
+#: admin/admin.php:4627
+msgid "✓ Options saved successfully."
+msgstr ""
+
+#: admin/admin.php:4734
+msgid "Advanced Options"
+msgstr ""
+
+#: admin/admin.php:4740
+msgid "Save Options"
+msgstr ""
+
+#: admin/admin.php:4759
+msgid "About Syntekpro Toggle"
+msgstr ""
+
+#: admin/admin.php:4766
+msgid "🌓 Syntekpro Toggle"
+msgstr ""
+
+#: admin/admin.php:4767
+msgid "Dark mode tools for WordPress sites."
+msgstr ""
+
+#: admin/admin.php:4772
+msgid "Welcome to Syntekpro Toggle"
+msgstr ""
+
+#: admin/admin.php:4774
+msgid "Syntekpro Toggle is a lightweight dark mode plugin for WordPress. It helps apply dark and light preferences with configurable behavior, accessibility options, and theme-compatible styling controls."
+msgstr ""
+
+#: admin/admin.php:4780
+msgid "✨ Key Features"
+msgstr ""
+
+#: admin/admin.php:4783
+msgid "🎨 Full Customization"
+msgstr ""
+
+#: admin/admin.php:4784
+msgid "Complete control over dark mode colors, themes, and animations"
+msgstr ""
+
+#: admin/admin.php:4787
+msgid "🔄 Smart Auto Mode"
+msgstr ""
+
+#: admin/admin.php:4788
+msgid "Automatically respects users' OS dark mode preferences"
+msgstr ""
+
+#: admin/admin.php:4791
+msgid "🎯 Block Theme Compatible"
+msgstr ""
+
+#: admin/admin.php:4792
+msgid "Works seamlessly with all modern WordPress block themes"
+msgstr ""
+
+#: admin/admin.php:4795
+msgid "⚡ Admin Dark Mode"
+msgstr ""
+
+#: admin/admin.php:4796
+msgid "Beautiful dark mode for the WordPress admin dashboard"
+msgstr ""
+
+#: admin/admin.php:4799
+msgid "📊 Analytics Tracking"
+msgstr ""
+
+#: admin/admin.php:4800
+msgid "Track user preferences and toggle behavior with built-in analytics"
+msgstr ""
+
+#: admin/admin.php:4803
+msgid "⚙️ Advanced Options"
+msgstr ""
+
+#: admin/admin.php:4804
+msgid "Media filters, custom CSS, transition controls, and more"
+msgstr ""
+
+#: admin/admin.php:4811
+msgid "📦 Plugin Information"
+msgstr ""
+
+#: admin/admin.php:4812
+msgid "Current Version:"
+msgstr ""
+
+#: admin/admin.php:4813
+msgid "Requires:"
+msgstr ""
+
+#: admin/admin.php:4813
+msgid "WordPress 5.0+ | PHP 7.2+"
+msgstr ""
+
+#: admin/admin.php:4814
+msgid "License:"
+msgstr ""
+
+#: admin/admin.php:4814
+msgid "GPL v2 or later"
+msgstr ""
+
+#: admin/admin.php:4822
+msgid "⚙️ Quick Links"
+msgstr ""
+
+#: admin/admin.php:4824
+msgid "<- Mode Settings"
+msgstr ""
+
+#: admin/admin.php:4827
+msgid "<- Options"
+msgstr ""
+
+#: admin/admin.php:4833
+msgid "💬 Help & Resources"
+msgstr ""
+
+#: admin/admin.php:4834
+msgid "Documentation and support channels are available below."
+msgstr ""
+
+#: admin/admin.php:4836
+msgid "📚 View Docs"
+msgstr ""
+
+#: admin/admin.php:4839
+msgid "📧 Email Support"
+msgstr ""
+
+#: admin/admin.php:4842
+msgid "🐛 Report Issue"
+msgstr ""
+
+#: admin/admin.php:4848
+msgid "⭐ Share Feedback"
+msgstr ""
+
+#: admin/admin.php:4849
+msgid "If the plugin is useful for your site, you can leave a review."
+msgstr ""
+
+#: admin/admin.php:4851
+msgid "⭐ Leave a Review"
+msgstr ""
+
+#: admin/admin.php:4857
+msgid "🌐 Follow Us"
+msgstr ""
+
+#: admin/admin.php:4888
+msgid "Toggle+ license key saved."
+msgstr ""
+
+#: admin/admin.php:4888
+msgid "License key cleared."
+msgstr ""
+
+#: admin/admin.php:4900
+msgid "Toggle+ license key removed."
+msgstr ""
+
+#: admin/admin.php:4911
+msgid "Toggle+ - Premium Features"
+msgstr ""
+
+#: admin/admin.php:4918
+msgid "🔑 Toggle+ License"
+msgstr ""
+
+#: admin/admin.php:4919
+msgid "Add your Toggle+ license key to keep premium features linked to this site."
+msgstr ""
+
+#: admin/admin.php:4927
+msgid "Enter your Toggle+ license key"
+msgstr ""
+
+#: admin/admin.php:4931
+msgid "Save License"
+msgstr ""
+
+#: admin/admin.php:4933
+msgid "Remove saved Toggle+ license key?"
+msgstr ""
+
+#: admin/admin.php:4933
+msgid "Remove License"
+msgstr ""
+
+#. translators: %s is the masked license key suffix shown to the admin user.
+#: admin/admin.php:4941
+#, php-format
+msgid "Active — Premium unlocked (%s)"
+msgstr ""
+
+#: admin/admin.php:4943
+msgid "Not set"
+msgstr ""
+
+#: admin/admin.php:4951
+msgid "Optional add-on features for extended dark mode controls."
+msgstr ""
+
+#: admin/admin.php:4953
+msgid "View Toggle+ details"
+msgstr ""
+
+#: admin/admin.php:4958
+msgid "🎯 Features Comparison"
+msgstr ""
+
+#: admin/admin.php:4963
+msgid "Feature"
+msgstr ""
+
+#: admin/admin.php:4964
+msgid "Free Edition"
+msgstr ""
+
+#: admin/admin.php:4970
+msgid "Basic Dark Mode Toggle"
+msgstr ""
+
+#: admin/admin.php:4975
+msgid "36 Button Themes"
+msgstr ""
+
+#: admin/admin.php:4976
+msgid "✅ (5 Free)"
+msgstr ""
+
+#: admin/admin.php:4977
+msgid "✅ All 36"
+msgstr ""
+
+#: admin/admin.php:4980
+msgid "20 Color Presets"
+msgstr ""
+
+#: admin/admin.php:4981
+msgid "✅ (1 Free)"
+msgstr ""
+
+#: admin/admin.php:4982
+msgid "✅ All 20"
+msgstr ""
+
+#: admin/admin.php:4985
+msgid "Shape & Animation Options"
+msgstr ""
+
+#: admin/admin.php:4995
+#: admin/admin.php:5235
+msgid "Analytics Dashboard"
+msgstr ""
+
+#: admin/admin.php:4996
+msgid "✅ (Basic)"
+msgstr ""
+
+#: admin/admin.php:4997
+msgid "✅ Advanced"
+msgstr ""
+
+#: admin/admin.php:5000
+msgid "Media Filters (Images, Videos)"
+msgstr ""
+
+#: admin/admin.php:5005
+msgid "Support"
+msgstr ""
+
+#: admin/admin.php:5007
+msgid "✅ Extended"
+msgstr ""
+
+#: admin/admin.php:5010
+msgid "Beta Features Access"
+msgstr ""
+
+#: admin/admin.php:5015
+msgid "Advanced Custom CSS"
+msgstr ""
+
+#: admin/admin.php:5025
+msgid "💡 Toggle+ Highlights"
+msgstr ""
+
+#: admin/admin.php:5028
+msgid "🎨 Unlimited Customization"
+msgstr ""
+
+#: admin/admin.php:5029
+msgid "Access all 36 premium button themes and 20 carefully curated color schemes"
+msgstr ""
+
+#: admin/admin.php:5032
+msgid "📊 Advanced Analytics"
+msgstr ""
+
+#: admin/admin.php:5033
+msgid "Get detailed insights into user behavior and dark mode preferences"
+msgstr ""
+
+#: admin/admin.php:5036
+msgid "🚀 Early Access"
+msgstr ""
+
+#: admin/admin.php:5037
+msgid "Be the first to access new features and beta testing opportunities"
+msgstr ""
+
+#: admin/admin.php:5040
+msgid "💬 Extended Support"
+msgstr ""
+
+#: admin/admin.php:5041
+msgid "Get faster response times and dedicated support from our team"
+msgstr ""
+
+#: admin/admin.php:5048
+msgid "Need additional features?"
+msgstr ""
+
+#: admin/admin.php:5049
+msgid "Review the Toggle+ add-on feature set and choose what fits your site."
+msgstr ""
+
+#: admin/admin.php:5051
+msgid "Open Toggle+ page"
+msgstr ""
+
+#: admin/admin.php:5053
+msgid "Available as an optional add-on."
+msgstr ""
+
+#: admin/admin.php:5069
+msgid "Other Plugins - By SyntekPro"
+msgstr ""
+
+#: admin/admin.php:5074
+msgid "SyntekPro Forms"
+msgstr ""
+
+#: admin/admin.php:5076
+msgid "Advanced WordPress Form Builder"
+msgstr ""
+
+#: admin/admin.php:5077
+msgid "Create powerful forms with conditional logic, email notifications, payment integration, and advanced routing. Perfect for lead capture, surveys, contact forms, and more."
+msgstr ""
+
+#: admin/admin.php:5079
+msgid "30+ Field Types"
+msgstr ""
+
+#: admin/admin.php:5080
+msgid "Conditional Logic"
+msgstr ""
+
+#: admin/admin.php:5081
+msgid "Payment Processing"
+msgstr ""
+
+#: admin/admin.php:5082
+msgid "Email Routing"
+msgstr ""
+
+#: admin/admin.php:5083
+msgid "Multi-page Forms"
+msgstr ""
+
+#: admin/admin.php:5089
+msgid "SyntekPro Animations"
+msgstr ""
+
+#: admin/admin.php:5091
+msgid "Pure CSS & JavaScript Animations"
+msgstr ""
+
+#: admin/admin.php:5092
+msgid "Add stunning animations and transitions to any WordPress element without jQuery. Smooth scroll effects, fade-ins, slide animations, and more with incredible performance."
+msgstr ""
+
+#: admin/admin.php:5094
+msgid "50+ Animations"
+msgstr ""
+
+#: admin/admin.php:5095
+msgid "Scroll Triggers"
+msgstr ""
+
+#: admin/admin.php:5096
+msgid "Entry Effects"
+msgstr ""
+
+#: admin/admin.php:5097
+msgid "Loop Animation"
+msgstr ""
+
+#: admin/admin.php:5098
+msgid "60 FPS Performance"
+msgstr ""
+
+#: admin/admin.php:5104
+msgid "SyntekPro License Server"
+msgstr ""
+
+#: admin/admin.php:5106
+msgid "License Management & Product Activation"
+msgstr ""
+
+#: admin/admin.php:5107
+msgid "Manage software licenses, product keys, and user activations. Perfect for selling plugins, themes, software, or digital products with built-in security and analytics."
+msgstr ""
+
+#: admin/admin.php:5109
+msgid "License Generation"
+msgstr ""
+
+#: admin/admin.php:5110
+msgid "Activation Tracking"
+msgstr ""
+
+#: admin/admin.php:5111
+msgid "API Integration"
+msgstr ""
+
+#: admin/admin.php:5112
+msgid "License Revocation"
+msgstr ""
+
+#: admin/admin.php:5113
+msgid "Sales Analytics"
+msgstr ""
+
+#: admin/admin.php:5126
+msgid "Related WordPress plugins from the same developer."
+msgstr ""
+
+#: admin/admin.php:5158
+msgid "View plugin details"
+msgstr ""
+
+#: admin/admin.php:5166
+msgid "Plugin Notes"
+msgstr ""
+
+#: admin/admin.php:5169
+msgid "🏆 Professional"
+msgstr ""
+
+#: admin/admin.php:5170
+msgid "Built by experienced WordPress developers for enterprise-grade performance"
+msgstr ""
+
+#: admin/admin.php:5173
+msgid "🔒 Secure"
+msgstr ""
+
+#: admin/admin.php:5174
+msgid "Security-first approach with regular updates and professional support"
+msgstr ""
+
+#: admin/admin.php:5177
+msgid "⚡ Fast"
+msgstr ""
+
+#: admin/admin.php:5178
+msgid "Optimized for performance with minimal overhead and smart caching"
+msgstr ""
+
+#: admin/admin.php:5181
+msgid "📞 Support"
+msgstr ""
+
+#: admin/admin.php:5182
+msgid "Support resources are available for setup and troubleshooting."
+msgstr ""
+
+#: admin/admin.php:5185
+msgid "🎓 Documentation"
+msgstr ""
+
+#: admin/admin.php:5186
+msgid "Comprehensive tutorials and guides for easy implementation"
+msgstr ""
+
+#: admin/admin.php:5189
+msgid "🔄 Updates"
+msgstr ""
+
+#: admin/admin.php:5190
+msgid "Regular updates with new features and improvement"
+msgstr ""
+
+#: admin/admin.php:5197
+msgid "Explore the plugin catalog"
+msgstr ""
+
+#: admin/admin.php:5198
+msgid "View additional plugins and related resources."
+msgstr ""
+
+#: admin/admin.php:5200
+msgid "🌐 Open plugin catalog"
+msgstr ""
+
+#: admin/admin.php:5223
+msgid "Analytics settings saved."
+msgstr ""
+
+#: admin/admin.php:5229
+msgid "Analytics data reset successfully."
+msgstr ""
+
+#: admin/admin.php:5240
+#: admin/admin.php:5252
+msgid "Analytics Settings"
+msgstr ""
+
+#: admin/admin.php:5241
+#: admin/admin.php:5265
+msgid "Usage Statistics"
+msgstr ""
+
+#: admin/admin.php:5242
+#: admin/admin.php:5312
+msgid "Mode Preferences"
+msgstr ""
+
+#: admin/admin.php:5243
+#: admin/admin.php:5347
+msgid "Popular Themes"
+msgstr ""
+
+#: admin/admin.php:5244
+#: admin/admin.php:5365
+msgid "Recent Activity"
+msgstr ""
+
+#: admin/admin.php:5245
+#: admin/admin.php:5384
+msgid "Reset Analytics"
+msgstr ""
+
+#: admin/admin.php:5246
+#: admin/admin.php:5397
+msgid "Info & Privacy"
+msgstr ""
+
+#: admin/admin.php:5258
+msgid "Save Analytics Settings"
+msgstr ""
+
+#: admin/admin.php:5274
+msgid "Total Toggle Clicks"
+msgstr ""
+
+#: admin/admin.php:5284
+msgid "Total Page Views"
+msgstr ""
+
+#: admin/admin.php:5294
+msgid "Most Active Time"
+msgstr ""
+
+#: admin/admin.php:5304
+msgid "Tracking Since"
+msgstr ""
+
+#: admin/admin.php:5358
+msgid "No theme usage data available yet."
+msgstr ""
+
+#: admin/admin.php:5377
+msgid "No recent activity recorded."
+msgstr ""
+
+#: admin/admin.php:5386
+msgid "Clear all analytics data and start fresh. This action cannot be undone."
+msgstr ""
+
+#: admin/admin.php:5400
+msgid "Analytics Info"
+msgstr ""
+
+#: admin/admin.php:5401
+msgid "Track how users interact with your dark mode toggle."
+msgstr ""
+
+#: admin/admin.php:5410
+msgid "What We Track"
+msgstr ""
+
+#: admin/admin.php:5421
+msgid "Privacy Notice"
+msgstr ""
+
+#: admin/admin.php:5422
+msgid "All analytics data is stored locally on your server. No data is sent to external services."
+msgstr ""
+
+#: admin/admin.php:5423
+msgid "We track usage patterns to help you understand how visitors use dark mode on your site."
+msgstr ""
+
+#: syntekpro-toggle.php:820
+msgid "Display the dark mode toggle button."
+msgstr ""
+
+#: syntekpro-toggle.php:855
+msgid "Invalid nonce."
+msgstr ""
+
+#: syntekpro-toggle.php:862
+msgid "Invalid events payload."
+msgstr ""
+
+#: syntekpro-toggle.php:867
+#: syntekpro-toggle.php:901
+msgid "Tracking function not available."
+msgstr ""
+
+#: syntekpro-toggle.php:880
+msgid "Events tracked."
+msgstr ""
+
+#: syntekpro-toggle.php:892
+msgid "No event type provided."
+msgstr ""
+
+#: syntekpro-toggle.php:899
+msgid "Event tracked."
+msgstr ""

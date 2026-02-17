@@ -3,7 +3,7 @@
  * Plugin Name: Syntekpro-Toggle
  * Plugin URI: https://plugins.syntekpro.com/toggle
  * Description: A lightweight Dark/Light mode toggle that respects OS preferences and remembers user choices.
- * Version: 1.6.0
+ * Version: 1.6.1
  * Requires at least: 5.0
  * Requires PHP: 7.2
  * Author: Syntekpro
@@ -14,7 +14,7 @@
  * Domain Path: /languages
  * 
  * @package Syntekpro_Toggle
- * @version 1.6.0
+ * @version 1.6.1
  * @author Syntekpro <development@syntekpro.com>
  */
 
@@ -24,9 +24,21 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('SYNTEKPRO_TOGGLE_VERSION', '1.6.0');
+define('SYNTEKPRO_TOGGLE_VERSION', '1.6.1');
 define('SYNTEKPRO_TOGGLE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SYNTEKPRO_TOGGLE_PLUGIN_URL', plugin_dir_url(__FILE__));
+
+/**
+ * Load plugin translations.
+ */
+function syntekpro_toggle_load_textdomain() {
+    load_plugin_textdomain(
+        'syntekpro-toggle',
+        false,
+        dirname(plugin_basename(__FILE__)) . '/languages'
+    );
+}
+add_action('plugins_loaded', 'syntekpro_toggle_load_textdomain');
 
 // Include admin functionality
 if (is_admin()) {
@@ -804,8 +816,8 @@ class Syntekpro_Toggle_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
             'syntekpro_toggle_widget',
-            'Syntekpro Toggle',
-            array('description' => 'Display the dark mode toggle button.')
+            __('Syntekpro Toggle', 'syntekpro-toggle'),
+            array('description' => __('Display the dark mode toggle button.', 'syntekpro-toggle'))
         );
     }
 
@@ -838,21 +850,21 @@ add_action('widgets_init', 'syntekpro_toggle_register_widget');
  * AJAX Handler for Analytics Tracking
  */
 function syntekpro_toggle_ajax_track_analytics() {
-    // Verify nonce
-    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'syntekpro_analytics_nonce')) {
-        wp_send_json_error('Invalid nonce');
+    // Verify nonce.
+    if (false === check_ajax_referer('syntekpro_analytics_nonce', 'nonce', false)) {
+        wp_send_json_error(__('Invalid nonce.', 'syntekpro-toggle'));
         return;
     }
 
     if (isset($_POST['events'])) {
-        $events = json_decode(stripslashes($_POST['events']), true);
+        $events = json_decode(wp_unslash($_POST['events']), true);
         if (!is_array($events)) {
-            wp_send_json_error('Invalid events payload');
+            wp_send_json_error(__('Invalid events payload.', 'syntekpro-toggle'));
             return;
         }
 
         if (!function_exists('syntekpro_toggle_track_event')) {
-            wp_send_json_error('Tracking function not available');
+            wp_send_json_error(__('Tracking function not available.', 'syntekpro-toggle'));
             return;
         }
 
@@ -865,25 +877,28 @@ function syntekpro_toggle_ajax_track_analytics() {
             syntekpro_toggle_track_event($event_type, $event_data);
         }
 
-        wp_send_json_success('Events tracked');
+        wp_send_json_success(__('Events tracked.', 'syntekpro-toggle'));
         return;
     }
     
     // Get event type and data
-    $event_type = isset($_POST['event_type']) ? sanitize_text_field($_POST['event_type']) : '';
-    $event_data = isset($_POST['event_data']) ? json_decode(stripslashes($_POST['event_data']), true) : array();
+    $event_type = isset($_POST['event_type']) ? sanitize_text_field(wp_unslash($_POST['event_type'])) : '';
+    $event_data = isset($_POST['event_data']) ? json_decode(wp_unslash($_POST['event_data']), true) : array();
+    if (!is_array($event_data)) {
+        $event_data = array();
+    }
     
     if (empty($event_type)) {
-        wp_send_json_error('No event type provided');
+        wp_send_json_error(__('No event type provided.', 'syntekpro-toggle'));
         return;
     }
     
     // Track the event using the function from admin.php
     if (function_exists('syntekpro_toggle_track_event')) {
         syntekpro_toggle_track_event($event_type, $event_data);
-        wp_send_json_success('Event tracked');
+        wp_send_json_success(__('Event tracked.', 'syntekpro-toggle'));
     } else {
-        wp_send_json_error('Tracking function not available');
+        wp_send_json_error(__('Tracking function not available.', 'syntekpro-toggle'));
     }
 }
 add_action('wp_ajax_syntekpro_track_analytics', 'syntekpro_toggle_ajax_track_analytics');

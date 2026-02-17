@@ -5,6 +5,19 @@ All notable changes to Syntekpro-Toggle will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1] - 2026-02-17
+
+### ✨ Added
+- **Localization Readiness** - Added/expanded translation wrappers across admin pages and generated an updated POT file in `languages/syntekpro-toggle.pot`.
+- **Uninstall Cleanup** - Added `uninstall.php` to remove plugin options during uninstall.
+
+### 🔧 Changed
+- **Plugin Packaging Metadata** - Added WordPress.org-style `readme.txt` and aligned release metadata.
+- **Version Consistency** - Updated plugin version metadata/constants to `1.6.1`.
+
+### 🛡️ Security
+- **Request Handling Hardening** - Improved nonce validation and sanitization flow for admin/AJAX request inputs.
+
 ## [1.6.0] - 2026-02-16
 
 ### ✨ Added
