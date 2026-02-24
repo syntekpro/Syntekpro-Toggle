@@ -21,6 +21,7 @@ Features include:
 - Configurable button theme, position, and behavior
 - Optional analytics stored locally in WordPress options
 - Admin-side customization controls
+- WordPress Consent API compatibility (`wp_set_consent_type('preferences')`) with backward-safe fallback
 
 == Installation ==
 
@@ -48,6 +49,10 @@ Yes. Use the Display Rules and targeting options in plugin settings.
 Yes. The plugin loads a text domain and includes a POT template in the `languages` directory.
 
 == Changelog ==
+
+= Unreleased =
+- Added WordPress Consent API compatibility declaration using `wp_set_consent_type('preferences')` on `init` when available.
+- Added backward compatibility guard with `function_exists('wp_set_consent_type')` for older WordPress environments.
 
 = 1.6.1 =
 - Added full i18n coverage for admin interface strings and regenerated translation template.

@@ -242,6 +242,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### ✨ Added
+- **WordPress Consent API Compatibility** - Declares plugin consent category using `wp_set_consent_type('preferences')` on `init` when available.
+
+### 🔧 Changed
+- **Backward Compatibility Guard** - Consent API registration now uses a `function_exists('wp_set_consent_type')` check to avoid issues on WordPress installs where the function is unavailable.
+
 ### 🔮 Planned Features
 - WordPress.org repository submission
 - Admin settings page with:

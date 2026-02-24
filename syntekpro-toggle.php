@@ -40,6 +40,19 @@ function syntekpro_toggle_load_textdomain() {
 }
 add_action('plugins_loaded', 'syntekpro_toggle_load_textdomain');
 
+/**
+ * Declare plugin consent category for the WordPress Consent API.
+ *
+ * Uses a runtime function check so the plugin remains fully backward compatible
+ * when the Consent API is not available.
+ */
+function syntekpro_toggle_register_consent_api_support() {
+    if (function_exists('wp_set_consent_type')) {
+        wp_set_consent_type('preferences');
+    }
+}
+add_action('init', 'syntekpro_toggle_register_consent_api_support', 1);
+
 // Include admin functionality
 if (is_admin()) {
     require_once SYNTEKPRO_TOGGLE_PLUGIN_DIR . 'admin/admin.php';

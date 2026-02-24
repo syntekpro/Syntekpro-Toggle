@@ -17,6 +17,7 @@ A lightweight WordPress dark/light mode toggle plugin with admin controls, block
 - Display rules, user targeting, schedule controls, and theme exclusions
 - Optional local analytics dashboard (stored in WordPress options)
 - Admin UI mode and dashboard widget controls
+- WordPress Consent API compatibility via `wp_set_consent_type('preferences')` when available
 - Translation-ready text domain with POT file in `languages/`
 
 ## Requirements
@@ -49,6 +50,7 @@ A lightweight WordPress dark/light mode toggle plugin with admin controls, block
 - If `Auto` is enabled, OS preference can be used as source.
 - Display and targeting rules can restrict where the toggle renders.
 - Analytics data remains local to your WordPress site.
+- Consent category is declared as `preferences` for compatible WordPress versions, with safe fallback when the Consent API function is unavailable.
 
 ## Developer Notes
 
