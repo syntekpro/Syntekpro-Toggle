@@ -4,7 +4,7 @@ Tags: dark mode, light mode, accessibility, toggle, block themes
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,12 @@ Yes. The plugin loads a text domain and includes a POT template in the `language
 = Unreleased =
 - Added WordPress Consent API compatibility declaration using `wp_set_consent_type('preferences')` on `init` when available.
 - Added backward compatibility guard with `function_exists('wp_set_consent_type')` for older WordPress environments.
+
+= 1.6.2 =
+- Added optional frontend custom toggle icon upload setting with media picker.
+- Added optional admin floating toggle icon upload setting with media picker.
+- Restored default sun/moon toggle icons as fallback when custom icons are not set.
+- Increased admin menu icon sizing to 25x25px for better visibility.
 
 = 1.6.1 =
 - Added full i18n coverage for admin interface strings and regenerated translation template.

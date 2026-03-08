@@ -3,7 +3,7 @@
  * Plugin Name: Syntekpro-Toggle
  * Plugin URI: https://plugins.syntekpro.com/toggle
  * Description: A lightweight Dark/Light mode toggle that respects OS preferences and remembers user choices.
- * Version: 1.6.1
+ * Version: 1.6.2
  * Requires at least: 5.0
  * Requires PHP: 7.2
  * Author: Syntekpro
@@ -14,7 +14,7 @@
  * Domain Path: /languages
  * 
  * @package Syntekpro_Toggle
- * @version 1.6.1
+ * @version 1.6.2
  * @author Syntekpro <development@syntekpro.com>
  */
 
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('SYNTEKPRO_TOGGLE_VERSION', '1.6.1');
+define('SYNTEKPRO_TOGGLE_VERSION', '1.6.2');
 define('SYNTEKPRO_TOGGLE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SYNTEKPRO_TOGGLE_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -752,6 +752,7 @@ function syntekpro_toggle_render_button($options, $args = array()) {
     }
 
     $icon_size = intval($size * 0.48);
+    $custom_icon_url = isset($options['custom_button_icon_url']) ? trim((string) $options['custom_button_icon_url']) : '';
     $button_shape = isset($options['button_shape']) ? $options['button_shape'] : 'default';
     $button_animation = isset($options['button_animation']) ? $options['button_animation'] : 'none';
     $button_bg_style = isset($options['button_bg_style']) ? $options['button_bg_style'] : 'solid';
@@ -774,7 +775,12 @@ function syntekpro_toggle_render_button($options, $args = array()) {
     $id_attr = isset($args['id']) ? ' id="' . esc_attr($args['id']) . '"' : '';
     $style_attr = $inline ? $size_style : $position_style . $size_style;
     ?>
-    <button<?php echo $id_attr; ?> class="<?php echo esc_attr($button_classes); ?>" aria-label="Toggle Dark Mode" style="<?php echo esc_attr($style_attr); ?>">
+    <button<?php echo $id_attr; ?> class="<?php echo esc_attr($button_classes . (!empty($custom_icon_url) ? ' has-custom-icon' : '')); ?>" aria-label="Toggle Dark Mode" style="<?php echo esc_attr($style_attr); ?>">
+        <?php if (!empty($custom_icon_url)) : ?>
+        <span class="syntekpro-icon-custom" aria-hidden="true">
+            <img src="<?php echo esc_url($custom_icon_url); ?>" alt="" width="<?php echo esc_attr($icon_size); ?>" height="<?php echo esc_attr($icon_size); ?>" />
+        </span>
+        <?php else : ?>
         <span class="syntekpro-icon-sun" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" width="<?php echo esc_attr($icon_size); ?>" height="<?php echo esc_attr($icon_size); ?>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="5"></circle>
@@ -793,6 +799,7 @@ function syntekpro_toggle_render_button($options, $args = array()) {
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
         </span>
+        <?php endif; ?>
     </button>
     <?php
 }

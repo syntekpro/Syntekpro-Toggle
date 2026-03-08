@@ -101,6 +101,7 @@
         toggleButtons.forEach(function(toggleBtn) {
             const sunIcon = toggleBtn.querySelector('.syntekpro-icon-sun');
             const moonIcon = toggleBtn.querySelector('.syntekpro-icon-moon');
+            toggleBtn.classList.toggle('is-dark', isDarkMode);
 
             if (isDarkMode) {
                 toggleBtn.setAttribute('aria-label', 'Switch to Light Mode');

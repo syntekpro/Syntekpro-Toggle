@@ -5,6 +5,16 @@ All notable changes to Syntekpro-Toggle will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.2] - 2026-03-08
+
+### ✨ Added
+- **Custom Frontend Toggle Icon Option** - Added a settings field with media uploader support to let admins upload a custom frontend toggle icon.
+- **Custom Admin Toggle Icon Option** - Added a settings field with media uploader support to let admins upload a custom admin floating toggle icon.
+
+### 🔧 Changed
+- **Default Icon Behavior Restored** - Frontend and backend toggles now use default sun/moon icons by default and only switch when a custom icon URL is provided.
+- **Admin Menu Icon Sizing** - Increased WordPress admin menu icon size to `25x25px` for better visibility.
+
 ## [1.6.1] - 2026-02-17
 
 ### ✨ Added

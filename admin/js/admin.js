@@ -74,6 +74,54 @@
                 }
             });
         }
+
+        // Media uploader for custom icon fields
+        $(document).on('click', '.syntekpro-media-upload', function(e) {
+            e.preventDefault();
+
+            var targetName = $(this).data('target');
+            var $input = $('input[name="' + targetName + '"]');
+            if (!$input.length || typeof wp === 'undefined' || !wp.media) {
+                return;
+            }
+
+            var frame = wp.media({
+                title: 'Select Button Icon',
+                button: { text: 'Use this icon' },
+                library: { type: 'image' },
+                multiple: false
+            });
+
+            frame.on('select', function() {
+                var attachment = frame.state().get('selection').first().toJSON();
+                $input.val(attachment.url).trigger('change');
+            });
+
+            frame.open();
+        });
+
+        $(document).on('click', '.syntekpro-media-remove', function(e) {
+            e.preventDefault();
+            var targetName = $(this).data('target');
+            var $input = $('input[name="' + targetName + '"]');
+            if ($input.length) {
+                $input.val('').trigger('change');
+            }
+        });
+
+        $(document).on('change', '.syntekpro-media-url', function() {
+            var value = $(this).val();
+            var $preview = $(this).closest('td').find('.syntekpro-media-preview');
+            if (!$preview.length) {
+                return;
+            }
+
+            if (value) {
+                $preview.html('<img src="' + value + '" alt="" style="width:32px;height:32px;object-fit:contain;border:1px solid #ddd;padding:4px;border-radius:4px;" />');
+            } else {
+                $preview.empty();
+            }
+        });
         
         // Handle Frontend Color Presets
         $(document).on('change', 'input[name="syntekpro_toggle_options[color_preset]"]', function() {
