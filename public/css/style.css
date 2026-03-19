@@ -307,6 +307,36 @@ html.dark-mode .wp-block-embed iframe {
     display: block !important;
 }
 
+.syntekpro-toggle-btn .syntekpro-icon-custom {
+    display: none;
+    width: 24px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+}
+
+.syntekpro-toggle-btn .syntekpro-icon-custom img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    transition: filter var(--syntekpro-toggle-animation-duration) ease;
+    filter: brightness(0) saturate(100%) invert(16%) sepia(6%) saturate(5%) hue-rotate(342deg) brightness(95%) contrast(88%);
+}
+
+.syntekpro-toggle-btn.has-custom-icon .syntekpro-icon-custom {
+    display: flex;
+}
+
+.syntekpro-toggle-btn.has-custom-icon .syntekpro-icon-sun,
+.syntekpro-toggle-btn.has-custom-icon .syntekpro-icon-moon {
+    display: none !important;
+}
+
+html.dark-mode .syntekpro-toggle-btn.has-custom-icon .syntekpro-icon-custom img,
+.syntekpro-toggle-btn.has-custom-icon.is-dark .syntekpro-icon-custom img {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(183deg) brightness(104%) contrast(102%);
+}
+
 /* Icon visibility - Sun shows in dark mode, Moon shows in light mode */
 .syntekpro-icon-sun {
     display: none;
