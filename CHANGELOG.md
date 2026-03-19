@@ -5,6 +5,19 @@ All notable changes to Syntekpro-Toggle will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.2] - 2026-03-19
+
+### ✨ Added
+- **GitHub Update Notifier** - New `includes/class-github-updater.php` hooks into WordPress’s transient update system so every site running the plugin receives the standard “Update available” notice whenever a new GitHub Release is published. Remote version data is cached for 12 hours. Release notes are shown in the “View version details” dialog.
+- **Admin Bar Toggle – Right Side** - The dark-mode toggle icon in the WordPress top admin bar is now placed in the right-side `top-secondary` group (next to user menu and other quick-access items).
+
+### 🔧 Changed
+- **Plugin Display Name** - Renamed from `Syntekpro-Toggle` to `SyntekPro Toggle` (hyphen removed) so the Plugins list and dashboard show a clean, readable name.
+
+### 🐛 Fixed
+- **"Show toggle button on frontend" not saving when unchecked** - HTML checkboxes are absent from POST data when unchecked, so the previous `array_key_exists` check could never detect an unchecked state. Fixed by adding a hidden sentinel field (`_enable_toggle_sentinel`) so the sanitiser can reliably set the value to `'0'` when the box is unchecked.
+- **Toggle button invisible on some sites** - Aggressive theme or page-builder CSS could override `position`, `z-index`, `display`, `visibility`, or `pointer-events` on the floating button and its icon spans. Hardened with `!important` on layout-critical properties in `public/css/style.css`.
+
 ## [1.6.1] - 2026-02-17
 
 ### ✨ Added

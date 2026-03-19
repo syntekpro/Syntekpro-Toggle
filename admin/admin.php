@@ -1018,6 +1018,7 @@ function syntekpro_toggle_adminbar_icon($wp_admin_bar) {
     $icon_url = SYNTEKPRO_TOGGLE_PLUGIN_URL . 'assets/img/Syntekpro%20Toggle%20%20icon%20Grey%20New.png';
     $wp_admin_bar->add_node(array(
         'id'    => 'syntekpro-toggle-admin',
+        'parent' => 'top-secondary',
         'title' => '<span class="ab-icon" aria-hidden="true"><img src="' . esc_url($icon_url) . '" alt=""/></span><span class="screen-reader-text">Toggle admin dark mode</span>',
         'href'  => '#',
         'meta'  => array(
@@ -2209,9 +2210,9 @@ function syntekpro_toggle_sanitize_options($input) {
         $sanitized['default_mode'] = sanitize_text_field($input['default_mode']);
     }
     
-    // Checkboxes need special handling - they're only present when checked
-    // We need to check if the form containing this field was submitted
-    if (array_key_exists('enable_toggle', $input)) {
+    // Unchecked checkboxes are absent from POST data, so use the sentinel hidden field
+    // to detect whether the general settings form (that contains enable_toggle) was submitted.
+    if (isset($input['_enable_toggle_sentinel'])) {
         $sanitized['enable_toggle'] = isset($input['enable_toggle']) ? '1' : '0';
     }
     
@@ -3020,6 +3021,7 @@ function syntekpro_toggle_enable_toggle_callback() {
     $options = syntekpro_toggle_get_options();
     ?>
     <label>
+        <input type="hidden" name="syntekpro_toggle_options[_enable_toggle_sentinel]" value="1">
         <input type="checkbox" name="syntekpro_toggle_options[enable_toggle]" value="1" <?php checked($options['enable_toggle'], '1'); ?>>
         <?php esc_html_e('Show toggle button on frontend', 'syntekpro-toggle'); ?>
     </label>

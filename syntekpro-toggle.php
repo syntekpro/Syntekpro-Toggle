@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Syntekpro-Toggle
+ * Plugin Name: SyntekPro Toggle
  * Plugin URI: https://plugins.syntekpro.com/toggle
  * Description: A lightweight Dark/Light mode toggle that respects OS preferences and remembers user choices.
- * Version: 1.6.1
+ * Version: 1.6.2
  * Requires at least: 5.0
  * Requires PHP: 7.2
  * Author: Syntekpro
@@ -14,7 +14,7 @@
  * Domain Path: /languages
  * 
  * @package Syntekpro_Toggle
- * @version 1.6.1
+ * @version 1.6.2
  * @author Syntekpro <development@syntekpro.com>
  */
 
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('SYNTEKPRO_TOGGLE_VERSION', '1.6.1');
+define('SYNTEKPRO_TOGGLE_VERSION', '1.6.2');
 define('SYNTEKPRO_TOGGLE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SYNTEKPRO_TOGGLE_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -57,6 +57,14 @@ add_action('init', 'syntekpro_toggle_register_consent_api_support', 1);
 if (is_admin()) {
     require_once SYNTEKPRO_TOGGLE_PLUGIN_DIR . 'admin/admin.php';
 }
+
+// GitHub update notifier (runs on both admin and cron contexts)
+require_once SYNTEKPRO_TOGGLE_PLUGIN_DIR . 'includes/class-github-updater.php';
+new Syntekpro_Toggle_GitHub_Updater(
+    __FILE__,
+    'syntekpro',       // GitHub organisation / username
+    'Syntekpro-Toggle' // GitHub repository name (exact, case-sensitive)
+);
 
 /**
  * Get plugin options (available on both frontend and backend)

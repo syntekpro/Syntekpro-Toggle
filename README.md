@@ -1,8 +1,8 @@
-# Syntekpro-Toggle
+# SyntekPro Toggle
 
 A lightweight WordPress dark/light mode toggle plugin with admin controls, block-theme compatibility, accessibility-focused behavior, and local preference persistence.
 
-![Version](https://img.shields.io/badge/version-1.6.1-blue.svg)
+![Version](https://img.shields.io/badge/version-1.6.2-blue.svg)
 ![WordPress](https://img.shields.io/badge/wordpress-5.0+-green.svg)
 ![PHP](https://img.shields.io/badge/php-7.2+-purple.svg)
 ![License](https://img.shields.io/badge/license-GPL--2.0+-orange.svg)
@@ -19,6 +19,7 @@ A lightweight WordPress dark/light mode toggle plugin with admin controls, block
 - Admin UI mode and dashboard widget controls
 - WordPress Consent API compatibility via `wp_set_consent_type('preferences')` when available
 - Translation-ready text domain with POT file in `languages/`
+- **Automatic update notifications via GitHub Releases** — bump the version and push a tagged release to have every site prompt the one-click WordPress update
 
 ## Requirements
 
@@ -59,6 +60,16 @@ A lightweight WordPress dark/light mode toggle plugin with admin controls, block
 - Frontend CSS/JS: `public/css/style.css`, `public/js/script.js`
 - Uninstall cleanup: `uninstall.php`
 - Translation template: `languages/syntekpro-toggle.pot`
+- GitHub updater: `includes/class-github-updater.php`
+
+## Releasing a New Version
+
+1. Bump `Version:` in the plugin header (`syntekpro-toggle.php`) and the `SYNTEKPRO_TOGGLE_VERSION` constant.
+2. Add an entry to `CHANGELOG.md`.
+3. Commit and push to `main`.
+4. Create and push a tag matching the version (prefix `v`), e.g. `git tag v1.6.2 && git push origin v1.6.2`.
+5. Create a GitHub Release for that tag (attach a plugin ZIP as a release asset).
+6. Every site running the plugin will see the standard WordPress update notice within 12 hours (or on the next manual check).
 
 ## Changelog
 

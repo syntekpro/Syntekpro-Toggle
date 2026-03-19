@@ -4,7 +4,7 @@ Tags: dark mode, light mode, accessibility, toggle, block themes
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,13 @@ Yes. Use the Display Rules and targeting options in plugin settings.
 Yes. The plugin loads a text domain and includes a POT template in the `languages` directory.
 
 == Changelog ==
+
+= 1.6.2 =
+- Added GitHub update notifier so every site running the plugin receives WordPress-style update prompts when a new GitHub Release is published.
+- Moved admin bar dark-mode toggle icon to the right side of the top bar (`top-secondary` group).
+- Renamed plugin display name from "Syntekpro-Toggle" to "SyntekPro Toggle" (hyphen removed).
+- Fixed: "Show toggle button on frontend" checkbox not saving when unchecked (sentinel hidden field approach).
+- Fixed: Toggle button not visible on some sites due to theme CSS overriding fixed positioning, z-index and display properties.
 
 = Unreleased =
 - Added WordPress Consent API compatibility declaration using `wp_set_consent_type('preferences')` on `init` when available.

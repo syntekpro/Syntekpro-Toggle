@@ -247,7 +247,7 @@ html.dark-mode .wp-block-embed iframe {
    Toggle Button Styles - Base
    =================================== */
 .syntekpro-toggle-btn {
-    position: fixed;
+    position: fixed !important;
     bottom: 30px;
     right: 30px;
     width: 50px;
@@ -259,11 +259,15 @@ html.dark-mode .wp-block-embed iframe {
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transition: all var(--syntekpro-toggle-animation-duration) ease;
-    z-index: 9999;
-    display: flex;
+    z-index: 9999 !important;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     padding: 0;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    overflow: visible !important;
 }
 
 .syntekpro-toggle-inline {
@@ -287,17 +291,20 @@ html.dark-mode .wp-block-embed iframe {
 
 /* Icon container */
 .syntekpro-toggle-btn span {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     width: 24px;
     height: 24px;
+    line-height: 1;
 }
 
 .syntekpro-toggle-btn svg {
     width: 24px;
     height: 24px;
     stroke: currentColor;
+    overflow: visible;
+    display: block !important;
 }
 
 /* Icon visibility - Sun shows in dark mode, Moon shows in light mode */
