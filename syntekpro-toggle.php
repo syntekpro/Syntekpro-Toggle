@@ -23,6 +23,16 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Prevent fatal "Cannot redefine constant / class / function" errors.
+// WordPress sandbox-scrapes a new plugin ZIP by sending a fresh HTTP request
+// that first loads all active plugins (including this one) and then require()s
+// the new file.  Without this guard every define/class/function below would
+// be declared twice in the same PHP process, causing a fatal error that makes
+// the update appear to fail even though the files were already replaced.
+if ( defined( 'SYNTEKPRO_TOGGLE_VERSION' ) ) {
+    return;
+}
+
 // Define plugin constants
 define('SYNTEKPRO_TOGGLE_VERSION', '1.6.7');
 define('SYNTEKPRO_TOGGLE_PLUGIN_DIR', plugin_dir_path(__FILE__));

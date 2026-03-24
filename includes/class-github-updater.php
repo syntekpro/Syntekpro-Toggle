@@ -16,6 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+if ( ! class_exists( 'Syntekpro_Toggle_GitHub_Updater' ) ) :
+
 class Syntekpro_Toggle_GitHub_Updater {
 
     /** @var string  Absolute path to the main plugin file. */
@@ -235,30 +237,48 @@ class Syntekpro_Toggle_GitHub_Updater {
      * After the plugin zip is extracted, rename the folder back to the expected
      * directory name (GitHub auto-generates folders like "user-repo-abc1234").
      *
+     * Handles three scenarios:
+     *   1. Automatic update via the GitHub updater (hook_extra['plugin'] is set).
+     *   2. Manual ZIP upload of an existing plugin (WordPress passes hook_extra['plugin']).
+     *   3. Manual ZIP upload treated as a fresh install (no hook_extra['plugin']) —
+     *      detected by matching the destination folder name against our repo name.
+     *
+     * The activate_plugin() call has been intentionally removed: WordPress
+     * re-enables the plugin automatically after an upgrade, and calling it again
+     * in the same PHP request can trigger the activation hook twice.
+     *
      * @param  bool  $response    Whether the install succeeded.
      * @param  array $hook_extra  Extra install info.
      * @param  array $result      Result from the installer.
      * @return array              (Possibly modified) result array.
      */
     public function after_install( $response, $hook_extra, $result ) {
-        if ( ! isset( $hook_extra['plugin'] ) || $hook_extra['plugin'] !== $this->plugin_slug ) {
+        global $wp_filesystem;
+
+        $plugin_folder  = WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . dirname( $this->plugin_slug );
+        $installed_into = $result['destination'];
+
+        // Determine if this installation belongs to our plugin.
+        // Case A: WordPress explicitly tells us via hook_extra (standard update flow).
+        // Case B: Destination folder name matches our expected slug or GitHub repo
+        //         name (handles manual ZIP uploads and GitHub zipball installs).
+        $dest_basename  = strtolower( basename( untrailingslashit( $installed_into ) ) );
+        $expected_base  = strtolower( dirname( $this->plugin_slug ) );
+        $github_pattern = strtolower( $this->github_repo );
+
+        $is_our_plugin = ( isset( $hook_extra['plugin'] ) && $hook_extra['plugin'] === $this->plugin_slug )
+                         || $dest_basename === $expected_base
+                         || strpos( $dest_basename, $github_pattern ) !== false;
+
+        if ( ! $is_our_plugin ) {
             return $result;
         }
 
-        global $wp_filesystem;
-
-        $plugin_folder   = WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . dirname( $this->plugin_slug );
-        $installed_into  = $result['destination'];
-
-        // Only rename if the destination is different from what WordPress expects.
+        // Rename the extracted folder to the canonical plugin directory if needed.
+        // GitHub's auto-generated ZIPs produce folders like "syntekpro-Syntekpro-Toggle-abc123".
         if ( trailingslashit( $installed_into ) !== trailingslashit( $plugin_folder ) ) {
             $wp_filesystem->move( $installed_into, $plugin_folder, true );
             $result['destination'] = $plugin_folder;
-        }
-
-        // Re-activate the plugin after the update.
-        if ( is_plugin_inactive( $this->plugin_slug ) ) {
-            activate_plugin( $this->plugin_slug );
         }
 
         return $result;
@@ -271,3 +291,5 @@ class Syntekpro_Toggle_GitHub_Updater {
         delete_site_transient( $this->transient_key );
     }
 }
+
+endif; // class_exists Syntekpro_Toggle_GitHub_Updater
