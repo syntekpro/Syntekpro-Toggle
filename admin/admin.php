@@ -199,12 +199,12 @@ function syntekpro_toggle_menu_icon_css() {
             justify-content: center !important;
         }
         #adminmenu .toplevel_page_syntekpro-toggle .wp-menu-image img {
-            width: 18px !important;
-            height: 18px !important;
-            max-width: 18px !important;
-            max-height: 18px !important;
-            min-width: 18px !important;
-            min-height: 18px !important;
+            width: 20px !important;
+            height: 20px !important;
+            max-width: 20px !important;
+            max-height: 20px !important;
+            min-width: 20px !important;
+            min-height: 20px !important;
             object-fit: contain !important;
             padding: 0 !important;
             margin: 0 !important;
