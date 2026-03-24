@@ -103,15 +103,13 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
 }
 
 .syntekpro-header-version {
-    background: rgba(255, 255, 255, 0.8);
+    background: #dc3232;
     padding: 6px 15px;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
-    color: #666;
+    color: #fff;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    position: absolute;
-    right: 30px;
 }
 
 /* ===================================
@@ -443,8 +441,8 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
         padding: 11px 12px;
     }
 
-    .syntekpro-mode-layout .syntekpro-section-panel h2,
-    .syntekpro-options-layout .syntekpro-section-panel h2 {
+    .syntekpro-mode-layout .syntekpro-section-panel > h2,
+    .syntekpro-options-layout .syntekpro-section-panel > h2 {
         font-size: 19px;
     }
 
@@ -709,8 +707,8 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
     margin-bottom: 4px;
 }
 
-.syntekpro-mode-layout .syntekpro-section-panel h2,
-.syntekpro-options-layout .syntekpro-section-panel h2 {
+.syntekpro-mode-layout .syntekpro-section-panel > h2,
+.syntekpro-options-layout .syntekpro-section-panel > h2 {
     margin: 0 0 14px 0;
     font-size: 22px;
     line-height: 1.3;
@@ -729,20 +727,20 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.syntekpro-options-layout .syntekpro-section-panel h2 {
+.syntekpro-options-layout .syntekpro-section-panel > h2 {
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.syntekpro-options-layout .syntekpro-section-panel h2::after {
+.syntekpro-options-layout .syntekpro-section-panel > h2::after {
     content: '\25BC';
     font-size: 12px;
     color: #667eea;
 }
 
-.syntekpro-options-layout .syntekpro-section-panel.is-collapsed h2::after {
+.syntekpro-options-layout .syntekpro-section-panel.is-collapsed > h2::after {
     content: '\25B6';
 }
 
@@ -772,7 +770,7 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
     display: block;
 }
 
-.syntekpro-analytics-layout .syntekpro-section-panel h2 {
+.syntekpro-analytics-layout .syntekpro-section-panel > h2 {
     margin: 0 0 14px 0;
     font-size: 22px;
     line-height: 1.3;
@@ -786,19 +784,19 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
     gap: 10px;
 }
 
-.syntekpro-analytics-layout .syntekpro-section-panel h2 .dashicons {
+.syntekpro-analytics-layout .syntekpro-section-panel > h2 .dashicons {
     color: #667eea;
     margin-right: 6px;
 }
 
-.syntekpro-analytics-layout .syntekpro-section-panel h2::after {
+.syntekpro-analytics-layout .syntekpro-section-panel > h2::after {
     content: '\25BC';
     font-size: 12px;
     color: #667eea;
     margin-left: auto;
 }
 
-.syntekpro-analytics-layout .syntekpro-section-panel.is-collapsed h2::after {
+.syntekpro-analytics-layout .syntekpro-section-panel.is-collapsed > h2::after {
     content: '\25B6';
 }
 
@@ -818,6 +816,27 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
 .syntekpro-analytics-layout .syntekpro-section-panel .syntekpro-section-body > .syntekpro-admin-box {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
+
+/* ---- Frontend / Admin Panel / Media Settings pages ---- */
+.syntekpro-frontend-layout .syntekpro-section-panel,
+.syntekpro-admin-panel-layout .syntekpro-section-panel,
+.syntekpro-media-layout .syntekpro-section-panel {
+    display: none;
+    margin-bottom: 20px;
+}
+
+.syntekpro-frontend-layout .syntekpro-section-panel.active,
+.syntekpro-admin-panel-layout .syntekpro-section-panel.active,
+.syntekpro-media-layout .syntekpro-section-panel.active {
+    display: block;
+}
+
+.syntekpro-frontend-layout .syntekpro-section-panel .syntekpro-section-body,
+.syntekpro-admin-panel-layout .syntekpro-section-panel .syntekpro-section-body,
+.syntekpro-media-layout .syntekpro-section-panel .syntekpro-section-body {
+    display: block;
+}
+
 
 .syntekpro-analytics-grid {
     display: grid;
@@ -875,6 +894,57 @@ img[src*="Syntekpro Toggle"]:not(#adminmenu img) {
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+
+/* ===================================
+   License Layout
+   =================================== */
+.syntekpro-license-layout .syntekpro-section-panel {
+    display: none;
+    margin-bottom: 20px;
+}
+
+.syntekpro-license-layout .syntekpro-section-panel.active {
+    display: block;
+}
+
+.syntekpro-license-layout .syntekpro-section-panel > h2 {
+    margin: 0 0 14px 0;
+    font-size: 22px;
+    line-height: 1.3;
+    color: #1d2327;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.syntekpro-license-layout .syntekpro-section-panel > h2 .dashicons {
+    color: #667eea;
+    flex-shrink: 0;
+}
+
+.syntekpro-license-layout .syntekpro-section-panel > h2::after {
+    content: '\25BC';
+    font-size: 12px;
+    color: #667eea;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.syntekpro-license-layout .syntekpro-section-panel.is-collapsed > h2::after {
+    content: '\25B6';
+}
+
+.syntekpro-license-layout .syntekpro-section-panel .syntekpro-section-body {
+    display: block;
+}
+
+.syntekpro-license-layout .syntekpro-section-panel.is-collapsed .syntekpro-section-body {
+    display: none;
 }
 
 .mode-stat-item {

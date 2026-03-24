@@ -59,6 +59,49 @@
                     $(this).closest('.syntekpro-section-panel').toggleClass('is-collapsed');
                 });
             }
+
+            // Handler for the About page
+            var $aboutLayout = $('.syntekpro-about-layout');
+            if ($aboutLayout.length) {
+                $aboutLayout.off('click.syntekproTabs', '.syntekpro-about-nav-item');
+                $aboutLayout.on('click.syntekproTabs', '.syntekpro-about-nav-item', function(e) {
+                    e.preventDefault();
+                    var section = $(this).data('section');
+                    $aboutLayout.find('.syntekpro-about-nav-item').removeClass('active');
+                    $(this).addClass('active');
+                    $aboutLayout.find('.syntekpro-section-panel').removeClass('active');
+                    $aboutLayout.find('#section-' + section).addClass('active');
+                });
+            }
+
+            // Generic handler covering Frontend, Admin Panel, Media Settings and License pages
+            var newLayouts = [
+                '.syntekpro-frontend-layout',
+                '.syntekpro-admin-panel-layout',
+                '.syntekpro-media-layout',
+                '.syntekpro-license-layout'
+            ];
+            $.each(newLayouts, function(i, selector) {
+                var $layout = $(selector);
+                if (!$layout.length) { return; }
+                $layout.off('click.syntekproTabs', '.syntekpro-nav-item');
+                $layout.on('click.syntekproTabs', '.syntekpro-nav-item', function(e) {
+                    e.preventDefault();
+                    var section = $(this).data('section');
+                    $layout.find('.syntekpro-nav-item').removeClass('active');
+                    $(this).addClass('active');
+                    $layout.find('.syntekpro-section-panel').removeClass('active');
+                    $layout.find('.syntekpro-section-panel[data-section="' + section + '"]')
+                        .addClass('active')
+                        .removeClass('is-collapsed');
+                });
+
+                // Expand / collapse on section heading click
+                $layout.off('click.syntekproTabs', '.syntekpro-section-panel > h2');
+                $layout.on('click.syntekproTabs', '.syntekpro-section-panel > h2', function() {
+                    $(this).closest('.syntekpro-section-panel').toggleClass('is-collapsed');
+                });
+            });
         })();
 
         // Initialize WordPress Color Picker

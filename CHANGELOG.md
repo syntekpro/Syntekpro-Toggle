@@ -5,6 +5,46 @@ All notable changes to Syntekpro-Toggle will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.6] - 2026-03-25
+
+### ✨ Added
+- **SyntekPro Chat plugin card** — Added SyntekPro Chat to the "Other Plugins by SyntekPro" section in the About page.
+- **Real PNG plugin icons** — Replaced emoji placeholders in the Other Plugins grid with actual PNG icon images from `assets/img/`.
+- **SyntekPro Plugins Logo in heading** — "Other Plugins" section heading now displays the SyntekPro Plugins Logo image instead of a dashicon.
+- **License page sidebar-nav layout** — Fully redesigned Toggle+ / License page to match the sidebar-nav + collapsible section-panel pattern used across all other admin pages.
+
+### 🔧 Changed
+- **All plugin card URLs corrected** — Docs link updated to `plugins.syntekpro.com/toggle/docs`; support link to `plugins.syntekpro.com/support`; Forms/Animations/License Server plugin URLs normalised.
+- **Version badge** now displayed in red (`#dc3232`) for higher visibility.
+- **"Get Toggle+" button** repositioned further from the logo using `position:absolute; right:30px` on the header wrapper.
+- **Accordion arrows standardised** — All expand/collapse arrows across all admin pages now use the same `▼`/`▶` `::after` pseudo-element pattern.
+
+### 🐛 Fixed
+- **Double "Analytics Settings" heading** — Cleared the section title in `add_settings_section()` so `do_settings_sections()` no longer outputs a duplicate `<h2>`.
+- **Double expand/collapse arrows** — Scoped all arrow CSS selectors to `> h2` (direct child combinator) to prevent nested `<h2>` elements from incorrectly receiving arrow styles.
+
+---
+
+## [1.6.5] - 2026-03-25
+
+### ✨ Added
+- **Three dedicated settings pages** — Frontend, Admin Panel, and Media Settings replace the previous single combined page for a cleaner, more focused workflow.
+- **Free / Toggle+ labelling** — First three settings on Frontend and Admin Panel pages are free; remaining advanced options display a purple "Toggle+" badge.
+- **Advanced Media Settings** — New fields: custom image selector, image exclude class, background-image filter, SVG invert filter, custom video selector, iframe brightness filter, custom slide selector, slider colour overlay (colour + opacity).
+- **Collapsible About page** — Rich accordion layout with sections for Welcome/Features, User Guide (8-step walkthrough), Changelog, and Other Plugins.
+- **Other Plugins section in About** — SyntekPro Forms, Animations, and License Server cards moved from their own menu page into the About accordion.
+- **Detailed User Guide** — Step-by-step configuration guide built into the About page covering all major features.
+
+### 🔧 Changed
+- **Menu icon** resized from 25×25 px to 18×18 px for a cleaner sidebar appearance.
+- **Sidebar label** updated from "Toggle" to "SyntekPro Toggle".
+- **"Other Plugins" menu item removed** — content now lives inside About (redirect stub kept for back-compat).
+- **`admin_enqueue_scripts`** now uses page-slug check instead of brittle hook-name comparison.
+- **`syntekpro_toggle_page_header()`** logo logic simplified (plugins-page logo branch removed).
+
+### 🐛 Fixed
+- PHP 7.2 compat: replaced `??` null-coalescing on `sanitize_hex_color()` result with ternary.
+
 ## [1.6.3] - 2026-03-19
 
 ### ✨ Added
@@ -17,17 +57,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🐛 Fixed
 - **"Show toggle button on frontend" not saving when unchecked** - HTML checkboxes are absent from POST data when unchecked, so the previous `array_key_exists` check could never detect an unchecked state. Fixed by adding a hidden sentinel field (`_enable_toggle_sentinel`) so the sanitiser can reliably set the value to `'0'` when the box is unchecked.
 - **Toggle button invisible on some sites** - Aggressive theme or page-builder CSS could override `position`, `z-index`, `display`, `visibility`, or `pointer-events` on the floating button and its icon spans. Hardened with `!important` on layout-critical properties in `public/css/style.css`.
-=======
-## [1.6.2] - 2026-03-08
-
-### ✨ Added
-- **Custom Frontend Toggle Icon Option** - Added a settings field with media uploader support to let admins upload a custom frontend toggle icon.
-- **Custom Admin Toggle Icon Option** - Added a settings field with media uploader support to let admins upload a custom admin floating toggle icon.
-
-### 🔧 Changed
-- **Default Icon Behavior Restored** - Frontend and backend toggles now use default sun/moon icons by default and only switch when a custom icon URL is provided.
-- **Admin Menu Icon Sizing** - Increased WordPress admin menu icon size to `25x25px` for better visibility.
->>>>>>> origin/main
 
 
 ## [1.6.2] - 2026-03-08

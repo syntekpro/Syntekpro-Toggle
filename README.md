@@ -2,7 +2,7 @@
 
 A lightweight WordPress dark/light mode toggle plugin with admin controls, block-theme compatibility, accessibility-focused behavior, and local preference persistence.
 
-![Version](https://img.shields.io/badge/version-1.6.3-blue.svg)
+![Version](https://img.shields.io/badge/version-1.6.6-blue.svg)
 ![WordPress](https://img.shields.io/badge/wordpress-5.0+-green.svg)
 ![PHP](https://img.shields.io/badge/php-7.2+-purple.svg)
 ![License](https://img.shields.io/badge/license-GPL--2.0+-orange.svg)
