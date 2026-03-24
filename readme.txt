@@ -4,7 +4,7 @@ Tags: dark mode, light mode, accessibility, toggle, block themes
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.6.6
+Stable tag: 1.6.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,10 @@ Yes. Use the Display Rules and targeting options in plugin settings.
 Yes. The plugin loads a text domain and includes a POT template in the `languages` directory.
 
 == Changelog ==
+
+= 1.6.7 =
+- Fixed: Both sun and moon icons showing simultaneously due to CSS specificity conflict with display:flex !important on the icon container span.
+- Fixed: Toggle button jumping to page bottom on click when a theme overrides position with higher CSS specificity. position:fixed is now also set inline.
 
 = 1.6.6 =
 - Added SyntekPro Chat to the "Other Plugins" section in About page.

@@ -5,6 +5,14 @@ All notable changes to Syntekpro-Toggle will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.7] - 2026-03-25
+
+### 🐛 Fixed
+- **Toggle button showing both sun and moon icons simultaneously** — CSS `display: flex !important` on the icon container was overriding icon-hide rules (lower specificity) and defeating JS `element.style.display = 'none'` (stylesheet `!important` beats inline style). Fixed by removing `!important` from the container, and scoping icon selectors to `.syntekpro-toggle-btn .syntekpro-icon-sun/moon` with `!important` for reliable visibility control.
+- **Toggle button jumping to page bottom on click** — `position: fixed` was only in the CSS class; themes with higher-specificity rules overriding `position` would break fixed placement, making `bottom: 30px` relative to the document end instead of the viewport. Fixed by adding `position: fixed` directly to the button's inline style.
+
+---
+
 ## [1.6.6] - 2026-03-25
 
 ### ✨ Added
