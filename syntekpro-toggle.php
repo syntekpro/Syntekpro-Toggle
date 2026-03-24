@@ -752,7 +752,7 @@ function syntekpro_toggle_render_button($options, $args = array()) {
     $vertical = $position_parts[0];
     $horizontal = $position_parts[1];
 
-    $position_style = $vertical . ': 30px; ' . $horizontal . ': 30px;';
+    $position_style = 'position: fixed; ' . $vertical . ': 30px; ' . $horizontal . ': 30px;';
     $size_style = 'width: ' . $size . 'px; height: ' . $size . 'px;';
     if ($theme === 'pill') {
         $pill_width = intval($size * 1.4);
