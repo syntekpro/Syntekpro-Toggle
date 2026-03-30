@@ -4,7 +4,7 @@ Tags: dark mode, light mode, accessibility, toggle, block themes
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.6.7
+Stable tag: 1.6.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,13 @@ Yes. Use the Display Rules and targeting options in plugin settings.
 Yes. The plugin loads a text domain and includes a POT template in the `languages` directory.
 
 == Changelog ==
+
+= 1.6.8 =
+- Added an Admin Panel option to show or hide the floating admin dark-mode toggle button.
+- Fixed: Frontend and admin toggle buttons now correctly show the sun icon in dark mode.
+- Fixed: Toggle position now stays in the configured corner by resetting unused offsets before placement.
+- Fixed: System-mode dark mode now keeps late-rendered toggle buttons visible and in sync.
+- Fixed: Image/media filtering no longer applies overly broad slide selectors that could make images look x-ray-like.
 
 = 1.6.7 =
 - Fixed: Both sun and moon icons showing simultaneously due to CSS specificity conflict with display:flex !important on the icon container span.

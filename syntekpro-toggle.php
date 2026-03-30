@@ -3,7 +3,7 @@
  * Plugin Name: SyntekPro Toggle
  * Plugin URI: https://plugins.syntekpro.com/toggle
  * Description: A lightweight Dark/Light mode toggle that respects OS preferences and remembers user choices.
- * Version: 1.6.7
+ * Version: 1.6.8
  * Requires at least: 5.0
  * Requires PHP: 7.2
  * Author: Syntekpro
@@ -14,7 +14,7 @@
  * Domain Path: /languages
  * 
  * @package Syntekpro_Toggle
- * @version 1.6.7
+ * @version 1.6.8
  * @author Syntekpro <development@syntekpro.com>
  */
 
@@ -34,7 +34,7 @@ if ( defined( 'SYNTEKPRO_TOGGLE_VERSION' ) ) {
 }
 
 // Define plugin constants
-define('SYNTEKPRO_TOGGLE_VERSION', '1.6.7');
+define('SYNTEKPRO_TOGGLE_VERSION', '1.6.8');
 define('SYNTEKPRO_TOGGLE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SYNTEKPRO_TOGGLE_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -762,7 +762,7 @@ function syntekpro_toggle_render_button($options, $args = array()) {
     $vertical = $position_parts[0];
     $horizontal = $position_parts[1];
 
-    $position_style = 'position: fixed; ' . $vertical . ': 30px; ' . $horizontal . ': 30px;';
+    $position_style = 'position: fixed; top: auto; right: auto; bottom: auto; left: auto; ' . $vertical . ': 30px; ' . $horizontal . ': 30px;';
     $size_style = 'width: ' . $size . 'px; height: ' . $size . 'px;';
     if ($theme === 'pill') {
         $pill_width = intval($size * 1.4);
@@ -793,7 +793,7 @@ function syntekpro_toggle_render_button($options, $args = array()) {
     $id_attr = isset($args['id']) ? ' id="' . esc_attr($args['id']) . '"' : '';
     $style_attr = $inline ? $size_style : $position_style . $size_style;
     ?>
-    <button<?php echo $id_attr; ?> class="<?php echo esc_attr($button_classes . (!empty($custom_icon_url) ? ' has-custom-icon' : '')); ?>" aria-label="Toggle Dark Mode" style="<?php echo esc_attr($style_attr); ?>">
+    <button type="button"<?php echo $id_attr; ?> class="<?php echo esc_attr($button_classes . (!empty($custom_icon_url) ? ' has-custom-icon' : '')); ?>" aria-label="Toggle Dark Mode" style="<?php echo esc_attr($style_attr); ?>">
         <?php if (!empty($custom_icon_url)) : ?>
         <span class="syntekpro-icon-custom" aria-hidden="true">
             <img src="<?php echo esc_url($custom_icon_url); ?>" alt="" width="<?php echo esc_attr($icon_size); ?>" height="<?php echo esc_attr($icon_size); ?>" />

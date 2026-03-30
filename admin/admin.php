@@ -1093,6 +1093,7 @@ add_action('admin_bar_menu', 'syntekpro_toggle_adminbar_icon', 80);
 function syntekpro_toggle_admin_ui_script() {
     $options = syntekpro_toggle_get_options();
     $custom_admin_icon_url = isset($options['custom_admin_button_icon_url']) ? trim((string) $options['custom_admin_button_icon_url']) : '';
+    $show_floating_toggle = isset($options['enable_admin_floating_toggle']) ? $options['enable_admin_floating_toggle'] === '1' : true;
     $should_output = (isset($options['enable_admin_bar_icon']) && $options['enable_admin_bar_icon'] === '1') || (isset($options['enable_admin_dark_mode']) && $options['enable_admin_dark_mode'] === '1');
     if (!$should_output) {
         return;
@@ -1103,6 +1104,7 @@ function syntekpro_toggle_admin_ui_script() {
         (function() {
             const storageKey = 'syntekpro-admin-dark-mode';
             const allowDark = <?php echo $options['enable_admin_dark_mode'] === '1' ? 'true' : 'false'; ?>;
+            const allowFloatingToggle = <?php echo $show_floating_toggle ? 'true' : 'false'; ?>;
             const prefersDark = <?php echo $prefers_dark; ?>;
             const stored = localStorage.getItem(storageKey);
             let isDark = stored === null ? prefersDark : stored === 'true';
@@ -1120,6 +1122,14 @@ function syntekpro_toggle_admin_ui_script() {
                     fab.classList.toggle('is-dark', state);
                     fab.setAttribute('aria-pressed', state ? 'true' : 'false');
                     fab.setAttribute('aria-label', state ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+                    const sunIcon = fab.querySelector('.syntekpro-icon-sun');
+                    const moonIcon = fab.querySelector('.syntekpro-icon-moon');
+                    if (sunIcon) {
+                        sunIcon.style.display = state ? 'flex' : 'none';
+                    }
+                    if (moonIcon) {
+                        moonIcon.style.display = state ? 'none' : 'flex';
+                    }
                 }
                 document.querySelectorAll('.syntekpro-admin-dark-toggle').forEach(btn => {
                     const textNode = btn.querySelector('.syntekpro-admin-dark-toggle-text');
@@ -1150,12 +1160,12 @@ function syntekpro_toggle_admin_ui_script() {
             }
 
             // Create floating admin toggle button (switch style)
-            if (allowDark && !document.querySelector('.syntekpro-admin-fab')) {
+            if (allowDark && allowFloatingToggle && !document.querySelector('.syntekpro-admin-fab')) {
                 const fab = document.createElement('button');
                 fab.type = 'button';
                 fab.className = 'syntekpro-admin-fab <?php echo !empty($custom_admin_icon_url) ? 'has-custom-icon ' : ''; ?>theme-<?php echo esc_js(isset($options['admin_toggle_theme']) ? $options['admin_toggle_theme'] : 'default'); ?>';
                 fab.setAttribute('aria-label', 'Toggle admin dark mode');
-                fab.innerHTML = '<?php if (!empty($custom_admin_icon_url)) : ?><span class="syntekpro-icon-custom"><img src="<?php echo esc_js($custom_admin_icon_url); ?>" alt="" width="24" height="24" /></span><?php else : ?><span class="syntekpro-icon-sun" style="display:none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span><span class="syntekpro-icon-moon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span><?php endif; ?>';
+                fab.innerHTML = '<?php if (!empty($custom_admin_icon_url)) : ?><span class="syntekpro-icon-custom"><img src="<?php echo esc_js($custom_admin_icon_url); ?>" alt="" width="24" height="24" /></span><?php else : ?><span class="syntekpro-icon-sun"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span><span class="syntekpro-icon-moon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span><?php endif; ?>';
                 fab.addEventListener('click', function(e) {
                     e.preventDefault();
                     isDark = !isDark;
@@ -1626,6 +1636,14 @@ function syntekpro_toggle_register_settings() {
         'enable_admin_bar_icon',
         __('Top Bar Icon', 'syntekpro-toggle'),
         'syntekpro_toggle_admin_bar_icon_callback',
+        'syntekpro-toggle-admin-ui',
+        'syntekpro_toggle_admin_ui_section'
+    );
+
+    add_settings_field(
+        'enable_admin_floating_toggle',
+        __('Floating Toggle Button', 'syntekpro-toggle'),
+        'syntekpro_toggle_admin_floating_toggle_callback',
         'syntekpro-toggle-admin-ui',
         'syntekpro_toggle_admin_ui_section'
     );
@@ -2338,6 +2356,7 @@ function syntekpro_toggle_get_default_options() {
         'analytics_pageview_once_session' => '1',
         'debug_mode' => '0',
         'enable_admin_bar_icon' => '1',
+        'enable_admin_floating_toggle' => '1',
         'enable_dashboard_widget' => '1',
         'enable_admin_dark_mode' => '1',
         'admin_toggle_theme' => 'default',
@@ -2682,15 +2701,10 @@ function syntekpro_toggle_sanitize_options($input) {
         $sanitized['debug_mode'] = isset($input['debug_mode']) ? '1' : '0';
     }
     
-    if (array_key_exists('enable_admin_bar_icon', $input)) {
+    if (isset($input['_admin_ui_sentinel'])) {
         $sanitized['enable_admin_bar_icon'] = isset($input['enable_admin_bar_icon']) ? '1' : '0';
-    }
-    
-    if (array_key_exists('enable_dashboard_widget', $input)) {
+        $sanitized['enable_admin_floating_toggle'] = isset($input['enable_admin_floating_toggle']) ? '1' : '0';
         $sanitized['enable_dashboard_widget'] = isset($input['enable_dashboard_widget']) ? '1' : '0';
-    }
-    
-    if (array_key_exists('enable_admin_dark_mode', $input)) {
         $sanitized['enable_admin_dark_mode'] = isset($input['enable_admin_dark_mode']) ? '1' : '0';
     }
     
@@ -4082,7 +4096,7 @@ function syntekpro_toggle_analytics_track_modes_callback() {
 }
 
 function syntekpro_toggle_admin_ui_section_callback() {
-    echo '<p>' . esc_html__('Control admin UI helpers like dark mode, top bar icon, and dashboard widget.', 'syntekpro-toggle') . '</p>';
+    echo '<p>' . esc_html__('Control admin UI helpers like dark mode, top bar icon, floating toggle button, and dashboard widget.', 'syntekpro-toggle') . '</p>';
 }
 
 function syntekpro_toggle_admin_dark_mode_callback() {
@@ -4104,6 +4118,17 @@ function syntekpro_toggle_admin_bar_icon_callback() {
         <?php esc_html_e('Show top bar icon (also triggers admin dark toggle)', 'syntekpro-toggle'); ?>
     </label>
     <p class="description"><?php esc_html_e('Adds a small icon to the WordPress admin bar for quick access.', 'syntekpro-toggle'); ?></p>
+    <?php
+}
+
+function syntekpro_toggle_admin_floating_toggle_callback() {
+    $options = syntekpro_toggle_get_options();
+    ?>
+    <label>
+        <input type="checkbox" name="syntekpro_toggle_options[enable_admin_floating_toggle]" value="1" <?php checked($options['enable_admin_floating_toggle'], '1'); ?>>
+        <?php esc_html_e('Show floating toggle button in the admin panel', 'syntekpro-toggle'); ?>
+    </label>
+    <p class="description"><?php esc_html_e('Displays the floating dark mode toggle in the lower-right corner of the WordPress admin area.', 'syntekpro-toggle'); ?></p>
     <?php
 }
 
@@ -5062,6 +5087,7 @@ function syntekpro_toggle_admin_panel_page() {
         <div class="syntekpro-main-content syntekpro-admin-panel-main" style="flex:1;">
             <form action="options.php" method="post">
                 <?php settings_fields('syntekpro_toggle_settings'); ?>
+                <input type="hidden" name="syntekpro_toggle_options[_admin_ui_sentinel]" value="1">
 
                 <div class="syntekpro-section-panel active" id="section-admin-dark-mode" data-section="admin-dark-mode">
                     <h2>🖥️ <?php esc_html_e('Admin Dark Mode Controls', 'syntekpro-toggle'); ?> <span class="syntekpro-free-badge"><?php esc_html_e('FREE', 'syntekpro-toggle'); ?></span></h2>
@@ -5069,6 +5095,7 @@ function syntekpro_toggle_admin_panel_page() {
                         <p style="color:#666;font-size:13px;margin-top:0;"><?php esc_html_e('Core admin dark mode controls — available to all users.', 'syntekpro-toggle'); ?></p>
                         <?php syntekpro_toggle_render_field('enable_admin_dark_mode', 'syntekpro-toggle-admin-ui', 'syntekpro_toggle_admin_ui_section'); ?>
                         <?php syntekpro_toggle_render_field('enable_admin_bar_icon', 'syntekpro-toggle-admin-ui', 'syntekpro_toggle_admin_ui_section'); ?>
+                        <?php syntekpro_toggle_render_field('enable_admin_floating_toggle', 'syntekpro-toggle-admin-ui', 'syntekpro_toggle_admin_ui_section'); ?>
                         <?php syntekpro_toggle_render_field('enable_dashboard_widget', 'syntekpro-toggle-admin-ui', 'syntekpro_toggle_admin_ui_section'); ?>
                     </div>
                 </div>

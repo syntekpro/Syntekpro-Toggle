@@ -197,34 +197,38 @@ html.dark-mode .wp-block-navigation-item a {
    Images, Videos, and Slides Filters
    =================================== */
 
-/* Image filters in dark mode - exclude images inside slide containers */
-html.dark-mode img:not(.slides img):not(.slide img):not(.presentation img):not([class*="slide"] img):not(.reveal img):not(.slideshare img) {
+/* Image filters in dark mode - exclude images inside known slide containers */
+html.dark-mode img:not(.slides img):not(.slide img):not(.presentation img):not(.reveal img):not(.slideshare img):not(.swiper-slide img):not(.slick-slide img):not(.splide__slide img):not(.glide__slide img):not(.carousel-item img) {
     filter: brightness(var(--syntekpro-image-brightness, 1)) contrast(var(--syntekpro-image-contrast, 1)) !important;
     transition: filter 0.3s ease;
 }
 
-/* Video filters in dark mode - exclude videos inside slide containers */
-html.dark-mode video:not(.slides video):not(.slide video):not(.presentation video):not([class*="slide"] video):not(.reveal video):not(.slideshare video),
-html.dark-mode embed[type*="video"]:not(.slides embed):not(.slide embed):not(.presentation embed):not([class*="slide"] embed):not(.reveal embed):not(.slideshare embed),
-html.dark-mode object[type*="video"]:not(.slides object):not(.slide object):not(.presentation object):not([class*="slide"] object):not(.reveal object):not(.slideshare object) {
+/* Video filters in dark mode - exclude videos inside known slide containers */
+html.dark-mode video:not(.slides video):not(.slide video):not(.presentation video):not(.reveal video):not(.slideshare video):not(.swiper-slide video):not(.slick-slide video):not(.splide__slide video):not(.glide__slide video):not(.carousel-item video),
+html.dark-mode embed[type*="video"]:not(.slides embed):not(.slide embed):not(.presentation embed):not(.reveal embed):not(.slideshare embed):not(.swiper-slide embed):not(.slick-slide embed):not(.splide__slide embed):not(.glide__slide embed):not(.carousel-item embed),
+html.dark-mode object[type*="video"]:not(.slides object):not(.slide object):not(.presentation object):not(.reveal object):not(.slideshare object):not(.swiper-slide object):not(.slick-slide object):not(.splide__slide object):not(.glide__slide object):not(.carousel-item object) {
     filter: brightness(var(--syntekpro-video-brightness, 1)) contrast(var(--syntekpro-video-contrast, 1)) !important;
     transition: filter 0.3s ease;
 }
 
-/* Iframe filters (YouTube, Vimeo, etc.) - exclude iframes inside slide containers */
-html.dark-mode iframe:not(.slides iframe):not(.slide iframe):not(.presentation iframe):not([class*="slide"] iframe):not(.reveal iframe):not(.slideshare iframe) {
+/* Iframe filters (YouTube, Vimeo, etc.) - exclude iframes inside known slide containers */
+html.dark-mode iframe:not(.slides iframe):not(.slide iframe):not(.presentation iframe):not(.reveal iframe):not(.slideshare iframe):not(.swiper-slide iframe):not(.slick-slide iframe):not(.splide__slide iframe):not(.glide__slide iframe):not(.carousel-item iframe) {
     filter: brightness(var(--syntekpro-video-brightness, 1)) contrast(var(--syntekpro-video-contrast, 1)) !important;
     transition: filter 0.3s ease;
 }
 
-/* Slide filters - apply to slide containers and their content */
+/* Slide filters - apply to known slide containers only */
 html.dark-mode .slides,
 html.dark-mode .slide,
 html.dark-mode .presentation,
-html.dark-mode [class*="slide"],
 html.dark-mode [data-transition],
 html.dark-mode .reveal,
-html.dark-mode .slideshare {
+html.dark-mode .slideshare,
+html.dark-mode .swiper-slide,
+html.dark-mode .slick-slide,
+html.dark-mode .splide__slide,
+html.dark-mode .glide__slide,
+html.dark-mode .carousel-item {
     filter: brightness(var(--syntekpro-slide-brightness, 1)) invert(var(--syntekpro-slide-invert, 0)) !important;
     transition: filter 0.3s ease;
 }
@@ -248,8 +252,10 @@ html.dark-mode .wp-block-embed iframe {
    =================================== */
 .syntekpro-toggle-btn {
     position: fixed !important;
-    bottom: 30px;
-    right: 30px;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -268,6 +274,7 @@ html.dark-mode .wp-block-embed iframe {
     opacity: 1 !important;
     pointer-events: auto !important;
     overflow: visible !important;
+    max-width: none !important;
 }
 
 .syntekpro-toggle-inline {

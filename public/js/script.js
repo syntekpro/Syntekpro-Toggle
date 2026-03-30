@@ -35,6 +35,8 @@
     var lastEventTimes = {};
     var eventQueue = [];
     var batchTimer = null;
+    var toggleObserver = null;
+    var osPreferenceListenerBound = false;
 
     // Track page view on load (if analytics enabled)
     trackAnalyticsEvent('page_view');
@@ -47,17 +49,32 @@
     }
 
     function initDarkModeToggle() {
-        const toggleButtons = Array.prototype.slice.call(document.querySelectorAll('.syntekpro-dark-mode-toggle'));
+        syncToggleButtons();
+        observeToggleButtons();
+        bindOsPreferenceListener();
+    }
+
+    function getToggleButtons() {
+        return Array.prototype.slice.call(document.querySelectorAll('.syntekpro-dark-mode-toggle'));
+    }
+
+    function syncToggleButtons() {
+        const toggleButtons = getToggleButtons();
+
+        // Update button appearance based on current mode
+        updateToggleButtons(toggleButtons);
 
         if (!toggleButtons.length) {
             return;
         }
 
-        // Update button appearance based on current mode
-        updateToggleButtons(toggleButtons);
-
         // Toggle dark mode on button click
         toggleButtons.forEach(function(toggleBtn) {
+            if (toggleBtn.dataset.syntekproToggleBound === '1') {
+                return;
+            }
+
+            toggleBtn.dataset.syntekproToggleBound = '1';
             toggleBtn.addEventListener('click', function() {
                 const isDarkMode = document.documentElement.classList.toggle('dark-mode');
 
@@ -71,26 +88,70 @@
                 trackAnalyticsEvent('mode_change', { mode: isDarkMode ? 'dark' : 'light' });
 
                 // Update button appearance
-                updateToggleButtons(toggleButtons);
+                syncToggleButtons();
             });
         });
+    }
 
+    function bindOsPreferenceListener() {
         // Listen for OS preference changes (only if auto mode is enabled)
-        if (settings.defaultMode === 'auto' && settings.autoListenOs && settings.autoModeSource === 'os') {
-            const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            darkModeMediaQuery.addEventListener('change', function(e) {
-                // Only apply OS preference if user hasn't manually set a preference
-                const savedMode = getStoredMode();
-                if (savedMode === null) {
-                    if (e.matches) {
-                        document.documentElement.classList.add('dark-mode');
-                    } else {
-                        document.documentElement.classList.remove('dark-mode');
-                    }
-                    updateToggleButtons(toggleButtons);
-                }
-            });
+        if (
+            osPreferenceListenerBound ||
+            settings.defaultMode !== 'auto' ||
+            !settings.autoListenOs ||
+            settings.autoModeSource !== 'os' ||
+            !window.matchMedia
+        ) {
+            return;
         }
+
+        osPreferenceListenerBound = true;
+
+        const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        darkModeMediaQuery.addEventListener('change', function(e) {
+            // Only apply OS preference if user hasn't manually set a preference
+            const savedMode = getStoredMode();
+            if (savedMode === null) {
+                if (e.matches) {
+                    document.documentElement.classList.add('dark-mode');
+                } else {
+                    document.documentElement.classList.remove('dark-mode');
+                }
+                syncToggleButtons();
+            }
+        });
+    }
+
+    function observeToggleButtons() {
+        if (toggleObserver || !window.MutationObserver) {
+            return;
+        }
+
+        const observerTarget = document.body || document.documentElement;
+
+        if (!observerTarget) {
+            return;
+        }
+
+        toggleObserver = new MutationObserver(function(mutations) {
+            const foundToggle = mutations.some(function(mutation) {
+                return Array.prototype.some.call(mutation.addedNodes, function(node) {
+                    return node.nodeType === 1 && (
+                        node.classList.contains('syntekpro-dark-mode-toggle') ||
+                        node.querySelector('.syntekpro-dark-mode-toggle')
+                    );
+                });
+            });
+
+            if (foundToggle) {
+                syncToggleButtons();
+            }
+        });
+
+        toggleObserver.observe(observerTarget, {
+            childList: true,
+            subtree: true
+        });
     }
 
     function updateToggleButtons(toggleButtons) {
@@ -105,12 +166,12 @@
 
             if (isDarkMode) {
                 toggleBtn.setAttribute('aria-label', 'Switch to Light Mode');
-                if (sunIcon) sunIcon.style.display = 'block';
+                if (sunIcon) sunIcon.style.display = 'flex';
                 if (moonIcon) moonIcon.style.display = 'none';
             } else {
                 toggleBtn.setAttribute('aria-label', 'Switch to Dark Mode');
                 if (sunIcon) sunIcon.style.display = 'none';
-                if (moonIcon) moonIcon.style.display = 'block';
+                if (moonIcon) moonIcon.style.display = 'flex';
             }
         });
 

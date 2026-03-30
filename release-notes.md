@@ -1,6 +1,8 @@
-## What's Fixed in v1.6.7
+## What's Fixed in v1.6.8
 
-### Bug Fixes
-- **Both icons showing simultaneously** — The sun and moon icons were both visible at the same time due to a CSS specificity conflict: `display: flex !important` on the icon container was overriding both the icon-hide CSS rules (lower specificity) and JavaScript's `element.style.display = 'none'` (stylesheet `!important` beats inline style). Fixed by removing `!important` from the container rule and using button-scoped selectors `.syntekpro-toggle-btn .syntekpro-icon-sun/moon` with `!important`.
-
-- **Button jumping to page bottom on toggle** — Clicking the button caused it to move to the bottom of the page instead of staying fixed to the viewport. `position: fixed` was only set in the CSS class, so any theme CSS with higher specificity could override it, making `bottom: 30px` position relative to the document end. Fixed by adding `position: fixed` directly to the button's inline style.
+### Improvements
+- **Admin floating toggle visibility control** — Added a new Admin Panel setting to show or hide the floating admin dark-mode button.
+- **Sun icon visibility fixed** — The toggle button now correctly shows the sun icon in dark mode on both frontend and admin screens.
+- **Position stability improved** — Toggle placement now resets all sides before applying the selected corner, preventing drift to the wrong edge.
+- **System-mode sync improved** — Auto dark mode can now sync correctly even when the toggle is rendered later in the page lifecycle.
+- **Image filter behavior corrected** — Narrowed slide/media selectors so normal images darken subtly instead of looking inverted or x-ray-like.

@@ -5,6 +5,19 @@ All notable changes to Syntekpro-Toggle will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.8] - 2026-03-30
+
+### Added
+- Added an Admin Panel option to show or hide the floating admin dark-mode toggle button.
+
+### Fixed
+- Fixed the frontend and admin toggle buttons so the sun icon displays correctly when dark mode is active.
+- Fixed toggle placement conflicts by resetting all four positional offsets before applying the configured corner.
+- Fixed auto/system dark mode initialization so late-rendered toggle buttons still appear and sync correctly.
+- Fixed image and media filtering so regular images are no longer caught by overly broad slide selectors and rendered with an x-ray-like look.
+
+---
+
 ## [1.6.7] - 2026-03-25
 
 ### 🐛 Fixed
