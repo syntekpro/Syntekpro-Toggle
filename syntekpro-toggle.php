@@ -3,7 +3,7 @@
  * Plugin Name: SyntekPro Toggle
  * Plugin URI: https://plugins.syntekpro.com/toggle
  * Description: A lightweight Dark/Light mode toggle that respects OS preferences and remembers user choices.
- * Version: 1.6.8
+ * Version: 1.6.9
  * Requires at least: 5.0
  * Requires PHP: 7.2
  * Author: Syntekpro
@@ -14,7 +14,7 @@
  * Domain Path: /languages
  * 
  * @package Syntekpro_Toggle
- * @version 1.6.8
+ * @version 1.6.9
  * @author Syntekpro <development@syntekpro.com>
  */
 
@@ -34,7 +34,7 @@ if ( defined( 'SYNTEKPRO_TOGGLE_VERSION' ) ) {
 }
 
 // Define plugin constants
-define('SYNTEKPRO_TOGGLE_VERSION', '1.6.8');
+define('SYNTEKPRO_TOGGLE_VERSION', '1.6.9');
 define('SYNTEKPRO_TOGGLE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SYNTEKPRO_TOGGLE_PLUGIN_URL', plugin_dir_url(__FILE__));
 

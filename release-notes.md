@@ -1,8 +1,5 @@
-## What's Fixed in v1.6.8
+## What's New in v1.6.9
 
 ### Improvements
-- **Admin floating toggle visibility control** — Added a new Admin Panel setting to show or hide the floating admin dark-mode button.
-- **Sun icon visibility fixed** — The toggle button now correctly shows the sun icon in dark mode on both frontend and admin screens.
-- **Position stability improved** — Toggle placement now resets all sides before applying the selected corner, preventing drift to the wrong edge.
-- **System-mode sync improved** — Auto dark mode can now sync correctly even when the toggle is rendered later in the page lifecycle.
-- **Image filter behavior corrected** — Narrowed slide/media selectors so normal images darken subtly instead of looking inverted or x-ray-like.
+- **New SyntekPro PNG assets added** — Added dedicated Toggle, Themes, and Plugins Support icon assets under `assets/img/` for release packaging and branding use.
+- **Release package refreshed** — Updated plugin metadata, changelog, and the distributable archive for the 1.6.9 release.

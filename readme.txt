@@ -4,7 +4,7 @@ Tags: dark mode, light mode, accessibility, toggle, block themes
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.6.8
+Stable tag: 1.6.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,10 @@ Yes. Use the Display Rules and targeting options in plugin settings.
 Yes. The plugin loads a text domain and includes a POT template in the `languages` directory.
 
 == Changelog ==
+
+= 1.6.9 =
+- Added new SyntekPro PNG assets for Toggle, Themes, and Plugins Support branding in `assets/img/`.
+- Refreshed the 1.6.9 release package and metadata.
 
 = 1.6.8 =
 - Added an Admin Panel option to show or hide the floating admin dark-mode toggle button.
